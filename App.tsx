@@ -4,7 +4,7 @@ import { Sidebar } from './components/Sidebar';
 import { NavGroup } from './types';
 import { 
   HomeIcon, FileJsonIcon, LockIcon, PaletteIcon, FileTextIcon,
-  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon
+  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon, ClockIcon, GlobeIcon
 } from './components/ui/Icons';
 import { AppProvider } from './contexts/AppContext';
 
@@ -14,6 +14,7 @@ import { JsonTools, CodeTools, EncoderTools } from './pages/JsonToolkit';
 import { HashTools, EncryptTools, JwtTools, PasswordTools } from './pages/SecurityTools';
 import { ColorPaletteTools, ImageTools, CssGenTools } from './pages/ColorTools';
 import { EditorTools, RegexTools, DiffTools } from './pages/TextTools';
+import { CrontabTools, WorldClockTools } from './pages/TimeTools';
 
 const navGroups: NavGroup[] = [
   {
@@ -53,6 +54,13 @@ const navGroups: NavGroup[] = [
       { id: 'regex', label: 'nav.regex', icon: <RegexIcon />, path: '/regex' },
       { id: 'diff', label: 'nav.diff', icon: <DiffIcon />, path: '/diff' },
     ]
+  },
+  {
+    title: 'nav.time',
+    items: [
+      { id: 'crontab', label: 'nav.crontab', icon: <CodeIcon />, path: '/crontab' },
+      { id: 'worldclock', label: 'nav.worldclock', icon: <GlobeIcon />, path: '/worldclock' },
+    ]
   }
 ];
 
@@ -86,6 +94,10 @@ const MainLayout = () => {
             <Route path="/editor" element={<EditorTools />} />
             <Route path="/regex" element={<RegexTools />} />
             <Route path="/diff" element={<DiffTools />} />
+
+            {/* Time */}
+            <Route path="/crontab" element={<CrontabTools />} />
+            <Route path="/worldclock" element={<WorldClockTools />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

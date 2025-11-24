@@ -33,6 +33,11 @@ const translations: Record<string, { en: string; zh: string }> = {
   "nav.editor": { en: "Text Editor", zh: "文本编辑器" },
   "nav.regex": { en: "Regex", zh: "正则测试" },
   "nav.diff": { en: "Diff Checker", zh: "文本比对" },
+
+  // Time Tools
+  "nav.time": { en: "Time Tools", zh: "时间工具" },
+  "nav.crontab": { en: "Crontab", zh: "Crontab" },
+  "nav.worldclock": { en: "World Clock", zh: "世界时钟" },
   
   // Home
   "home.title": { en: "Welcome to Azin's Dev Toolkit", zh: "欢迎使用 Azin 的开发工具集" },
@@ -77,6 +82,12 @@ const translations: Record<string, { en: string; zh: string }> = {
   
   "tool.diff.title": { en: "Diff Checker", zh: "文本比对" },
   "tool.diff.desc": { en: "Compare two text blocks for differences.", zh: "比较两段文本的差异。" },
+
+  "tool.crontab.title": { en: "Crontab Interpreter", zh: "Crontab 解释器" },
+  "tool.crontab.desc": { en: "Explain cron expressions in plain English.", zh: "用自然语言解释 Cron 表达式。" },
+
+  "tool.worldclock.title": { en: "World Clock & Calibration", zh: "世界时钟与校准" },
+  "tool.worldclock.desc": { en: "Check local times and calibrate global time.", zh: "查看各地时间及全球时间校准。" },
 };
 
 export const AppProvider: React.FC<{ children?: ReactNode }> = ({ children }) => {
