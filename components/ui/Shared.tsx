@@ -21,10 +21,9 @@ export const CardContent = ({ children, className = "" }: { children?: React.Rea
   <div className={`p-6 ${className}`}>{children}</div>
 );
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ComponentProps<"button"> {
   variant?: "primary" | "secondary" | "danger" | "ghost" | "outline";
   size?: "default" | "sm" | "lg" | "icon";
-  children?: React.ReactNode;
 }
 
 export const Button = ({ children, variant = "primary", size = "default", className = "", ...props }: ButtonProps) => {
