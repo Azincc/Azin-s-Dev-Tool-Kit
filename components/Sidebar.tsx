@@ -33,7 +33,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
         onMouseLeave={() => setCollapsed(true)}
       >
         <div className="flex items-center justify-between h-16 px-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
-          {!collapsed && <span className="font-bold text-lg text-blue-600 dark:text-blue-400 tracking-tight animate-in fade-in duration-300 whitespace-nowrap overflow-hidden">Azin's Toolkit</span>}
+          {!collapsed && <span className="font-bold text-lg text-blue-600 dark:text-blue-400 tracking-tight animate-in fade-in duration-300">Azin's Toolkit</span>}
           <button 
             className={`p-1.5 rounded-md text-slate-500 dark:text-slate-400 transition-colors ${collapsed ? 'mx-auto' : 'ml-auto'}`}
           >
@@ -46,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
             <div key={groupIdx} className="space-y-1">
               {/* Category Header */}
               {!collapsed && group.title && (
-                <div className="px-3 mb-2 text-xs font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider animate-in fade-in duration-300 whitespace-nowrap overflow-hidden">
+                <div className="px-3 mb-2 text-xs font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider animate-in fade-in duration-300">
                   {t(group.title)}
                 </div>
               )}
@@ -99,12 +99,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
                className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors flex items-center gap-2"
              >
                <GlobeIcon className="w-5 h-5" />
-               {!collapsed && <span className="text-xs font-bold animate-in fade-in duration-300 whitespace-nowrap">{language.toUpperCase()}</span>}
+               {!collapsed && <span className="text-xs font-bold animate-in fade-in duration-300">{language.toUpperCase()}</span>}
              </button>
            </div>
 
           {!collapsed && (
-            <div className="text-xs text-slate-400 dark:text-slate-600 text-center mt-2 animate-in fade-in duration-300 whitespace-nowrap overflow-hidden">
+            <div className="text-xs text-slate-400 dark:text-slate-600 text-center mt-2 animate-in fade-in duration-300">
               v1.2.0 • © 2024 Azin
             </div>
           )}
