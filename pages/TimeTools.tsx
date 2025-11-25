@@ -200,11 +200,18 @@ export const WorldClockTools: React.FC = () => {
             
             if (json.status === 1) {
                  const serverTs = json.data.timestamp;
-                 const localTs = Date.now(); // Current local time
+                 // Use the midpoint of the request for better accuracy
+                 // (requestStart + requestEnd) / 2 approximates the time when server generated the timestamp (if network is symmetric)
+                 // However, the server timestamp 'serverTs' is the time at the server when it processed the request.
+                 // The time now is 'requestEnd'.
+                 // The time at 'requestStart' was 'localTs'.
+                 // The 'serverTs' happened roughly at (requestStart + requestEnd) / 2.
+                 // So we compare 'serverTs' with the midpoint of local time.
+                 const midPoint = (requestStart + requestEnd) / 2;
                  
-                 // Calculate offset: Server - Local
-                 // When we want to know Server Time later, we do: Local + Offset
-                 const offset = serverTs - localTs;
+                 // Calculate offset: Server - Local(Midpoint)
+                 // Server Time = Local Time + Offset
+                 const offset = serverTs - midPoint;
                  setTimeOffset(offset);
             }
         } catch (e) {
@@ -258,6 +265,14 @@ export const WorldClockTools: React.FC = () => {
     // If not, we just show dashes or local time as fallback (though requirement implies we need source of truth)
     const currentServerTime = timeOffset !== null ? now + timeOffset : null;
 
+    const getOffsetStatus = (offsetMs: number) => {
+        const absOffset = Math.abs(offsetMs);
+        if (absOffset < 30000) return { color: 'text-green-500', message: '' };
+        if (absOffset < 300000) return { color: 'text-yellow-500', message: 'TOTP 验证码失效，倒计时会有明显误差。' };
+        if (absOffset < 3600000) return { color: 'text-orange-500', message: 'JWT/Token 登录失败，消息排序混乱。' };
+        return { color: 'text-red-600', message: '日期错误，跨天业务逻辑完全崩坏。' };
+    };
+
     return (
         <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
             <div>
@@ -283,8 +298,13 @@ export const WorldClockTools: React.FC = () => {
                               <span className="text-sm text-slate-500 ml-2">(Beijing)</span>
                          </div>
                          {timeOffset !== null && (
-                             <div className={`text-sm ${Math.abs(timeOffset) > 1000 ? 'text-red-500' : 'text-green-500'}`}>
-                                 {t('tool.worldclock.offset')}: {timeOffset}ms
+                             <div className={`text-sm ${getOffsetStatus(timeOffset).color}`}>
+                                 {t('tool.worldclock.offset')}: {Math.round(timeOffset)}ms
+                                 {getOffsetStatus(timeOffset).message && (
+                                     <div className="mt-1 font-semibold">
+                                         {getOffsetStatus(timeOffset).message}
+                                     </div>
+                                 )}
                              </div>
                          )}
                      </div>
