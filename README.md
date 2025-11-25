@@ -1,20 +1,55 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Azin's Dev Toolkit
 
-# Run and deploy your AI Studio app
+一个功能丰富的开发者工具集合，提供多种实用工具帮助开发者提高工作效率。
 
-This contains everything you need to run your app locally.
+## 🔗 在线预览
 
-View your app in AI Studio: https://ai.studio/apps/drive/1jxD7J2AhTCXGNBjwx9EX9Rs-L8qisv-2
+访问 [tool.azin.cc](https://tool.azin.cc) 体验完整功能
 
-## Run Locally
+## ✨ 功能特性
 
-**Prerequisites:**  Node.js
+- **时间工具** - 时间转换、时区处理、Crontab 表达式等
+- **文本工具** - 文本格式化、编码转换、正则测试等
+- **JSON 工具** - JSON 格式化、验证、转换等
+- **颜色工具** - 颜色选择器、格式转换、二维码生成等
+- **安全工具** - 加密解密、哈希计算等
+- **国际化支持** - 多语言界面
+- **深色模式** - 支持明暗主题切换
 
+## 🚀 本地运行
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**前置要求:** Node.js
+
+1. 安装依赖:
+   ```bash
+   npm install
+   ```
+
+2. 启动开发服务器:
+   ```bash
+   npm run dev
+   ```
+
+3. 构建生产版本:
+   ```bash
+   npm run build
+   ```
+
+## 🐳 Docker 部署
+
+```bash
+docker build -t azin-dev-toolkit .
+docker run -p 9080:80 azin-dev-toolkit
+```
+
+## 🙏 致谢
+
+本项目由以下工具和服务协助完成：
+- Gemini 3 Pro
+- Claude
+- [CTO.NEW](https://cto.new)
+- 感谢随时跑路公益站提供的公益服务
+
+## 📄 License
+
+MIT
