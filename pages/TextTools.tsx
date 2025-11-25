@@ -47,6 +47,21 @@ export const RegexTools: React.FC = () => {
                 <div className="flex gap-2"><Input value={regexPattern} onChange={e => setRegexPattern(e.target.value)} placeholder={t('tool.regex.pattern') + " (e.g. \\d+)"} className="flex-1 font-mono text-emerald-600 dark:text-emerald-400 bg-slate-50 dark:bg-slate-900 text-slate-900" /><Input value={regexFlags} onChange={e => setRegexFlags(e.target.value)} placeholder={t('tool.regex.flags')} className="w-24 font-mono bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" /></div>
                 <TextArea value={text} onChange={e => setText(e.target.value)} placeholder={t('tool.regex.test_placeholder')} className="h-32 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" />
                 <div className="bg-slate-100 dark:bg-slate-950 rounded border border-slate-200 dark:border-slate-700 p-4 min-h-[150px]"><Label>{t('tool.regex.matches')} ({regexMatches?.length || 0})</Label><div className="flex flex-wrap gap-2 mt-2">{regexMatches === null ? <span className="text-red-400">{t('tool.regex.invalid')}</span> : regexMatches.length === 0 ? <span className="text-slate-500 italic">{t('tool.regex.no_matches')}</span> : regexMatches.map((m, i) => <span key={i} className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-200 rounded text-sm font-mono border border-blue-200 dark:border-blue-800">{m}</span>)}</div></div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 space-y-1 p-4 bg-slate-50 dark:bg-slate-900 rounded border border-slate-100 dark:border-slate-800">
+                    <p className="font-semibold">Common Rules:</p>
+                    <div className="grid grid-cols-2 gap-2">
+                        <span><code>.</code> Any character</span>
+                        <span><code>\d</code> Digit (0-9)</span>
+                        <span><code>\w</code> Word char (a-z, 0-9, _)</span>
+                        <span><code>\s</code> Whitespace</span>
+                        <span><code>*</code> 0 or more</span>
+                        <span><code>+</code> 1 or more</span>
+                        <span><code>?</code> 0 or 1</span>
+                        <span><code>^</code> Start of string</span>
+                        <span><code>$</code> End of string</span>
+                        <span><code>[abc]</code> Any of a, b, c</span>
+                    </div>
+                </div>
             </CardContent>
         </Card>
     </div>
