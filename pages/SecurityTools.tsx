@@ -142,7 +142,7 @@ export const PasswordTools: React.FC = () => {
             <CardContent className="space-y-4 pt-6">
                 <div className="flex gap-4 items-end"><div className="w-32"><Label>{t('tool.pass.length')}</Label><Input type="number" value={passLength} onChange={e => setPassLength(parseInt(e.target.value))} min={4} max={128} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" /></div><Button onClick={generatePasswords}>{t('tool.pass.generate')}</Button></div>
                 <div className="grid gap-2">
-                    {passwords.map((p, i) => (<div key={i} className="flex justify-between items-center bg-slate-100 dark:bg-slate-950 p-2 px-4 rounded border border-slate-200 dark:border-slate-800 group"><span className="font-mono text-emerald-600 dark:text-emerald-400">{p}</span><div className="opacity-0 group-hover:opacity-100"><CopyButton text={p} /></div></div>))}
+                    {passwords.map((p, i) => (<div key={i} className="flex justify-between items-center bg-slate-100 dark:bg-slate-950 p-2 px-4 rounded border border-slate-200 dark:border-slate-800 group"><span className="font-mono text-emerald-600 dark:text-emerald-400 break-all">{p}</span><div className="opacity-0 group-hover:opacity-100"><CopyButton text={p} /></div></div>))}
                     {passwords.length === 0 && <div className="text-slate-500 text-center py-4">{t('tool.pass.click_generate')}</div>}
                 </div>
             </CardContent>
