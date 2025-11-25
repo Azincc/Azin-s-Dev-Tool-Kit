@@ -162,6 +162,7 @@ const translations: Record<string, { en: string; zh: string }> = {
   "tool.jwt.payload": { en: "Payload", zh: "载荷" },
   "tool.jwt.invalid": { en: "Invalid Token", zh: "无效 Token" },
   "tool.pass.length": { en: "Length", zh: "长度" },
+  "tool.pass.count": { en: "Count", zh: "数量" },
   "tool.pass.generate": { en: "Generate Batch", zh: "批量生成" },
   "tool.pass.click_generate": { en: "Click generate", zh: "点击生成" },
 
