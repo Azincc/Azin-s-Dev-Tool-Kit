@@ -37,7 +37,7 @@ export const HashTools: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                       <Label>{t('tool.hash.text')}</Label>
-                      <Input value={hashInput.startsWith("File:") ? "" : hashInput} onChange={(e) => calculateHashes(e.target.value)} placeholder={t('tool.hash.type_placeholder')} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" />
+                      <Input value={hashInput.startsWith("File:") ? "" : hashInput} onChange={(e) => calculateHashes(e.target.value)} placeholder={t('tool.hash.type_placeholder')} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full" />
                   </div>
                   <div className="space-y-2">
                       <Label>{t('tool.hash.or_file')}</Label>
@@ -77,10 +77,10 @@ export const EncryptTools: React.FC = () => {
             <CardHeader title={t('tool.encrypt.demo_title')} />
             <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2"><Label>{t('tool.encrypt.message')}</Label><TextArea value={aesInput} onChange={e => setAesInput(e.target.value)} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" /></div>
-                    <div className="space-y-2"><Label>{t('tool.encrypt.secret_key')}</Label><Input value={aesKey} onChange={e => setAesKey(e.target.value)} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" /><Button onClick={simpleEncrypt} className="w-full mt-2">{t('tool.encrypt.action')}</Button></div>
+                    <div className="space-y-2"><Label>{t('tool.encrypt.message')}</Label><TextArea value={aesInput} onChange={e => setAesInput(e.target.value)} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full" /></div>
+                    <div className="space-y-2"><Label>{t('tool.encrypt.secret_key')}</Label><Input value={aesKey} onChange={e => setAesKey(e.target.value)} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full" /><Button onClick={simpleEncrypt} className="w-full mt-2">{t('tool.encrypt.action')}</Button></div>
                 </div>
-                <div className="space-y-2"><Label>{t('tool.encrypt.result')}</Label><div className="relative"><TextArea readOnly value={aesOutput} className="bg-slate-100 dark:bg-slate-950 text-emerald-600 dark:text-emerald-400" /><div className="absolute top-2 right-2"><CopyButton text={aesOutput} /></div></div></div>
+                <div className="space-y-2"><Label>{t('tool.encrypt.result')}</Label><div className="relative"><TextArea readOnly value={aesOutput} className="bg-slate-100 dark:bg-slate-950 text-emerald-600 dark:text-emerald-400 w-full" /><div className="absolute top-2 right-2"><CopyButton text={aesOutput} /></div></div></div>
             </CardContent>
         </Card>
     </div>
@@ -108,10 +108,10 @@ export const JwtTools: React.FC = () => {
         <div><h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.jwt.title')}</h2><p className="text-slate-500 dark:text-slate-400">{t('tool.jwt.desc')}</p></div>
         <Card>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
-                <div className="space-y-2"><Label>{t('tool.jwt.encoded')}</Label><TextArea value={jwtToken} onChange={e => decodeJwt(e.target.value)} className="h-64 text-xs bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." /></div>
+                <div className="space-y-2"><Label>{t('tool.jwt.encoded')}</Label><TextArea value={jwtToken} onChange={e => decodeJwt(e.target.value)} className="h-64 text-xs bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." /></div>
                 <div className="space-y-4">
-                    <div className="space-y-1"><Label className="text-blue-600 dark:text-blue-400">{t('tool.jwt.header')}</Label><pre className="bg-slate-100 dark:bg-slate-950 p-3 rounded border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-300 h-24 overflow-auto">{jwtDecoded?.header}</pre></div>
-                    <div className="space-y-1"><Label className="text-purple-600 dark:text-purple-400">{t('tool.jwt.payload')}</Label><pre className="bg-slate-100 dark:bg-slate-950 p-3 rounded border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-300 h-32 overflow-auto">{jwtDecoded?.payload}</pre></div>
+                    <div className="space-y-1"><Label className="text-blue-600 dark:text-blue-400">{t('tool.jwt.header')}</Label><pre className="bg-slate-100 dark:bg-slate-950 p-3 rounded border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-300 h-24 overflow-auto w-full">{jwtDecoded?.header}</pre></div>
+                    <div className="space-y-1"><Label className="text-purple-600 dark:text-purple-400">{t('tool.jwt.payload')}</Label><pre className="bg-slate-100 dark:bg-slate-950 p-3 rounded border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-300 h-32 overflow-auto w-full">{jwtDecoded?.payload}</pre></div>
                 </div>
             </CardContent>
         </Card>
