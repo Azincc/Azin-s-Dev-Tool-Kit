@@ -4,7 +4,7 @@ import { Sidebar } from './components/Sidebar';
 import { NavGroup } from './types';
 import { 
   HomeIcon, FileJsonIcon, LockIcon, PaletteIcon, FileTextIcon,
-  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon
+  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon, ClockIcon, GlobeIcon
 } from './components/ui/Icons';
 import { AppProvider } from './contexts/AppContext';
 
@@ -14,6 +14,7 @@ import { JsonTools, CodeTools, EncoderTools } from './pages/JsonToolkit';
 import { HashTools, EncryptTools, JwtTools, PasswordTools } from './pages/SecurityTools';
 import { ColorPaletteTools, ImageTools, CssGenTools } from './pages/ColorTools';
 import { EditorTools, RegexTools, DiffTools } from './pages/TextTools';
+import { CrontabTools, WorldClockTools } from './pages/TimeTools';
 
 const navGroups: NavGroup[] = [
   {
@@ -53,6 +54,13 @@ const navGroups: NavGroup[] = [
       { id: 'regex', label: 'nav.regex', icon: <RegexIcon />, path: '/regex' },
       { id: 'diff', label: 'nav.diff', icon: <DiffIcon />, path: '/diff' },
     ]
+  },
+  {
+    title: 'nav.time',
+    items: [
+      { id: 'crontab', label: 'nav.crontab', icon: <CodeIcon />, path: '/crontab' },
+      { id: 'worldclock', label: 'nav.worldclock', icon: <GlobeIcon />, path: '/worldclock' },
+    ]
   }
 ];
 
@@ -61,7 +69,7 @@ const MainLayout = () => {
     <div className="flex min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-500/30 transition-colors duration-300">
       <Sidebar groups={navGroups} />
       
-      <main className="flex-1 ml-16 md:ml-16 transition-all duration-300">
+      <main className="flex-1 ml-16 md:ml-16 transition-all duration-300 group-hover/sidebar:md:ml-64">
         <div className="container mx-auto p-6 md:p-8 lg:p-12 max-w-7xl animate-fade-in">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -86,6 +94,10 @@ const MainLayout = () => {
             <Route path="/editor" element={<EditorTools />} />
             <Route path="/regex" element={<RegexTools />} />
             <Route path="/diff" element={<DiffTools />} />
+
+            {/* Time */}
+            <Route path="/crontab" element={<CrontabTools />} />
+            <Route path="/worldclock" element={<WorldClockTools />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

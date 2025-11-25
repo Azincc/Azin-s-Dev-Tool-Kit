@@ -9,7 +9,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const { theme, toggleTheme, language, toggleLanguage, t } = useAppContext();
   
   // Tooltip State
@@ -28,17 +28,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
   return (
     <>
       <aside 
-        className={`fixed left-0 top-0 z-50 h-[100dvh] bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 flex flex-col ${
-          collapsed ? 'w-16' : 'w-64'
-        }`}
+        className="fixed left-0 top-0 z-50 h-[100dvh] bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 flex flex-col w-16 hover:w-64 group/sidebar"
+        onMouseEnter={() => setCollapsed(false)}
+        onMouseLeave={() => setCollapsed(true)}
       >
         <div className="flex items-center justify-between h-16 px-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
-          {!collapsed && <span className="font-bold text-lg text-blue-600 dark:text-blue-400 tracking-tight">Azin's Toolkit</span>}
+          {!collapsed && <span className="font-bold text-lg text-blue-600 dark:text-blue-400 tracking-tight animate-in fade-in duration-300">Azin's Toolkit</span>}
           <button 
-            onClick={() => { setCollapsed(!collapsed); setHoveredItem(null); }}
-            className={`p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ${collapsed ? 'mx-auto' : 'ml-auto'}`}
+            className={`p-1.5 rounded-md text-slate-500 dark:text-slate-400 transition-colors ${collapsed ? 'mx-auto' : 'ml-auto'}`}
           >
-            {collapsed ? <MenuIcon className="w-5 h-5" /> : <ChevronLeftIcon className="w-5 h-5" />}
+            <MenuIcon className="w-5 h-5" />
           </button>
         </div>
 
@@ -47,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
             <div key={groupIdx} className="space-y-1">
               {/* Category Header */}
               {!collapsed && group.title && (
-                <div className="px-3 mb-2 text-xs font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider">
+                <div className="px-3 mb-2 text-xs font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider animate-in fade-in duration-300">
                   {t(group.title)}
                 </div>
               )}
@@ -74,7 +73,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
                     {item.icon}
                   </span>
                   {!collapsed && (
-                    <span className="ml-3 font-medium whitespace-nowrap overflow-hidden text-sm">
+                    <span className="ml-3 font-medium whitespace-nowrap overflow-hidden text-sm animate-in fade-in duration-300">
                       {t(item.label)}
                     </span>
                   )}
@@ -100,29 +99,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
                className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors flex items-center gap-2"
              >
                <GlobeIcon className="w-5 h-5" />
-               {!collapsed && <span className="text-xs font-bold">{language.toUpperCase()}</span>}
+               {!collapsed && <span className="text-xs font-bold animate-in fade-in duration-300">{language.toUpperCase()}</span>}
              </button>
            </div>
 
           {!collapsed && (
-            <div className="text-xs text-slate-400 dark:text-slate-600 text-center mt-2">
+            <div className="text-xs text-slate-400 dark:text-slate-600 text-center mt-2 animate-in fade-in duration-300">
               v1.2.0 • © 2024 Azin
             </div>
           )}
         </div>
       </aside>
-
-      {/* Fixed Tooltip Rendered Outside Overflow Container */}
-      {collapsed && hoveredItem && (
-        <div 
-          className="fixed left-16 z-[60] bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs px-2 py-1.5 rounded-md shadow-lg whitespace-nowrap pointer-events-none animate-in fade-in slide-in-from-left-2 duration-150"
-          style={{ top: hoveredItem.top + 5 }}
-        >
-          {hoveredItem.label}
-          {/* Arrow */}
-          <div className="absolute left-0 top-1/2 -translate-x-1 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-r-[4px] border-r-slate-900 dark:border-r-white border-b-[4px] border-b-transparent"></div>
-        </div>
-      )}
     </>
   );
 };

@@ -75,7 +75,7 @@ export const JsonTools: React.FC = () => {
       </div>
 
       <div className="flex flex-wrap gap-2 bg-slate-100 dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
-        {[{id: 'format', l: 'Prettify'}, {id: 'minify', l: 'Minify'}, {id: 'toTS', l: 'To TS'}, {id: 'toGo', l: 'To Go'},
+        {[{id: 'format', l: t('tool.json.prettify')}, {id: 'minify', l: t('tool.json.minify')}, {id: 'toTS', l: 'To TS'}, {id: 'toGo', l: 'To Go'},
           {id: 'toJava', l: 'To Java'}, {id: 'toXML', l: 'To XML'}, {id: 'toCSV', l: 'To CSV'}
         ].map((m) => (
           <button key={m.id} onClick={() => setMode(m.id)} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === m.id ? 'bg-blue-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700'}`}>{m.l}</button>
@@ -84,13 +84,13 @@ export const JsonTools: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
         <Card className="flex flex-col h-full">
-          <CardHeader title="Input JSON" action={input && <button onClick={() => { setInput(''); setOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
+          <CardHeader title={t('tool.json.input')} action={input && <button onClick={() => { setInput(''); setOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
           <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-900">
-            <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder='{"name": "Azin"}' className="w-full h-full border-0 bg-transparent resize-none p-2 font-mono text-sm" spellCheck={false} />
+            <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder='{"name": "Azin"}' className="w-full h-full border-0 bg-transparent text-slate-900 dark:text-white resize-none p-2 font-mono text-sm" spellCheck={false} />
           </div>
         </Card>
         <Card className="flex flex-col h-full border-blue-900/30">
-          <CardHeader title={error ? "Error" : "Output"} action={<CopyButton text={output} />} />
+          <CardHeader title={error ? t('tool.json.error') : t('tool.json.output')} action={<CopyButton text={output} />} />
           <div className="flex-1 p-0 bg-slate-100 dark:bg-slate-950 overflow-hidden relative">
              {error ? <div className="p-4 text-red-500 dark:text-red-400 font-mono text-sm">{error}</div> : 
              <TextArea readOnly value={output} className="w-full h-full border-0 bg-transparent resize-none p-4 font-mono text-emerald-600 dark:text-emerald-400 text-sm" />}
@@ -130,13 +130,13 @@ export const CodeTools: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
         <Card className="flex flex-col h-full">
           <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex justify-between items-center">
-              <h3 className="font-semibold text-slate-800 dark:text-white">Input Code</h3>
+              <h3 className="font-semibold text-slate-800 dark:text-white">{t('tool.code.input')}</h3>
               <div className="w-32"><Select value={codeLang} onChange={(e) => setCodeLang(e.target.value)}><option value="html">HTML</option><option value="sql">SQL</option><option value="css">CSS</option></Select></div>
           </div>
-          <TextArea value={codeInput} onChange={(e) => setCodeInput(e.target.value)} className="flex-1 w-full border-0 bg-slate-50 dark:bg-slate-900 p-4 resize-none font-mono text-sm" placeholder={`Paste ${codeLang.toUpperCase()} here...`} spellCheck={false} />
+          <TextArea value={codeInput} onChange={(e) => setCodeInput(e.target.value)} className="flex-1 w-full border-0 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white p-4 resize-none font-mono text-sm" placeholder={t('tool.code.paste')} spellCheck={false} />
         </Card>
         <Card className="flex flex-col h-full border-blue-900/30">
-            <CardHeader title="Formatted Output" action={<CopyButton text={codeOutput} />} />
+            <CardHeader title={t('tool.code.output')} action={<CopyButton text={codeOutput} />} />
             <TextArea readOnly value={codeOutput} className="flex-1 w-full border-0 bg-slate-100 dark:bg-slate-950 p-4 resize-none font-mono text-blue-600 dark:text-blue-300 text-sm" />
         </Card>
       </div>
@@ -171,43 +171,39 @@ export const EncoderTools: React.FC = () => {
   }, [encodeInput, encodeMode]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
        <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.encoder.title')}</h2>
         <p className="text-slate-500 dark:text-slate-400">{t('tool.encoder.desc')}</p>
       </div>
-      <Card>
-          <CardContent className="space-y-6 p-6">
-               <div className="flex flex-col gap-4">
-                   <div className="flex gap-4 items-center">
-                       <Label className="mb-0 w-24">Mode</Label>
-                       <div className="flex-1 flex gap-2 bg-slate-50 dark:bg-slate-900 p-1 rounded-md border border-slate-300 dark:border-slate-700">
-                           <select className="w-full bg-transparent text-slate-900 dark:text-white text-sm p-1 outline-none" value={encodeMode} onChange={(e) => setEncodeMode(e.target.value)}>
-                               <option value="base64_enc">Base64 Encode</option>
-                               <option value="base64_dec">Base64 Decode</option>
-                               <option value="url_enc">URL Encode</option>
-                               <option value="url_dec">URL Decode</option>
-                               <option value="hex_bin">Text to Hex</option>
-                               <option value="bin_hex">Hex to Text</option>
-                           </select>
-                       </div>
-                   </div>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                       <div className="space-y-2">
-                           <Label>Input</Label>
-                           <TextArea value={encodeInput} onChange={(e) => setEncodeInput(e.target.value)} className="h-64" placeholder="Type here..." />
-                       </div>
-                       <div className="space-y-2">
-                           <Label>Result</Label>
-                           <div className="relative h-64">
-                              <TextArea readOnly value={encodeOutput} className="h-full text-emerald-600 dark:text-emerald-400 bg-slate-100 dark:bg-slate-950 resize-none" />
-                              <div className="absolute top-2 right-2"><CopyButton text={encodeOutput} /></div>
-                           </div>
-                       </div>
-                   </div>
-              </div>
-          </CardContent>
-      </Card>
+
+      <div className="flex flex-wrap gap-2 bg-slate-100 dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
+        {[
+            {id: 'base64_enc', l: 'Base64 Encode'},
+            {id: 'base64_dec', l: 'Base64 Decode'},
+            {id: 'url_enc', l: 'URL Encode'},
+            {id: 'url_dec', l: 'URL Decode'},
+            {id: 'hex_bin', l: 'Text to Hex'},
+            {id: 'bin_hex', l: 'Hex to Text'}
+        ].map((m) => (
+          <button key={m.id} onClick={() => setEncodeMode(m.id)} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${encodeMode === m.id ? 'bg-blue-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700'}`}>{m.l}</button>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
+        <Card className="flex flex-col h-full">
+            <CardHeader title={t('tool.encoder.input')} action={encodeInput && <button onClick={() => { setEncodeInput(''); setEncodeOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
+            <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-900">
+                <TextArea value={encodeInput} onChange={(e) => setEncodeInput(e.target.value)} className="w-full h-full border-0 bg-transparent text-slate-900 dark:text-white resize-none p-2 font-mono text-sm" placeholder={t('tool.encoder.type')} />
+            </div>
+        </Card>
+        <Card className="flex flex-col h-full border-blue-900/30">
+            <CardHeader title={t('tool.encoder.result')} action={<CopyButton text={encodeOutput} />} />
+            <div className="flex-1 p-0 bg-slate-100 dark:bg-slate-950 overflow-hidden relative">
+                <TextArea readOnly value={encodeOutput} className="w-full h-full border-0 bg-transparent resize-none p-4 font-mono text-emerald-600 dark:text-emerald-400 text-sm" />
+            </div>
+        </Card>
+      </div>
     </div>
   );
 };
