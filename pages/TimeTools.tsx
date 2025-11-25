@@ -284,7 +284,7 @@ export const WorldClockTools: React.FC = () => {
                          </div>
                          {timeOffset !== null && (
                              <div className={`text-sm ${Math.abs(timeOffset) > 1000 ? 'text-red-500' : 'text-green-500'}`}>
-                                 {t('tool.worldclock.offset')}: {Math.round(-timeOffset / 1000)}s
+                                 {t('tool.worldclock.offset')}: {timeOffset}ms
                              </div>
                          )}
                      </div>

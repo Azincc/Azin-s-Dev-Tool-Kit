@@ -5,7 +5,8 @@ import {
   FileJsonIcon, CodeIcon, ShuffleIcon, 
   HashIcon, LockIcon, ShieldIcon, KeyIcon, 
   PaletteIcon, ImageIcon, BoxIcon, 
-  FileTextIcon, RegexIcon, DiffIcon 
+  FileTextIcon, RegexIcon, DiffIcon,
+  ClockIcon, GlobeIcon
 } from '../components/ui/Icons';
 import { Card, CardContent } from '../components/ui/Shared';
 
@@ -44,6 +45,10 @@ const Home: React.FC = () => {
     { title: 'tool.editor.title', desc: 'tool.editor.desc', icon: <FileTextIcon className="w-6 h-6" />, path: '/editor', color: 'text-slate-500' },
     { title: 'tool.regex.title', desc: 'tool.regex.desc', icon: <RegexIcon className="w-6 h-6" />, path: '/regex', color: 'text-emerald-500' },
     { title: 'tool.diff.title', desc: 'tool.diff.desc', icon: <DiffIcon className="w-6 h-6" />, path: '/diff', color: 'text-amber-500' },
+
+    // Time
+    { title: 'tool.crontab.title', desc: 'tool.crontab.desc', icon: <CodeIcon className="w-6 h-6" />, path: '/crontab', color: 'text-teal-500' },
+    { title: 'tool.worldclock.title', desc: 'tool.worldclock.desc', icon: <GlobeIcon className="w-6 h-6" />, path: '/worldclock', color: 'text-rose-500' },
   ];
 
   return (
@@ -91,7 +96,7 @@ const Home: React.FC = () => {
       </div>
 
       <div className="text-sm text-slate-400 dark:text-slate-600 pt-8">
-        Built for developers, by developers.
+        {t('home.footer')}
       </div>
     </div>
   );
