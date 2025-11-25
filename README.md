@@ -42,6 +42,38 @@ docker build -t azin-dev-toolkit .
 docker run -p 9080:80 azin-dev-toolkit
 ```
 
+## 🌍 Localization
+
+The project uses a modularized localization system located in `locales/`.
+
+### Directory Structure
+
+```
+locales/
+  ├── index.ts        # Aggregator and type definitions
+  ├── en/             # English translations
+  │   ├── navigation.ts
+  │   ├── home.ts
+  │   ├── tools.ts
+  │   └── time.ts
+  └── zh/             # Chinese translations
+      ├── navigation.ts
+      ├── ...
+```
+
+### Adding New Translations
+
+1.  Identify the feature module (e.g., `tools`, `home`) or create a new one.
+2.  Add the key-value pair to the corresponding file in both `locales/en/` and `locales/zh/`.
+3.  If you created a new module, import it in `locales/index.ts` and add it to the `enRaw` and `zhRaw` objects.
+4.  The keys are automatically flattened. For example, `{ tool: { json: { title: "..." } } }` becomes `tool.json.title`.
+
+### Naming Convention
+
+-   Use camelCase for keys.
+-   Group related keys in nested objects.
+-   Ensure keys are identical across all languages.
+
 ## 🙏 致谢
 
 本项目由以下工具和服务协助完成：
