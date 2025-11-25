@@ -88,6 +88,46 @@ const translations: Record<string, { en: string; zh: string }> = {
 
   "tool.worldclock.title": { en: "World Clock & Calibration", zh: "世界时钟与校准" },
   "tool.worldclock.desc": { en: "Check local times and calibrate global time.", zh: "查看各地时间及全球时间校准。" },
+
+  "tool.crontab.builder": { en: "Cron Expression Builder", zh: "Cron 表达式生成器" },
+  "tool.crontab.manual": { en: "Manual Edit", zh: "手动编辑" },
+  "tool.crontab.format": { en: "Format: Minute Hour Day Month Week", zh: "格式：分 时 日 月 周" },
+  "tool.crontab.meaning": { en: "Meaning:", zh: "含义：" },
+  "tool.crontab.minute": { en: "Minute (Min)", zh: "分" },
+  "tool.crontab.hour": { en: "Hour (Hr)", zh: "时" },
+  "tool.crontab.day": { en: "Day (Day)", zh: "日" },
+  "tool.crontab.month": { en: "Month (Mon)", zh: "月" },
+  "tool.crontab.week": { en: "Week (Wk)", zh: "周" },
+
+  "tool.crontab.everyMin": { en: "Every Minute (*)", zh: "每分钟 (*)" },
+  "tool.crontab.every5Min": { en: "Every 5 Min (*/5)", zh: "每5分钟 (*/5)" },
+  "tool.crontab.every15Min": { en: "Every 15 Min (*/15)", zh: "每15分钟 (*/15)" },
+  "tool.crontab.at0": { en: "At 0 (0)", zh: "整点 (0)" },
+  "tool.crontab.at30": { en: "At 30 (30)", zh: "半点 (30)" },
+  
+  "tool.crontab.everyHour": { en: "Every Hour (*)", zh: "每小时 (*)" },
+  "tool.crontab.every2Hours": { en: "Every 2 Hours (*/2)", zh: "每2小时 (*/2)" },
+  "tool.crontab.midnight": { en: "Midnight (0)", zh: "午夜 (0)" },
+  "tool.crontab.noon": { en: "Noon (12)", zh: "中午 (12)" },
+
+  "tool.crontab.everyDay": { en: "Every Day (*)", zh: "每天 (*)" },
+  "tool.crontab.everyMonth": { en: "Every Month (*)", zh: "每月 (*)" },
+
+  "tool.crontab.sun": { en: "Sunday (0)", zh: "周日 (0)" },
+  "tool.crontab.mon": { en: "Monday (1)", zh: "周一 (1)" },
+  "tool.crontab.tue": { en: "Tuesday (2)", zh: "周二 (2)" },
+  "tool.crontab.wed": { en: "Wednesday (3)", zh: "周三 (3)" },
+  "tool.crontab.thu": { en: "Thursday (4)", zh: "周四 (4)" },
+  "tool.crontab.fri": { en: "Friday (5)", zh: "周五 (5)" },
+  "tool.crontab.sat": { en: "Saturday (6)", zh: "周六 (6)" },
+
+  "tool.worldclock.calibration": { en: "Global Time Calibration", zh: "全球时间校准" },
+  "tool.worldclock.server": { en: "Server Time (Source of Truth)", zh: "服务器时间 (标准源)" },
+  "tool.worldclock.local": { en: "Local System Time", zh: "本地系统时间" },
+  "tool.worldclock.offset": { en: "Offset", zh: "偏差" },
+  "tool.worldclock.source": { en: "Source", zh: "来源" },
+  "tool.worldclock.sync": { en: "Sync Now", zh: "立即同步" },
+  "tool.worldclock.syncing": { en: "Syncing...", zh: "同步中..." },
 };
 
 export const AppProvider: React.FC<{ children?: ReactNode }> = ({ children }) => {

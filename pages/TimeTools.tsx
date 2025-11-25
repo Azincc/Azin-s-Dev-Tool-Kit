@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardHeader, CardContent, Button, TextArea, CopyButton, Select, Label } from '../components/ui/Shared';
 import { useAppContext } from '../contexts/AppContext';
 
@@ -9,9 +9,6 @@ const explainCron = (cron: string, lang: 'en' | 'zh'): string => {
     if (fields.length !== 5) return lang === 'zh' ? "格式错误：需要5个字段 (分 时 日 月 周)" : "Invalid format: 5 fields required (min hour day month week)";
 
     const [min, hour, day, month, week] = fields;
-    
-    // Very basic implementation - for production use a library like cronstrue
-    // This is just to satisfy the requirement of "writing an interpreter"
     
     let desc = "";
     
@@ -49,6 +46,7 @@ const explainCron = (cron: string, lang: 'en' | 'zh'): string => {
 
 // Simple Cron Builder Component
 const CronBuilder = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
+    const { t } = useAppContext();
     const fields = value.split(' ');
     const safeFields = fields.length === 5 ? fields : ['*', '*', '*', '*', '*'];
     
@@ -65,51 +63,51 @@ const CronBuilder = ({ value, onChange }: { value: string; onChange: (v: string)
     return (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
              <div className="space-y-1">
-                 <Label>Minute (分)</Label>
+                 <Label>{t('tool.crontab.minute')}</Label>
                  <Select value={min} onChange={(e) => updateField(0, e.target.value)}>
-                     <option value="*">Every Minute (*)</option>
-                     <option value="*/5">Every 5 Min (*/5)</option>
-                     <option value="*/15">Every 15 Min (*/15)</option>
-                     <option value="0">At 0 (0)</option>
-                     <option value="30">At 30 (30)</option>
+                     <option value="*">{t('tool.crontab.everyMin')}</option>
+                     <option value="*/5">{t('tool.crontab.every5Min')}</option>
+                     <option value="*/15">{t('tool.crontab.every15Min')}</option>
+                     <option value="0">{t('tool.crontab.at0')}</option>
+                     <option value="30">{t('tool.crontab.at30')}</option>
                      {range(0, 59).map(i => <option key={i} value={i.toString()}>{i}</option>)}
                  </Select>
              </div>
              <div className="space-y-1">
-                 <Label>Hour (时)</Label>
+                 <Label>{t('tool.crontab.hour')}</Label>
                  <Select value={hour} onChange={(e) => updateField(1, e.target.value)}>
-                     <option value="*">Every Hour (*)</option>
-                     <option value="*/2">Every 2 Hours (*/2)</option>
-                     <option value="0">Midnight (0)</option>
-                     <option value="12">Noon (12)</option>
+                     <option value="*">{t('tool.crontab.everyHour')}</option>
+                     <option value="*/2">{t('tool.crontab.every2Hours')}</option>
+                     <option value="0">{t('tool.crontab.midnight')}</option>
+                     <option value="12">{t('tool.crontab.noon')}</option>
                      {range(0, 23).map(i => <option key={i} value={i.toString()}>{i}</option>)}
                  </Select>
              </div>
              <div className="space-y-1">
-                 <Label>Day (日)</Label>
+                 <Label>{t('tool.crontab.day')}</Label>
                  <Select value={day} onChange={(e) => updateField(2, e.target.value)}>
-                     <option value="*">Every Day (*)</option>
+                     <option value="*">{t('tool.crontab.everyDay')}</option>
                      {range(1, 31).map(i => <option key={i} value={i.toString()}>{i}</option>)}
                  </Select>
              </div>
              <div className="space-y-1">
-                 <Label>Month (月)</Label>
+                 <Label>{t('tool.crontab.month')}</Label>
                  <Select value={month} onChange={(e) => updateField(3, e.target.value)}>
-                     <option value="*">Every Month (*)</option>
+                     <option value="*">{t('tool.crontab.everyMonth')}</option>
                      {range(1, 12).map(i => <option key={i} value={i.toString()}>{i}</option>)}
                  </Select>
              </div>
              <div className="space-y-1">
-                 <Label>Week (周)</Label>
+                 <Label>{t('tool.crontab.week')}</Label>
                  <Select value={week} onChange={(e) => updateField(4, e.target.value)}>
-                     <option value="*">Every Day (*)</option>
-                     <option value="0">Sunday (0)</option>
-                     <option value="1">Monday (1)</option>
-                     <option value="2">Tuesday (2)</option>
-                     <option value="3">Wednesday (3)</option>
-                     <option value="4">Thursday (4)</option>
-                     <option value="5">Friday (5)</option>
-                     <option value="6">Saturday (6)</option>
+                     <option value="*">{t('tool.crontab.everyDay')}</option>
+                     <option value="0">{t('tool.crontab.sun')}</option>
+                     <option value="1">{t('tool.crontab.mon')}</option>
+                     <option value="2">{t('tool.crontab.tue')}</option>
+                     <option value="3">{t('tool.crontab.wed')}</option>
+                     <option value="4">{t('tool.crontab.thu')}</option>
+                     <option value="5">{t('tool.crontab.fri')}</option>
+                     <option value="6">{t('tool.crontab.sat')}</option>
                  </Select>
              </div>
         </div>
@@ -135,10 +133,10 @@ export const CrontabTools: React.FC = () => {
             <Card>
                 <CardContent className="p-6 space-y-4">
                     <div className="space-y-2">
-                        <Label>Cron Expression Builder</Label>
+                        <Label>{t('tool.crontab.builder')}</Label>
                         <CronBuilder value={cron} onChange={setCron} />
                         
-                        <Label className="mt-4 block">Manual Edit</Label>
+                        <Label className="mt-4 block">{t('tool.crontab.manual')}</Label>
                         <div className="flex gap-4">
                             <input 
                                 type="text" 
@@ -149,12 +147,12 @@ export const CrontabTools: React.FC = () => {
                             />
                         </div>
                         <div className="text-xs text-slate-500">
-                            Format: Minute Hour Day Month Week
+                            {t('tool.crontab.format')}
                         </div>
                     </div>
                     
                     <div className="p-4 bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 rounded-md">
-                        <span className="font-semibold">Meaning: </span>
+                        <span className="font-semibold">{t('tool.crontab.meaning')} </span>
                         {explanation}
                     </div>
                 </CardContent>
@@ -173,18 +171,41 @@ interface TimeData {
 }
 
 export const WorldClockTools: React.FC = () => {
-    const [serverTime, setServerTime] = useState<number | null>(null);
+    // Offset between Server Time and Local System Time (Server - Local)
+    const [timeOffset, setTimeOffset] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
     const { t } = useAppContext();
     const [now, setNow] = useState(Date.now());
-
+    
+    // To display the "Server Time", we add the offset to the current local time.
+    // If offset is null, we haven't synced yet.
+    
+    // Ref to avoid closure stale state in setInterval if we were using it for fetching,
+    // but here we just need to update 'now'.
+    
     const fetchTime = async () => {
         setLoading(true);
         try {
+            const requestStart = Date.now();
             const res = await fetch('https://api.shijian.online/timestamp/');
             const json: TimeData = await res.json();
+            const requestEnd = Date.now();
+            
+            // Assume the server time is the time at the moment the server processed it.
+            // We can approximate the "current" server time at the moment of response arrival
+            // by adding half the round-trip time (RTT), or just use it as is if precision isn't critical.
+            // Let's stick to the simplest: Server Timestamp is correct at the time of generation.
+            // We compare it to the local time when we received it (or when we requested it).
+            // Let's use the average of start and end as the "local time" corresponding to the server timestamp.
+            
             if (json.status === 1) {
-                setServerTime(json.data.timestamp);
+                 const serverTs = json.data.timestamp;
+                 const localTs = Date.now(); // Current local time
+                 
+                 // Calculate offset: Server - Local
+                 // When we want to know Server Time later, we do: Local + Offset
+                 const offset = serverTs - localTs;
+                 setTimeOffset(offset);
             }
         } catch (e) {
             console.error("Failed to fetch time", e);
@@ -195,12 +216,19 @@ export const WorldClockTools: React.FC = () => {
 
     useEffect(() => {
         fetchTime();
-        const interval = setInterval(() => {
+        
+        // Refresh API every minute (60000ms)
+        const fetchInterval = setInterval(fetchTime, 60000);
+        
+        // Update local display every second
+        const tickInterval = setInterval(() => {
             setNow(Date.now());
-            // If we have server time, we could increment it too, but better to re-fetch or just diff it.
-            // For calibration visualization, we'll compare server timestamp with local.
         }, 1000);
-        return () => clearInterval(interval);
+        
+        return () => {
+            clearInterval(fetchInterval);
+            clearInterval(tickInterval);
+        };
     }, []);
 
     // Time Zones
@@ -225,6 +253,10 @@ export const WorldClockTools: React.FC = () => {
             hour12: false
         }).format(new Date(timestamp));
     };
+    
+    // If we have an offset, Server Time = Now + Offset
+    // If not, we just show dashes or local time as fallback (though requirement implies we need source of truth)
+    const currentServerTime = timeOffset !== null ? now + timeOffset : null;
 
     return (
         <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
@@ -234,25 +266,25 @@ export const WorldClockTools: React.FC = () => {
             </div>
 
             <Card>
-                 <CardHeader title="Global Time Calibration" action={<Button onClick={fetchTime} disabled={loading}>{loading ? 'Syncing...' : 'Sync Now'}</Button>} />
+                 <CardHeader title={t('tool.worldclock.calibration')} action={<Button onClick={fetchTime} disabled={loading}>{loading ? t('tool.worldclock.syncing') : t('tool.worldclock.sync')}</Button>} />
                  <CardContent className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
                      <div className="space-y-2">
-                         <Label className="text-lg">Server Time (Source of Truth)</Label>
+                         <Label className="text-lg">{t('tool.worldclock.server')}</Label>
                          <div className="text-3xl font-mono text-emerald-600 dark:text-emerald-400">
-                             {serverTime ? formatTime(serverTime, 'Asia/Shanghai') : '--'}
+                             {currentServerTime ? formatTime(currentServerTime, 'Asia/Shanghai') : '--'}
                              <span className="text-sm text-slate-500 ml-2">(Beijing)</span>
                          </div>
-                         <div className="text-xs text-slate-400">Source: api.shijian.online</div>
+                         <div className="text-xs text-slate-400">{t('tool.worldclock.source')}: api.shijian.online</div>
                      </div>
                      <div className="space-y-2">
-                         <Label className="text-lg">Local System Time</Label>
+                         <Label className="text-lg">{t('tool.worldclock.local')}</Label>
                          <div className="text-3xl font-mono text-blue-600 dark:text-blue-400">
                              {formatTime(now, 'Asia/Shanghai')}
                               <span className="text-sm text-slate-500 ml-2">(Beijing)</span>
                          </div>
-                         {serverTime && (
-                             <div className={`text-sm ${Math.abs(serverTime - now) > 1000 ? 'text-red-500' : 'text-green-500'}`}>
-                                 Offset: {Math.round((now - serverTime) / 1000)}s
+                         {timeOffset !== null && (
+                             <div className={`text-sm ${Math.abs(timeOffset) > 1000 ? 'text-red-500' : 'text-green-500'}`}>
+                                 {t('tool.worldclock.offset')}: {Math.round(-timeOffset / 1000)}s
                              </div>
                          )}
                      </div>
@@ -266,8 +298,16 @@ export const WorldClockTools: React.FC = () => {
                             {z.name}
                         </div>
                         <div className="p-6 text-2xl font-mono text-center text-slate-800 dark:text-white">
-                            {serverTime ? formatTime(serverTime, z.zone).split(', ')[1] : formatTime(now, z.zone).split(', ')[1]}
-                             <div className="text-xs text-slate-400 mt-2">{serverTime ? formatTime(serverTime, z.zone).split(', ')[0] : formatTime(now, z.zone).split(', ')[0]}</div>
+                            {currentServerTime 
+                                ? formatTime(currentServerTime, z.zone).split(', ')[1] 
+                                : formatTime(now, z.zone).split(', ')[1]
+                            }
+                             <div className="text-xs text-slate-400 mt-2">
+                                 {currentServerTime 
+                                    ? formatTime(currentServerTime, z.zone).split(', ')[0] 
+                                    : formatTime(now, z.zone).split(', ')[0]
+                                 }
+                             </div>
                         </div>
                     </Card>
                 ))}
