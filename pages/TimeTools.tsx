@@ -299,7 +299,16 @@ export const WorldClockTools: React.FC = () => {
                          </div>
                          {timeOffset !== null && (
                              <div className={`text-sm ${getOffsetStatus(timeOffset).color}`}>
-                                 {t('tool.worldclock.offset')}: {Math.round(timeOffset)}ms
+                                 {(() => {
+                                     const absMs = Math.abs(timeOffset);
+                                     const days = Math.floor(absMs / 86400000);
+                                     const hours = Math.floor((absMs % 86400000) / 3600000);
+                                     const minutes = Math.floor((absMs % 3600000) / 60000);
+                                     const seconds = Math.floor((absMs % 60000) / 1000);
+                                     const ms = Math.floor(absMs % 1000);
+                                     const direction = timeOffset < 0 ? '慢' : '快';
+                                     return `您的时间比北京时间${direction}${days > 0 ? `${days}天` : ''}${hours > 0 ? `${hours}时` : ''}${minutes > 0 ? `${minutes}分` : ''}${seconds > 0 ? `${seconds}秒` : ''}${ms}毫秒`;
+                                 })()}
                                  {getOffsetStatus(timeOffset).message && (
                                      <div className="mt-1 font-semibold">
                                          {getOffsetStatus(timeOffset).message}
