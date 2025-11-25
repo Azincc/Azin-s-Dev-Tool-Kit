@@ -101,7 +101,7 @@ export const AppProvider: React.FC<{ children?: ReactNode }> = ({ children }) =>
   });
 
   // Language state
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>('zh');
 
   // Apply theme class to html element
   useEffect(() => {

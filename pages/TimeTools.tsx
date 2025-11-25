@@ -9,12 +9,6 @@ const explainCron = (cron: string, lang: 'en' | 'zh'): string => {
     if (fields.length !== 5) return lang === 'zh' ? "格式错误：需要5个字段 (分 时 日 月 周)" : "Invalid format: 5 fields required (min hour day month week)";
 
     const [min, hour, day, month, week] = fields;
-
-    const parseField = (field: string, unit: string, range: string) => {
-        if (field === '*') return '';
-        if (field.startsWith('*/')) return lang === 'zh' ? `每隔 ${field.substring(2)} ${unit}` : `every ${field.substring(2)} ${unit}s`;
-        return `${lang === 'zh' ? '' : 'at '}${field} ${unit}`;
-    };
     
     // Very basic implementation - for production use a library like cronstrue
     // This is just to satisfy the requirement of "writing an interpreter"
@@ -53,6 +47,75 @@ const explainCron = (cron: string, lang: 'en' | 'zh'): string => {
     return desc;
 };
 
+// Simple Cron Builder Component
+const CronBuilder = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
+    const fields = value.split(' ');
+    const safeFields = fields.length === 5 ? fields : ['*', '*', '*', '*', '*'];
+    
+    const [min, hour, day, month, week] = safeFields;
+
+    const updateField = (index: number, val: string) => {
+        const newFields = [...safeFields];
+        newFields[index] = val;
+        onChange(newFields.join(' '));
+    };
+
+    const range = (start: number, end: number) => Array.from({ length: end - start + 1 }, (_, i) => start + i);
+
+    return (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
+             <div className="space-y-1">
+                 <Label>Minute (分)</Label>
+                 <Select value={min} onChange={(e) => updateField(0, e.target.value)}>
+                     <option value="*">Every Minute (*)</option>
+                     <option value="*/5">Every 5 Min (*/5)</option>
+                     <option value="*/15">Every 15 Min (*/15)</option>
+                     <option value="0">At 0 (0)</option>
+                     <option value="30">At 30 (30)</option>
+                     {range(0, 59).map(i => <option key={i} value={i.toString()}>{i}</option>)}
+                 </Select>
+             </div>
+             <div className="space-y-1">
+                 <Label>Hour (时)</Label>
+                 <Select value={hour} onChange={(e) => updateField(1, e.target.value)}>
+                     <option value="*">Every Hour (*)</option>
+                     <option value="*/2">Every 2 Hours (*/2)</option>
+                     <option value="0">Midnight (0)</option>
+                     <option value="12">Noon (12)</option>
+                     {range(0, 23).map(i => <option key={i} value={i.toString()}>{i}</option>)}
+                 </Select>
+             </div>
+             <div className="space-y-1">
+                 <Label>Day (日)</Label>
+                 <Select value={day} onChange={(e) => updateField(2, e.target.value)}>
+                     <option value="*">Every Day (*)</option>
+                     {range(1, 31).map(i => <option key={i} value={i.toString()}>{i}</option>)}
+                 </Select>
+             </div>
+             <div className="space-y-1">
+                 <Label>Month (月)</Label>
+                 <Select value={month} onChange={(e) => updateField(3, e.target.value)}>
+                     <option value="*">Every Month (*)</option>
+                     {range(1, 12).map(i => <option key={i} value={i.toString()}>{i}</option>)}
+                 </Select>
+             </div>
+             <div className="space-y-1">
+                 <Label>Week (周)</Label>
+                 <Select value={week} onChange={(e) => updateField(4, e.target.value)}>
+                     <option value="*">Every Day (*)</option>
+                     <option value="0">Sunday (0)</option>
+                     <option value="1">Monday (1)</option>
+                     <option value="2">Tuesday (2)</option>
+                     <option value="3">Wednesday (3)</option>
+                     <option value="4">Thursday (4)</option>
+                     <option value="5">Friday (5)</option>
+                     <option value="6">Saturday (6)</option>
+                 </Select>
+             </div>
+        </div>
+    );
+};
+
 export const CrontabTools: React.FC = () => {
     const [cron, setCron] = useState('* * * * *');
     const [explanation, setExplanation] = useState('');
@@ -72,7 +135,10 @@ export const CrontabTools: React.FC = () => {
             <Card>
                 <CardContent className="p-6 space-y-4">
                     <div className="space-y-2">
-                        <Label>Cron Expression</Label>
+                        <Label>Cron Expression Builder</Label>
+                        <CronBuilder value={cron} onChange={setCron} />
+                        
+                        <Label className="mt-4 block">Manual Edit</Label>
                         <div className="flex gap-4">
                             <input 
                                 type="text" 
@@ -90,14 +156,6 @@ export const CrontabTools: React.FC = () => {
                     <div className="p-4 bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 rounded-md">
                         <span className="font-semibold">Meaning: </span>
                         {explanation}
-                    </div>
-                    
-                    <div className="grid grid-cols-5 gap-2 text-center text-sm">
-                         {['Minute', 'Hour', 'Day', 'Month', 'Week'].map(field => (
-                             <div key={field} className="bg-slate-100 dark:bg-slate-800 p-2 rounded">
-                                 <div className="font-bold text-slate-700 dark:text-slate-300">{field}</div>
-                             </div>
-                         ))}
                     </div>
                 </CardContent>
             </Card>
