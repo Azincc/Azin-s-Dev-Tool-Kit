@@ -18,7 +18,7 @@ export const ColorPaletteTools: React.FC = () => {
 
 export const ImageTools: React.FC = () => {
   const [imgBase64, setImgBase64] = useState('');
-  const [qrText, setQrText] = useState('https://azin.dev');
+  const [qrText, setQrText] = useState(window.location.href);
   const { t } = useAppContext();
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
