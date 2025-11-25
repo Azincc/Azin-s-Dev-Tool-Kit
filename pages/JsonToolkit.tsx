@@ -86,7 +86,7 @@ export const JsonTools: React.FC = () => {
         <Card className="flex flex-col h-full">
           <CardHeader title={t('tool.json.input')} action={input && <button onClick={() => { setInput(''); setOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
           <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-900">
-            <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder='{"name": "Azin"}' className="w-full h-full border-0 bg-transparent resize-none p-2 font-mono text-sm" spellCheck={false} />
+            <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder='{"name": "Azin"}' className="w-full h-full border-0 bg-transparent text-slate-900 dark:text-white resize-none p-2 font-mono text-sm" spellCheck={false} />
           </div>
         </Card>
         <Card className="flex flex-col h-full border-blue-900/30">
@@ -133,7 +133,7 @@ export const CodeTools: React.FC = () => {
               <h3 className="font-semibold text-slate-800 dark:text-white">{t('tool.code.input')}</h3>
               <div className="w-32"><Select value={codeLang} onChange={(e) => setCodeLang(e.target.value)}><option value="html">HTML</option><option value="sql">SQL</option><option value="css">CSS</option></Select></div>
           </div>
-          <TextArea value={codeInput} onChange={(e) => setCodeInput(e.target.value)} className="flex-1 w-full border-0 bg-slate-50 dark:bg-slate-900 p-4 resize-none font-mono text-sm" placeholder={t('tool.code.paste')} spellCheck={false} />
+          <TextArea value={codeInput} onChange={(e) => setCodeInput(e.target.value)} className="flex-1 w-full border-0 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white p-4 resize-none font-mono text-sm" placeholder={t('tool.code.paste')} spellCheck={false} />
         </Card>
         <Card className="flex flex-col h-full border-blue-900/30">
             <CardHeader title={t('tool.code.output')} action={<CopyButton text={codeOutput} />} />
@@ -195,7 +195,7 @@ export const EncoderTools: React.FC = () => {
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                        <div className="space-y-2">
                            <Label>{t('tool.encoder.input')}</Label>
-                           <TextArea value={encodeInput} onChange={(e) => setEncodeInput(e.target.value)} className="h-64" placeholder={t('tool.encoder.type')} />
+                           <TextArea value={encodeInput} onChange={(e) => setEncodeInput(e.target.value)} className="h-64 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" placeholder={t('tool.encoder.type')} />
                        </div>
                        <div className="space-y-2">
                            <Label>{t('tool.encoder.result')}</Label>
