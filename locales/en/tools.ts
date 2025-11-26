@@ -6,7 +6,12 @@ export const tools = {
     error: "Error",
     output: "Output",
     prettify: "Prettify",
-    minify: "Minify"
+    minify: "Minify",
+    toTS: "To TS",
+    toGo: "To Go",
+    toJava: "To Java",
+    toXML: "To XML",
+    toCSV: "To CSV"
   },
   code: {
     title: "Code Formatter",
@@ -21,7 +26,13 @@ export const tools = {
     mode: "Mode",
     input: "Input",
     result: "Result",
-    type: "Type here..."
+    type: "Type here...",
+    base64_enc: "Base64 Encode",
+    base64_dec: "Base64 Decode",
+    url_enc: "URL Encode",
+    url_dec: "URL Decode",
+    hex_bin: "Text to Hex",
+    bin_hex: "Hex to Text"
   },
   hash: {
     title: "Hash Calculator",
@@ -105,7 +116,20 @@ export const tools = {
     test_placeholder: "Test string...",
     matches: "Matches",
     invalid: "Invalid Regex",
-    no_matches: "No matches found"
+    no_matches: "No matches found",
+    common_rules: "Common Rules:",
+    rule: {
+      any_char: "Any character",
+      digit: "Digit (0-9)",
+      word_char: "Word char (a-z, 0-9, _)",
+      whitespace: "Whitespace",
+      zero_or_more: "0 or more",
+      one_or_more: "1 or more",
+      zero_or_one: "0 or 1",
+      start_str: "Start of string",
+      end_str: "End of string",
+      any_of: "Any of a, b, c"
+    }
   },
   diff: {
     title: "Diff Checker",

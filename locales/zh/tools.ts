@@ -6,7 +6,12 @@ export const tools = {
     error: "错误",
     output: "输出",
     prettify: "美化",
-    minify: "压缩"
+    minify: "压缩",
+    toTS: "转 TypeScript",
+    toGo: "转 Go",
+    toJava: "转 Java",
+    toXML: "转 XML",
+    toCSV: "转 CSV"
   },
   code: {
     title: "代码格式化",
@@ -21,7 +26,13 @@ export const tools = {
     mode: "模式",
     input: "输入",
     result: "结果",
-    type: "在此输入..."
+    type: "在此输入...",
+    base64_enc: "Base64 编码",
+    base64_dec: "Base64 解码",
+    url_enc: "URL 编码",
+    url_dec: "URL 解码",
+    hex_bin: "文本转十六进制",
+    bin_hex: "十六进制转文本"
   },
   hash: {
     title: "哈希计算器",
@@ -105,7 +116,20 @@ export const tools = {
     test_placeholder: "测试字符串...",
     matches: "匹配结果",
     invalid: "无效正则表达式",
-    no_matches: "未找到匹配项"
+    no_matches: "未找到匹配项",
+    common_rules: "常用规则：",
+    rule: {
+      any_char: "任意字符",
+      digit: "数字 (0-9)",
+      word_char: "单词字符 (a-z, 0-9, _)",
+      whitespace: "空白字符",
+      zero_or_more: "0次或多次",
+      one_or_more: "1次或多次",
+      zero_or_one: "0次或1次",
+      start_str: "字符串开头",
+      end_str: "字符串结尾",
+      any_of: "a, b, c 中的任意一个"
+    }
   },
   diff: {
     title: "文本比对",

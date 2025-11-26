@@ -12,11 +12,19 @@ export const JsonTools: React.FC = () => {
   const { t } = useAppContext();
 
   useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash && ['format', 'minify', 'toTS', 'toGo', 'toJava', 'toXML', 'toCSV'].includes(hash)) {
+      setMode(hash);
+    }
+  }, []);
+
+  useEffect(() => {
     if (!input.trim()) {
       setOutput('');
       setError(null);
       return;
     }
+    window.location.hash = mode;
     try {
       const parsed = JSON.parse(input);
       setError(null);
@@ -75,10 +83,10 @@ export const JsonTools: React.FC = () => {
       </div>
 
       <div className="flex flex-wrap gap-2 bg-slate-100 dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
-        {[{id: 'format', l: t('tool.json.prettify')}, {id: 'minify', l: t('tool.json.minify')}, {id: 'toTS', l: 'To TS'}, {id: 'toGo', l: 'To Go'},
-          {id: 'toJava', l: 'To Java'}, {id: 'toXML', l: 'To XML'}, {id: 'toCSV', l: 'To CSV'}
+        {[{id: 'format', l: t('tool.json.prettify')}, {id: 'minify', l: t('tool.json.minify')}, {id: 'toTS', l: t('tool.json.toTS')}, {id: 'toGo', l: t('tool.json.toGo')},
+          {id: 'toJava', l: t('tool.json.toJava')}, {id: 'toXML', l: t('tool.json.toXML')}, {id: 'toCSV', l: t('tool.json.toCSV')}
         ].map((m) => (
-          <button key={m.id} onClick={() => setMode(m.id)} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === m.id ? 'bg-blue-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700'}`}>{m.l}</button>
+          <button key={m.id} onClick={() => { setMode(m.id); window.location.hash = m.id; }} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === m.id ? 'bg-blue-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700'}`}>{m.l}</button>
         ))}
       </div>
 
@@ -155,6 +163,14 @@ export const EncoderTools: React.FC = () => {
   const hexToString = (str: string) => str.replace(/\s/g,'').match(/.{1,2}/g)?.map(byte => String.fromCharCode(parseInt(byte, 16))).join('') || '';
 
   useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash && ['base64_enc', 'base64_dec', 'url_enc', 'url_dec', 'hex_bin', 'bin_hex'].includes(hash)) {
+        setEncodeMode(hash);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.location.hash = encodeMode;
     if (!encodeInput) { setEncodeOutput(''); return; }
     try {
         let res = '';
@@ -179,14 +195,14 @@ export const EncoderTools: React.FC = () => {
 
       <div className="flex flex-wrap gap-2 bg-slate-100 dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
         {[
-            {id: 'base64_enc', l: 'Base64 Encode'},
-            {id: 'base64_dec', l: 'Base64 Decode'},
-            {id: 'url_enc', l: 'URL Encode'},
-            {id: 'url_dec', l: 'URL Decode'},
-            {id: 'hex_bin', l: 'Text to Hex'},
-            {id: 'bin_hex', l: 'Hex to Text'}
+            {id: 'base64_enc', l: t('tool.encoder.base64_enc')},
+            {id: 'base64_dec', l: t('tool.encoder.base64_dec')},
+            {id: 'url_enc', l: t('tool.encoder.url_enc')},
+            {id: 'url_dec', l: t('tool.encoder.url_dec')},
+            {id: 'hex_bin', l: t('tool.encoder.hex_bin')},
+            {id: 'bin_hex', l: t('tool.encoder.bin_hex')}
         ].map((m) => (
-          <button key={m.id} onClick={() => setEncodeMode(m.id)} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${encodeMode === m.id ? 'bg-blue-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700'}`}>{m.l}</button>
+          <button key={m.id} onClick={() => { setEncodeMode(m.id); window.location.hash = m.id; }} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${encodeMode === m.id ? 'bg-blue-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700'}`}>{m.l}</button>
         ))}
       </div>
 

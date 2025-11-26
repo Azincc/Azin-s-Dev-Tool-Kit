@@ -33,8 +33,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
     <>
       <aside 
         className={`fixed left-0 top-0 z-50 h-[100dvh] bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 flex flex-col group/sidebar ${collapsed ? 'w-16 hover:w-64' : 'w-64'}`}
-        onMouseEnter={() => setCollapsed(false)}
-        onMouseLeave={() => setCollapsed(true)}
+        onMouseEnter={() => window.innerWidth >= 768 && setCollapsed(false)}
+        onMouseLeave={() => window.innerWidth >= 768 && setCollapsed(true)}
       >
         <div className="flex items-center justify-between h-16 px-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
           {!collapsed && <span className="font-bold text-lg text-blue-600 dark:text-blue-400 tracking-tight animate-in fade-in duration-300">Azin's Toolkit</span>}
