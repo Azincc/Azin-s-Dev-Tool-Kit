@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@config "../tailwind.config.js";
+
+/* Force class-based dark mode for v4 compatibility if config is missed */
+@variant dark (&:where(.dark, .dark *));
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
