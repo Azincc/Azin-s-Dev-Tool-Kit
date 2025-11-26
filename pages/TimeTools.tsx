@@ -164,10 +164,7 @@ export const CrontabTools: React.FC = () => {
 // --- World Clock Tools ---
 
 interface TimeData {
-    status: number;
-    data: {
-        timestamp: number;
-    };
+    ts: number;
 }
 
 export const WorldClockTools: React.FC = () => {
@@ -183,36 +180,20 @@ export const WorldClockTools: React.FC = () => {
     // Ref to avoid closure stale state in setInterval if we were using it for fetching,
     // but here we just need to update 'now'.
     
-    const fetchTime = async () => {
+const fetchTime = async () => {
         setLoading(true);
+        const start = Date.now();
         try {
-            const requestStart = Date.now();
-            const res = await fetch('https://api.shijian.online/timestamp/');
+            const res = await fetch('https://time.azin.workers.dev/');
             const json: TimeData = await res.json();
-            const requestEnd = Date.now();
-            
-            // Assume the server time is the time at the moment the server processed it.
-            // We can approximate the "current" server time at the moment of response arrival
-            // by adding half the round-trip time (RTT), or just use it as is if precision isn't critical.
-            // Let's stick to the simplest: Server Timestamp is correct at the time of generation.
-            // We compare it to the local time when we received it (or when we requested it).
-            // Let's use the average of start and end as the "local time" corresponding to the server timestamp.
-            
-            if (json.status === 1) {
-                 const serverTs = json.data.timestamp;
-                 // Use the midpoint of the request for better accuracy
-                 // (requestStart + requestEnd) / 2 approximates the time when server generated the timestamp (if network is symmetric)
-                 // However, the server timestamp 'serverTs' is the time at the server when it processed the request.
-                 // The time now is 'requestEnd'.
-                 // The time at 'requestStart' was 'localTs'.
-                 // The 'serverTs' happened roughly at (requestStart + requestEnd) / 2.
-                 // So we compare 'serverTs' with the midpoint of local time.
-                 const midPoint = (requestStart + requestEnd) / 2;
-                 
-                 // Calculate offset: Server - Local(Midpoint)
-                 // Server Time = Local Time + Offset
-                 const offset = serverTs - midPoint;
-                 setTimeOffset(offset);
+            const end = Date.now();
+
+            if (json.ts) {
+                const serverTs = json.ts;
+                const rtt = end - start;
+                const offset = (serverTs + rtt / 2) - end;
+                setTimeOffset(offset);
+                console.log(`Time Sync - RTT: ${rtt}ms, Offset: ${offset}ms`);
             }
         } catch (e) {
             console.error("Failed to fetch time", e);
@@ -289,7 +270,7 @@ export const WorldClockTools: React.FC = () => {
                              {currentServerTime ? formatTime(currentServerTime, 'Asia/Shanghai') : '--'}
                              <span className="text-sm text-slate-500 ml-2">(Beijing)</span>
                          </div>
-                         <div className="text-xs text-slate-400">{t('tool.worldclock.source')}: api.shijian.online</div>
+                         <div className="text-xs text-slate-400">{t('tool.worldclock.source')}: time.azin.workers.dev</div>
                      </div>
                      <div className="space-y-2">
                          <Label className="text-lg">{t('tool.worldclock.local')}</Label>
