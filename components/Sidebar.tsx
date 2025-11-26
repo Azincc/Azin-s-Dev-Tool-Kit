@@ -100,17 +100,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
                   onMouseEnter={(e) => handleItemMouseEnter(e, t(item.label))}
                   onMouseLeave={handleItemMouseLeave}
                   className={({ isActive }) => `
-                    flex items-center py-2.5 rounded-lg transition-all duration-200 group relative pl-5 pr-3
+                    flex items-center py-2.5 rounded-lg transition-all duration-200 group relative px-0
                     ${isActive 
                       ? 'bg-blue-600 text-white shadow-md shadow-blue-900/20' 
                       : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}
                   `}
                 >
-                  <span className="shrink-0 flex items-center justify-center w-5 h-5">
+                  <span className="shrink-0 flex items-center justify-center w-12">
                     {item.icon}
                   </span>
                   
-                  <span className={`ml-3 font-medium whitespace-nowrap overflow-hidden text-sm transition-all duration-300 ease-in-out ${collapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}>
+                  <span className={`font-medium whitespace-nowrap overflow-hidden text-sm transition-all duration-300 ease-in-out ${collapsed ? 'max-w-0 opacity-0' : 'max-w-[200px] opacity-100'}`}>
                     {t(item.label)}
                   </span>
                 </NavLink>
