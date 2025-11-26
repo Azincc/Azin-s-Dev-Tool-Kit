@@ -8,12 +8,12 @@ export const Card = ({ children, className = "" }: { children?: React.ReactNode;
 );
 
 export const CardHeader = ({ title, description, action }: { title: string; description?: string; action?: React.ReactNode }) => (
-  <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex justify-between items-start transition-colors duration-200">
+  <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 transition-colors duration-200">
     <div>
       <h3 className="text-lg font-semibold text-slate-800 dark:text-white">{title}</h3>
       {description && <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{description}</p>}
     </div>
-    {action && <div>{action}</div>}
+    {action && <div className="self-end sm:self-auto">{action}</div>}
   </div>
 );
 
