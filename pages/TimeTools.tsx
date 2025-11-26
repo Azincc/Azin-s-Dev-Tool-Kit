@@ -184,7 +184,7 @@ const fetchTime = async () => {
         setLoading(true);
         const start = Date.now();
         try {
-            const res = await fetch('https://time.azin.workers.dev/');
+            const res = await fetch('https://time.tool.azin.cc/');
             const json: TimeData = await res.json();
             const end = Date.now();
 
