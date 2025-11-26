@@ -81,7 +81,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-6 scrollbar-hide">
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden py-4 px-2 space-y-6 scrollbar-hide">
           {groups.map((group, groupIdx) => (
             <div key={groupIdx} className="space-y-1">
               {/* Category Header */}
@@ -129,13 +129,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
                {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
              </button>
 
-             <button 
-               onClick={toggleLanguage} 
+             <button
+               onClick={toggleLanguage}
                title={language === 'en' ? "切换到中文" : "Switch to English"}
                className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors flex items-center gap-2"
              >
                <GlobeIcon className="w-5 h-5" />
-               <span className={`text-xs font-bold whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out ${collapsed ? 'max-w-0 opacity-0' : 'max-w-[50px] opacity-100'}`}>{language.toUpperCase()}</span>
+               <span className={`text-xs font-bold whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out ${collapsed ? 'max-w-0 opacity-0' : 'max-w-[50px] opacity-100'}`}>{language === 'en' ? 'ZH' : 'EN'}</span>
              </button>
            </div>
 
