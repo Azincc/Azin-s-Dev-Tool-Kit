@@ -1,5 +1,7 @@
 # Azin's Dev Toolkit
 
+[![Build and Publish Docker Image](https://github.com/Azincc/Azin-s-Dev-Tool-Kit/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Azincc/Azin-s-Dev-Tool-Kit/actions/workflows/docker-publish.yml)
+
 一个功能丰富的开发者工具集合，提供多种实用工具帮助开发者提高工作效率。
 
 ## 🔗 在线预览
