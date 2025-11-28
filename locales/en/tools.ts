@@ -20,6 +20,19 @@ export const tools = {
     output: "Formatted Output",
     paste: "Paste code here..."
   },
+  csv: {
+    title: "CSV/Excel Processor",
+    desc: "View, filter, and convert CSV or Excel files.",
+    import: "Import File",
+    export: "Export",
+    rows: "Rows",
+    cols: "Columns",
+    search: "Search...",
+    toJson: "To JSON",
+    toSql: "To SQL",
+    download: "Download",
+    clear: "Clear"
+  },
   encoder: {
     title: "Encoders & Decoders",
     desc: "Base64, URL, and Hex conversions.",

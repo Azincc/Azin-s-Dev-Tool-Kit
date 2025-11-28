@@ -3,6 +3,7 @@ export const navigation = {
   formatters: "格式化工具",
   json: "JSON 工具",
   code: "代码格式化",
+  csv: "CSV/Excel",
   encoders: "编解码",
   security: "安全工具",
   hashing: "哈希计算",

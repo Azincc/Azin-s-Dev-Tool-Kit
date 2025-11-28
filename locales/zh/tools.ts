@@ -20,6 +20,19 @@ export const tools = {
     output: "格式化输出",
     paste: "在此粘贴代码..."
   },
+  csv: {
+    title: "CSV/Excel 处理器",
+    desc: "查看、过滤及转换 CSV 或 Excel 文件。",
+    import: "导入文件",
+    export: "导出",
+    rows: "行",
+    cols: "列",
+    search: "搜索...",
+    toJson: "转 JSON",
+    toSql: "转 SQL",
+    download: "下载",
+    clear: "清空"
+  },
   encoder: {
     title: "编码转换工具",
     desc: "Base64, URL, 进制转换。",
