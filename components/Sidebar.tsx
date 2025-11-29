@@ -75,7 +75,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
           </div>
           <button 
             onClick={toggleCollapsed}
-            className={`p-1.5 rounded-md text-slate-500 dark:text-slate-400 transition-colors shrink-0`}
+            className={`p-1.5 rounded-md text-slate-500 dark:text-slate-400 transition-colors duration-300 shrink-0`}
           >
             <MenuIcon className="w-5 h-5" />
           </button>
@@ -100,7 +100,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
                   onMouseEnter={(e) => handleItemMouseEnter(e, t(item.label))}
                   onMouseLeave={handleItemMouseLeave}
                   className={({ isActive }) => `
-                    flex items-center py-2.5 rounded-lg transition-all duration-200 group relative px-0
+                    flex items-center py-2.5 rounded-lg transition-all duration-300 group relative px-0
                     ${isActive 
                       ? 'bg-blue-600 text-white shadow-md shadow-blue-900/20' 
                       : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}
@@ -124,7 +124,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
              <button 
                onClick={toggleTheme} 
                title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
-               className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors"
+               className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors duration-300"
              >
                {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
              </button>
@@ -132,7 +132,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
              <button
                onClick={toggleLanguage}
                title={language === 'en' ? "切换到中文" : "Switch to English"}
-               className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors flex items-center"
+               className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors duration-300 flex items-center"
              >
                <GlobeIcon className="w-5 h-5" />
                <span className={`text-xs font-bold whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out ${collapsed ? 'max-w-0 opacity-0 ml-0' : 'max-w-[50px] opacity-100 ml-2'}`}>{language === 'en' ? 'ZH' : 'EN'}</span>
