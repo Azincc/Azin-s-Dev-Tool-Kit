@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Card, CardHeader, Button, CopyButton } from '../components/ui/Shared';
+import { Card, CardHeader, Button, CopyButton, Select } from '../components/ui/Shared';
 import { TrashIcon, FileTextIcon, ShuffleIcon } from '../components/ui/Icons';
 import { useAppContext } from '../contexts/AppContext';
 import Papa from 'papaparse';
@@ -11,6 +11,11 @@ export const CsvTools: React.FC = () => {
   const [headers, setHeaders] = useState<string[]>([]);
   const [fileName, setFileName] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState('');
+  
+  const [sheetNames, setSheetNames] = useState<string[]>([]);
+  const [currentSheet, setCurrentSheet] = useState<string>('');
+  const workbookRef = useRef<XLSX.WorkBook | null>(null);
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +24,11 @@ export const CsvTools: React.FC = () => {
 
     setFileName(file.name);
     const ext = file.name.split('.').pop()?.toLowerCase();
+
+    // Reset previous workbook data
+    workbookRef.current = null;
+    setSheetNames([]);
+    setCurrentSheet('');
 
     if (ext === 'csv') {
       Papa.parse(file, {
@@ -36,16 +46,35 @@ export const CsvTools: React.FC = () => {
       reader.onload = (evt) => {
         const bstr = evt.target?.result;
         const wb = XLSX.read(bstr, { type: 'binary' });
-        const wsname = wb.SheetNames[0];
-        const ws = wb.Sheets[wsname];
-        const jsonData = XLSX.utils.sheet_to_json(ws);
-        if (jsonData.length > 0) {
-          setHeaders(Object.keys(jsonData[0] as object));
-          setData(jsonData);
+        
+        workbookRef.current = wb;
+        setSheetNames(wb.SheetNames);
+        
+        if (wb.SheetNames.length > 0) {
+           loadSheet(wb.SheetNames[0]);
         }
       };
       reader.readAsBinaryString(file);
     }
+  };
+
+  const loadSheet = (sheetName: string) => {
+    if (!workbookRef.current) return;
+    setCurrentSheet(sheetName);
+    const ws = workbookRef.current.Sheets[sheetName];
+    const jsonData = XLSX.utils.sheet_to_json(ws);
+    
+    if (jsonData.length > 0) {
+        setHeaders(Object.keys(jsonData[0] as object));
+        setData(jsonData);
+    } else {
+        setHeaders([]);
+        setData([]);
+    }
+  };
+
+  const handleSheetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      loadSheet(e.target.value);
   };
 
   const filteredData = data.filter(row => 
@@ -111,6 +140,9 @@ export const CsvTools: React.FC = () => {
     setHeaders([]);
     setFileName('');
     setSearchTerm('');
+    setSheetNames([]);
+    setCurrentSheet('');
+    workbookRef.current = null;
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -148,6 +180,15 @@ export const CsvTools: React.FC = () => {
             </Button>
             {fileName && <span className="text-sm font-mono text-slate-600 dark:text-slate-400">{fileName}</span>}
           </div>
+
+          {sheetNames.length > 1 && (
+            <div className="flex items-center gap-2">
+                <span className="text-sm text-slate-500">{t('tool.csv.rows') /* reusing label for 'Sheet' if lazy, but better add specific label */}:</span>
+                <Select value={currentSheet} onChange={handleSheetChange} className="w-40">
+                    {sheetNames.map(s => <option key={s} value={s}>{s}</option>)}
+                </Select>
+            </div>
+          )}
           
           {data.length > 0 && (
             <div className="flex items-center gap-4">
