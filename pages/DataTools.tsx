@@ -2,11 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardHeader, Button, CopyButton, Select } from '../components/ui/Shared';
 import { TrashIcon, FileTextIcon, ShuffleIcon } from '../components/ui/Icons';
 import { useAppContext } from '../contexts/AppContext';
+import { useLocation } from 'react-router-dom';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
 
 export const CsvTools: React.FC = () => {
   const { t } = useAppContext();
+  const location = useLocation();
   const [data, setData] = useState<any[]>([]);
   const [headers, setHeaders] = useState<string[]>([]);
   const [fileName, setFileName] = useState<string>('');
@@ -17,6 +19,17 @@ export const CsvTools: React.FC = () => {
   const workbookRef = useRef<XLSX.WorkBook | null>(null);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (location.state?.data && Array.isArray(location.state.data) && location.state.data.length > 0) {
+        const d = location.state.data;
+        setData(d);
+        setHeaders(Object.keys(d[0] as object));
+        setFileName('imported_data');
+        // Clear state to avoid reloading on simple refreshes or nav
+        window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

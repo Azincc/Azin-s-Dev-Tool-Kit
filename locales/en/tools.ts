@@ -11,7 +11,8 @@ export const tools = {
     toGo: "To Go",
     toJava: "To Java",
     toXML: "To XML",
-    toCSV: "To CSV"
+    toCSV: "To CSV",
+    openCsv: "Open in CSV Tool"
   },
   code: {
     title: "Code Formatter",

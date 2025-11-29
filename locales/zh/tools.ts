@@ -11,7 +11,8 @@ export const tools = {
     toGo: "转 Go",
     toJava: "转 Java",
     toXML: "转 XML",
-    toCSV: "转 CSV"
+    toCSV: "转 CSV",
+    openCsv: "在 CSV 工具中打开"
   },
   code: {
     title: "代码格式化",
