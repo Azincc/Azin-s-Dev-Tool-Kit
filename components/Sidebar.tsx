@@ -132,10 +132,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
              <button
                onClick={toggleLanguage}
                title={language === 'en' ? "切换到中文" : "Switch to English"}
-               className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors flex items-center gap-2"
+               className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors flex items-center"
              >
                <GlobeIcon className="w-5 h-5" />
-               <span className={`text-xs font-bold whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out ${collapsed ? 'max-w-0 opacity-0' : 'max-w-[50px] opacity-100'}`}>{language === 'en' ? 'ZH' : 'EN'}</span>
+               <span className={`text-xs font-bold whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out ${collapsed ? 'max-w-0 opacity-0 ml-0' : 'max-w-[50px] opacity-100 ml-2'}`}>{language === 'en' ? 'ZH' : 'EN'}</span>
              </button>
            </div>
 
