@@ -30,6 +30,8 @@ export const tools = {
     search: "搜索...",
     toJson: "转 JSON",
     toSql: "转 SQL",
+    toCsv: "转 CSV",
+    toExcel: "转 Excel",
     download: "下载",
     clear: "清空"
   },

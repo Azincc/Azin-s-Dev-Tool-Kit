@@ -87,6 +87,25 @@ export const CsvTools: React.FC = () => {
     link.click();
   };
 
+  const exportCsv = () => {
+    if (data.length === 0) return;
+    const csv = Papa.unparse(data);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${fileName.split('.')[0] || 'export'}.csv`;
+    link.click();
+  };
+
+  const exportExcel = () => {
+    if (data.length === 0) return;
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, `${fileName.split('.')[0] || 'export'}.xlsx`);
+  };
+
   const clearData = () => {
     setData([]);
     setHeaders([]);
@@ -106,6 +125,8 @@ export const CsvTools: React.FC = () => {
            <div className="flex gap-2">
              <Button onClick={exportJson} variant="secondary" size="sm">{t('tool.csv.toJson')}</Button>
              <Button onClick={exportSql} variant="secondary" size="sm">{t('tool.csv.toSql')}</Button>
+             <Button onClick={exportCsv} variant="secondary" size="sm">{t('tool.csv.toCsv')}</Button>
+             <Button onClick={exportExcel} variant="secondary" size="sm">{t('tool.csv.toExcel')}</Button>
              <Button onClick={clearData} variant="danger" size="sm" className="px-2"><TrashIcon className="w-4 h-4" /></Button>
            </div>
         )}

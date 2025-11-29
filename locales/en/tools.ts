@@ -30,6 +30,8 @@ export const tools = {
     search: "Search...",
     toJson: "To JSON",
     toSql: "To SQL",
+    toCsv: "To CSV",
+    toExcel: "To Excel",
     download: "Download",
     clear: "Clear"
   },
