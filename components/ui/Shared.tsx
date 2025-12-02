@@ -2,16 +2,16 @@ import React from "react";
 import { CopyIcon, CheckIcon } from "./Icons";
 
 export const Card = ({ children, className = "" }: { children?: React.ReactNode; className?: string }) => (
-  <div className={`bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm dark:shadow-lg overflow-hidden transition-colors duration-300 ${className}`}>
+  <div className={`bg-background-surface border border-border rounded-lg shadow-sm dark:shadow-lg overflow-hidden transition-colors duration-300 ${className}`}>
     {children}
   </div>
 );
 
 export const CardHeader = ({ title, description, action }: { title: string; description?: string; action?: React.ReactNode }) => (
-  <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 transition-colors duration-300">
+  <div className="px-6 py-4 border-b border-border bg-background-highlight flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 transition-colors duration-300">
     <div>
-      <h3 className="text-lg font-semibold text-slate-800 dark:text-white">{title}</h3>
-      {description && <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{description}</p>}
+      <h3 className="text-lg font-semibold text-text-primary">{title}</h3>
+      {description && <p className="text-sm text-text-secondary mt-1">{description}</p>}
     </div>
     {action && <div className="self-end sm:self-auto">{action}</div>}
   </div>
@@ -27,14 +27,14 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
 }
 
 export const Button = ({ children, variant = "primary", size = "default", className = "", ...props }: ButtonProps) => {
-  const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-50 disabled:pointer-events-none";
+  const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-muted disabled:opacity-50 disabled:pointer-events-none";
   
   const variants = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700 shadow-sm",
-    secondary: "bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-600",
-    danger: "bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-200 hover:bg-red-200 dark:hover:bg-red-900/70 border border-red-200 dark:border-red-900",
-    ghost: "hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white",
-    outline: "border border-slate-200 dark:border-slate-700 bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300"
+    primary: "bg-brand-primary text-text-inverse hover:bg-brand-hover shadow-sm",
+    secondary: "bg-background-secondary text-text-primary hover:bg-slate-200 dark:hover:bg-slate-600",
+    danger: "bg-status-error-bg text-status-error-text hover:bg-red-200 dark:hover:bg-red-900/70 border border-status-error-border",
+    ghost: "hover:bg-background-secondary text-text-secondary hover:text-text-primary",
+    outline: "border border-border bg-transparent hover:bg-background-secondary text-text-secondary"
   };
 
   const sizes = {
@@ -53,14 +53,14 @@ export const Button = ({ children, variant = "primary", size = "default", classN
 
 export const Input = ({ className = "", ...props }: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input
-    className={`flex h-10 w-full rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-300 ${className}`}
+    className={`flex h-10 w-full rounded-md border border-border-input bg-background-input px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-primary disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-300 ${className}`}
     {...props}
   />
 );
 
 export const TextArea = ({ className = "", ...props }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
   <textarea
-    className={`flex min-h-[80px] w-full rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 font-mono transition-colors duration-300 ${className}`}
+    className={`flex min-h-[80px] w-full rounded-md border border-border-input bg-background-input px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-primary disabled:cursor-not-allowed disabled:opacity-50 font-mono transition-colors duration-300 ${className}`}
     {...props}
   />
 );
@@ -68,19 +68,19 @@ export const TextArea = ({ className = "", ...props }: React.TextareaHTMLAttribu
 export const Select = ({ children, className = "", ...props }: React.SelectHTMLAttributes<HTMLSelectElement>) => (
   <div className="relative">
     <select
-      className={`flex h-10 w-full appearance-none rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-300 ${className}`}
+      className={`flex h-10 w-full appearance-none rounded-md border border-border-input bg-background-input px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-primary disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-300 ${className}`}
       {...props}
     >
       {children}
     </select>
-    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
+    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-text-muted">
       <svg className="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
     </div>
   </div>
 );
 
 export const Label = ({ children, className = "" }: { children?: React.ReactNode; className?: string }) => (
-  <label className={`text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5 block ${className}`}>
+  <label className={`text-xs font-semibold text-text-secondary uppercase tracking-wider mb-1.5 block ${className}`}>
     {children}
   </label>
 );
@@ -88,7 +88,7 @@ export const Label = ({ children, className = "" }: { children?: React.ReactNode
 export const Slider = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input 
     type="range" 
-    className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+    className="w-full h-2 bg-border-default rounded-lg appearance-none cursor-pointer accent-brand-primary"
     {...props} 
   />
 );
@@ -127,7 +127,7 @@ export const Tabs = ({ defaultValue, children, className = "" }: { defaultValue:
 };
 
 export const TabsList = ({ children, className = "" }: { children?: React.ReactNode; className?: string }) => (
-  <div className={`flex space-x-1 rounded-lg bg-slate-100 dark:bg-slate-800 p-1 mb-6 transition-colors duration-300 ${className}`}>
+  <div className={`flex space-x-1 rounded-lg bg-background-secondary p-1 mb-6 transition-colors duration-300 ${className}`}>
     {children}
   </div>
 );
@@ -141,7 +141,7 @@ export const TabsTrigger = ({ value, children, className = "" }: { value: string
     <button
       onClick={() => context.setActiveTab(value)}
       className={`flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 
-      ${isActive ? "bg-white dark:bg-slate-600 text-slate-900 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-700 dark:hover:text-slate-200"} ${className}`}
+      ${isActive ? "bg-background-surface text-text-primary shadow-sm" : "text-text-secondary hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-text-primary"} ${className}`}
     >
       {children}
     </button>
