@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardContent, Button, TextArea, CopyButton, Select, Label } from '../components/ui/Shared';
-import { TrashIcon } from '../components/ui/Icons';
+import { TrashIcon, TableIcon } from '../components/ui/Icons';
 import { useAppContext } from '../contexts/AppContext';
+import { useNavigate } from 'react-router-dom';
+import Papa from 'papaparse';
 
 // --- JSON Tools Component ---
 export const JsonTools: React.FC = () => {
@@ -10,6 +12,7 @@ export const JsonTools: React.FC = () => {
   const [mode, setMode] = useState('format');
   const [error, setError] = useState<string | null>(null);
   const { t } = useAppContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!input.trim()) {
@@ -60,12 +63,29 @@ export const JsonTools: React.FC = () => {
   const jsonToCsv = (obj: any): string => {
       const arr = Array.isArray(obj) ? obj : [obj];
       if (arr.length === 0) return '';
-      const headers = Object.keys(arr[0]);
-      return [
-          headers.join(','),
-          ...arr.map((row: any) => headers.map(h => JSON.stringify(row[h] || '')).join(','))
-      ].join('\n');
+      return Papa.unparse(arr);
   }
+
+  const handleDownloadCsv = () => {
+      if (!output) return;
+      const blob = new Blob([output], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'converted.csv';
+      link.click();
+  };
+
+  const handleOpenInCsvTool = () => {
+      if (!input) return;
+      try {
+          const parsed = JSON.parse(input);
+          const data = Array.isArray(parsed) ? parsed : [parsed];
+          navigate('/csv', { state: { data } });
+      } catch(e) {
+          // ignore
+      }
+  };
 
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
@@ -90,7 +110,21 @@ export const JsonTools: React.FC = () => {
           </div>
         </Card>
         <Card className="flex flex-col h-full border-blue-900/30">
-          <CardHeader title={error ? t('tool.json.error') : t('tool.json.output')} action={<CopyButton text={output} />} />
+          <CardHeader title={error ? t('tool.json.error') : t('tool.json.output')} action={
+              <div className="flex items-center gap-2">
+                  {mode === 'toCSV' && !error && output && (
+                      <>
+                        <Button size="sm" variant="secondary" onClick={handleOpenInCsvTool} className="text-xs" title={t('tool.json.openCsv')}>
+                           <TableIcon className="w-4 h-4" />
+                        </Button>
+                        <Button size="sm" variant="secondary" onClick={handleDownloadCsv} className="text-xs">
+                           {t('tool.csv.download')}
+                        </Button>
+                      </>
+                  )}
+                  <CopyButton text={output} />
+              </div>
+          } />
           <div className="flex-1 p-0 bg-slate-100 dark:bg-slate-950 overflow-hidden relative">
              {error ? <div className="p-4 text-red-500 dark:text-red-400 font-mono text-sm">{error}</div> : 
              <TextArea readOnly value={output} className="w-full h-full border-0 bg-transparent resize-none p-4 font-mono text-emerald-600 dark:text-emerald-400 text-sm" />}

@@ -11,7 +11,8 @@ export const tools = {
     toGo: "转 Go",
     toJava: "转 Java",
     toXML: "转 XML",
-    toCSV: "转 CSV"
+    toCSV: "转 CSV",
+    openCsv: "在 CSV 工具中打开"
   },
   code: {
     title: "代码格式化",
@@ -19,6 +20,21 @@ export const tools = {
     input: "输入代码",
     output: "格式化输出",
     paste: "在此粘贴代码..."
+  },
+  csv: {
+    title: "CSV/Excel 处理器",
+    desc: "查看、过滤及转换 CSV 或 Excel 文件。",
+    import: "导入文件",
+    export: "导出",
+    rows: "行",
+    cols: "列",
+    search: "搜索...",
+    toJson: "转 JSON",
+    toSql: "转 SQL",
+    toCsv: "转 CSV",
+    toExcel: "转 Excel",
+    download: "下载",
+    clear: "清空"
   },
   encoder: {
     title: "编码转换工具",
@@ -118,6 +134,20 @@ export const tools = {
     invalid: "无效正则表达式",
     no_matches: "未找到匹配项",
     common_rules: "常用规则：",
+    flag: {
+      g: "g - 全局匹配",
+      g_desc: "匹配所有出现的位置",
+      i: "i - 忽略大小写",
+      i_desc: "不区分大小写字母",
+      m: "m - 多行模式",
+      m_desc: "^和$匹配每行的开始和结束",
+      gm: "gm - 全局多行",
+      gm_desc: "全局匹配+多行模式",
+      gi: "gi - 全局忽略大小写",
+      gi_desc: "全局匹配+忽略大小写",
+      custom: "自定义",
+      custom_desc: "输入自定义flag组合"
+    },
     rule: {
       any_char: "任意字符",
       digit: "数字 (0-9)",

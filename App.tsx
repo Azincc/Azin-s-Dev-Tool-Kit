@@ -4,13 +4,14 @@ import { Sidebar } from './components/Sidebar';
 import { NavGroup } from './types';
 import { 
   HomeIcon, FileJsonIcon, LockIcon, PaletteIcon, FileTextIcon,
-  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon, ClockIcon, GlobeIcon
+  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon, ClockIcon, GlobeIcon, TableIcon
 } from './components/ui/Icons';
 import { AppProvider } from './contexts/AppContext';
 
 // Pages & Tools
 import Home from './pages/Home';
 import { JsonTools, CodeTools, EncoderTools } from './pages/JsonToolkit';
+import { CsvTools } from './pages/DataTools';
 import { HashTools, EncryptTools, JwtTools, PasswordTools } from './pages/SecurityTools';
 import { ColorPaletteTools, ImageTools, CssGenTools } from './pages/ColorTools';
 import { EditorTools, RegexTools, DiffTools } from './pages/TextTools';
@@ -26,6 +27,7 @@ const navGroups: NavGroup[] = [
     title: 'nav.formatters',
     items: [
       { id: 'json', label: 'nav.json', icon: <FileJsonIcon />, path: '/json' },
+      { id: 'csv', label: 'nav.csv', icon: <TableIcon />, path: '/csv' },
       { id: 'code', label: 'nav.code', icon: <CodeIcon />, path: '/code' },
       { id: 'encoders', label: 'nav.encoders', icon: <ShuffleIcon />, path: '/encoders' },
     ]
@@ -76,6 +78,7 @@ const MainLayout = () => {
             
             {/* Formatters */}
             <Route path="/json" element={<JsonTools />} />
+            <Route path="/csv" element={<CsvTools />} />
             <Route path="/code" element={<CodeTools />} />
             <Route path="/encoders" element={<EncoderTools />} />
 

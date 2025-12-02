@@ -3,6 +3,7 @@ export const navigation = {
   formatters: "Formatters",
   json: "JSON Tools",
   code: "Code Format",
+  csv: "CSV/Excel",
   encoders: "Encoders",
   security: "Security",
   hashing: "Hashing",

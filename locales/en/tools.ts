@@ -11,7 +11,8 @@ export const tools = {
     toGo: "To Go",
     toJava: "To Java",
     toXML: "To XML",
-    toCSV: "To CSV"
+    toCSV: "To CSV",
+    openCsv: "Open in CSV Tool"
   },
   code: {
     title: "Code Formatter",
@@ -19,6 +20,21 @@ export const tools = {
     input: "Input Code",
     output: "Formatted Output",
     paste: "Paste code here..."
+  },
+  csv: {
+    title: "CSV/Excel Processor",
+    desc: "View, filter, and convert CSV or Excel files.",
+    import: "Import File",
+    export: "Export",
+    rows: "Rows",
+    cols: "Columns",
+    search: "Search...",
+    toJson: "To JSON",
+    toSql: "To SQL",
+    toCsv: "To CSV",
+    toExcel: "To Excel",
+    download: "Download",
+    clear: "Clear"
   },
   encoder: {
     title: "Encoders & Decoders",
@@ -118,6 +134,20 @@ export const tools = {
     invalid: "Invalid Regex",
     no_matches: "No matches found",
     common_rules: "Common Rules:",
+    flag: {
+      g: "g - Global",
+      g_desc: "Match all occurrences",
+      i: "i - Case Insensitive",
+      i_desc: "Ignore case differences",
+      m: "m - Multiline",
+      m_desc: "^ and $ match line starts/ends",
+      gm: "gm - Global Multiline",
+      gm_desc: "Global match + multiline mode",
+      gi: "gi - Global Case Insensitive",
+      gi_desc: "Global match + ignore case",
+      custom: "Custom",
+      custom_desc: "Enter custom flag combination"
+    },
     rule: {
       any_char: "Any character",
       digit: "Digit (0-9)",
