@@ -134,6 +134,20 @@ export const tools = {
     invalid: "Invalid Regex",
     no_matches: "No matches found",
     common_rules: "Common Rules:",
+    flag: {
+      g: "g - Global",
+      g_desc: "Match all occurrences",
+      i: "i - Case Insensitive",
+      i_desc: "Ignore case differences",
+      m: "m - Multiline",
+      m_desc: "^ and $ match line starts/ends",
+      gm: "gm - Global Multiline",
+      gm_desc: "Global match + multiline mode",
+      gi: "gi - Global Case Insensitive",
+      gi_desc: "Global match + ignore case",
+      custom: "Custom",
+      custom_desc: "Enter custom flag combination"
+    },
     rule: {
       any_char: "Any character",
       digit: "Digit (0-9)",

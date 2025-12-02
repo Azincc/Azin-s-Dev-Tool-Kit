@@ -134,6 +134,20 @@ export const tools = {
     invalid: "无效正则表达式",
     no_matches: "未找到匹配项",
     common_rules: "常用规则：",
+    flag: {
+      g: "g - 全局匹配",
+      g_desc: "匹配所有出现的位置",
+      i: "i - 忽略大小写",
+      i_desc: "不区分大小写字母",
+      m: "m - 多行模式",
+      m_desc: "^和$匹配每行的开始和结束",
+      gm: "gm - 全局多行",
+      gm_desc: "全局匹配+多行模式",
+      gi: "gi - 全局忽略大小写",
+      gi_desc: "全局匹配+忽略大小写",
+      custom: "自定义",
+      custom_desc: "输入自定义flag组合"
+    },
     rule: {
       any_char: "任意字符",
       digit: "数字 (0-9)",
