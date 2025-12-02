@@ -88,7 +88,7 @@ export const Label = ({ children, className = "" }: { children?: React.ReactNode
 export const Slider = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input 
     type="range" 
-    className="w-full h-2 bg-border-default rounded-lg appearance-none cursor-pointer accent-brand-primary"
+    className="w-full h-2 bg-border rounded-lg appearance-none cursor-pointer accent-brand-primary"
     {...props} 
   />
 );
