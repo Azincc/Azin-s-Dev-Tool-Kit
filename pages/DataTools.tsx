@@ -163,8 +163,8 @@ export const CsvTools: React.FC = () => {
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
       <div className="flex justify-between items-start">
         <div>
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.csv.title')}</h2>
-          <p className="text-slate-500 dark:text-slate-400">{t('tool.csv.desc')}</p>
+          <h2 className="text-2xl font-bold text-text-primary">{t('tool.csv.title')}</h2>
+          <p className="text-text-secondary">{t('tool.csv.desc')}</p>
         </div>
         {data.length > 0 && (
            <div className="flex gap-2">
@@ -178,7 +178,7 @@ export const CsvTools: React.FC = () => {
       </div>
 
       <Card className="flex flex-col flex-1 min-h-0 overflow-hidden">
-        <div className="p-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex flex-wrap gap-4 items-center justify-between">
+        <div className="p-4 border-b border-border bg-background-highlight flex flex-wrap gap-4 items-center justify-between">
           <div className="flex items-center gap-4">
             <input
               type="file"
@@ -191,12 +191,12 @@ export const CsvTools: React.FC = () => {
               <FileTextIcon className="w-4 h-4 mr-2" />
               {t('tool.csv.import')}
             </Button>
-            {fileName && <span className="text-sm font-mono text-slate-600 dark:text-slate-400">{fileName}</span>}
+            {fileName && <span className="text-sm font-mono text-text-secondary">{fileName}</span>}
           </div>
 
           {sheetNames.length > 1 && (
             <div className="flex items-center gap-2">
-                <span className="text-sm text-slate-500">{t('tool.csv.rows') /* reusing label for 'Sheet' if lazy, but better add specific label */}:</span>
+                <span className="text-sm text-text-secondary">{t('tool.csv.rows') /* reusing label for 'Sheet' if lazy, but better add specific label */}:</span>
                 <Select value={currentSheet} onChange={handleSheetChange} className="w-40">
                     {sheetNames.map(s => <option key={s} value={s}>{s}</option>)}
                 </Select>
@@ -205,7 +205,7 @@ export const CsvTools: React.FC = () => {
           
           {data.length > 0 && (
             <div className="flex items-center gap-4">
-               <div className="text-xs text-slate-500">
+               <div className="text-xs text-text-secondary">
                  {data.length} {t('tool.csv.rows')} × {headers.length} {t('tool.csv.cols')}
                </div>
                <input
@@ -213,7 +213,7 @@ export const CsvTools: React.FC = () => {
                  placeholder={t('tool.csv.search')}
                  value={searchTerm}
                  onChange={(e) => setSearchTerm(e.target.value)}
-                 className="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                 className="px-3 py-1.5 text-sm rounded-md border border-border-input bg-background-input text-text-primary focus:ring-2 focus:ring-brand-primary focus:border-transparent outline-none"
                />
             </div>
           )}
@@ -221,16 +221,16 @@ export const CsvTools: React.FC = () => {
 
         <div className="flex-1 overflow-auto">
           {data.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-slate-400">
+            <div className="h-full flex flex-col items-center justify-center text-text-muted">
               <ShuffleIcon className="w-12 h-12 mb-4 opacity-20" />
               <p>{t('tool.csv.desc')}</p>
             </div>
           ) : (
             <table className="w-full text-sm text-left border-collapse">
-              <thead className="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-900 dark:text-slate-400 sticky top-0 z-10">
+              <thead className="text-xs text-text-secondary uppercase bg-background-secondary sticky top-0 z-10">
                 <tr>
                   {headers.map((header) => (
-                    <th key={header} className="px-6 py-3 border-b border-slate-200 dark:border-slate-700 font-medium whitespace-nowrap">
+                    <th key={header} className="px-6 py-3 border-b border-border font-medium whitespace-nowrap">
                       {header}
                     </th>
                   ))}
@@ -238,9 +238,9 @@ export const CsvTools: React.FC = () => {
               </thead>
               <tbody>
                 {filteredData.slice(0, 100).map((row, i) => (
-                  <tr key={i} className="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900">
+                  <tr key={i} className="bg-background-surface border-b border-border hover:bg-background-highlight">
                     {headers.map((header) => (
-                      <td key={`${i}-${header}`} className="px-6 py-4 whitespace-nowrap text-slate-900 dark:text-slate-300 font-mono text-xs">
+                      <td key={`${i}-${header}`} className="px-6 py-4 whitespace-nowrap text-text-primary font-mono text-xs">
                          {row[header] !== null && row[header] !== undefined ? String(row[header]) : ''}
                       </td>
                     ))}
@@ -248,7 +248,7 @@ export const CsvTools: React.FC = () => {
                 ))}
                 {filteredData.length > 100 && (
                    <tr>
-                     <td colSpan={headers.length} className="px-6 py-4 text-center text-slate-500 italic">
+                     <td colSpan={headers.length} className="px-6 py-4 text-center text-text-secondary italic">
                        {t('tool.json.output') ? `Showing first 100 of ${filteredData.length} rows` : `... ${filteredData.length - 100} more rows ...`}
                      </td>
                    </tr>

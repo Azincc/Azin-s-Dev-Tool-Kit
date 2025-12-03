@@ -30,25 +30,25 @@ export const HashTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div><h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.hash.title')}</h2><p className="text-slate-500 dark:text-slate-400">{t('tool.hash.desc')}</p></div>
+      <div><h2 className="text-2xl font-bold text-text-primary">{t('tool.hash.title')}</h2><p className="text-text-secondary">{t('tool.hash.desc')}</p></div>
       <Card>
           <CardHeader title={t('tool.hash.input_source')} />
           <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                       <Label>{t('tool.hash.text')}</Label>
-                      <Input value={hashInput.startsWith("File:") ? "" : hashInput} onChange={(e) => calculateHashes(e.target.value)} placeholder={t('tool.hash.type_placeholder')} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full" />
+                      <Input value={hashInput.startsWith("File:") ? "" : hashInput} onChange={(e) => calculateHashes(e.target.value)} placeholder={t('tool.hash.type_placeholder')} className="w-full" />
                   </div>
                   <div className="space-y-2">
                       <Label>{t('tool.hash.or_file')}</Label>
-                      <input type="file" onChange={handleFileHash} className="block w-full text-sm text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700" />
+                      <input type="file" onChange={handleFileHash} className="block w-full text-sm text-text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-brand-primary file:text-text-inverse hover:file:bg-brand-hover" />
                   </div>
               </div>
               <div className="space-y-4">
                   {['sha1', 'sha256', 'sha512'].map(algo => (
                       <div key={algo}>
-                          <div className="flex justify-between mb-1"><Label className="text-blue-600 dark:text-blue-400">{algo.toUpperCase()}</Label><CopyButton text={hashes[algo]} /></div>
-                          <div className="bg-slate-100 dark:bg-slate-950 p-3 rounded border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-600 dark:text-slate-300 break-all">{hashes[algo] || t('tool.hash.waiting')}</div>
+                          <div className="flex justify-between mb-1"><Label className="text-brand-primary">{algo.toUpperCase()}</Label><CopyButton text={hashes[algo]} /></div>
+                          <div className="bg-background-secondary p-3 rounded border border-border font-mono text-xs text-text-secondary break-all">{hashes[algo] || t('tool.hash.waiting')}</div>
                       </div>
                   ))}
               </div>
@@ -72,15 +72,15 @@ export const EncryptTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
-        <div><h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.encrypt.title')}</h2><p className="text-slate-500 dark:text-slate-400">{t('tool.encrypt.desc')}</p></div>
+        <div><h2 className="text-2xl font-bold text-text-primary">{t('tool.encrypt.title')}</h2><p className="text-text-secondary">{t('tool.encrypt.desc')}</p></div>
         <Card>
             <CardHeader title={t('tool.encrypt.demo_title')} />
             <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2"><Label>{t('tool.encrypt.message')}</Label><TextArea value={aesInput} onChange={e => setAesInput(e.target.value)} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full" /></div>
-                    <div className="space-y-2"><Label>{t('tool.encrypt.secret_key')}</Label><Input value={aesKey} onChange={e => setAesKey(e.target.value)} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full" /><Button onClick={simpleEncrypt} className="w-full mt-2">{t('tool.encrypt.action')}</Button></div>
+                    <div className="space-y-2"><Label>{t('tool.encrypt.message')}</Label><TextArea value={aesInput} onChange={e => setAesInput(e.target.value)} className="w-full" /></div>
+                    <div className="space-y-2"><Label>{t('tool.encrypt.secret_key')}</Label><Input value={aesKey} onChange={e => setAesKey(e.target.value)} className="w-full" /><Button onClick={simpleEncrypt} className="w-full mt-2">{t('tool.encrypt.action')}</Button></div>
                 </div>
-                <div className="space-y-2"><Label>{t('tool.encrypt.result')}</Label><div className="relative"><TextArea readOnly value={aesOutput} className="bg-slate-100 dark:bg-slate-950 text-emerald-600 dark:text-emerald-400 w-full" /><div className="absolute top-2 right-2"><CopyButton text={aesOutput} /></div></div></div>
+                <div className="space-y-2"><Label>{t('tool.encrypt.result')}</Label><div className="relative"><TextArea readOnly value={aesOutput} className="bg-background-secondary text-emerald-600 dark:text-emerald-400 w-full" /><div className="absolute top-2 right-2"><CopyButton text={aesOutput} /></div></div></div>
             </CardContent>
         </Card>
     </div>
@@ -105,13 +105,13 @@ export const JwtTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
-        <div><h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.jwt.title')}</h2><p className="text-slate-500 dark:text-slate-400">{t('tool.jwt.desc')}</p></div>
+        <div><h2 className="text-2xl font-bold text-text-primary">{t('tool.jwt.title')}</h2><p className="text-text-secondary">{t('tool.jwt.desc')}</p></div>
         <Card>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
-                <div className="space-y-2"><Label>{t('tool.jwt.encoded')}</Label><TextArea value={jwtToken} onChange={e => decodeJwt(e.target.value)} className="h-64 text-xs bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." /></div>
+                <div className="space-y-2"><Label>{t('tool.jwt.encoded')}</Label><TextArea value={jwtToken} onChange={e => decodeJwt(e.target.value)} className="h-64 text-xs w-full" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." /></div>
                 <div className="space-y-4">
-                    <div className="space-y-1"><Label className="text-blue-600 dark:text-blue-400">{t('tool.jwt.header')}</Label><pre className="bg-slate-100 dark:bg-slate-950 p-3 rounded border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-300 h-24 overflow-auto w-full">{jwtDecoded?.header}</pre></div>
-                    <div className="space-y-1"><Label className="text-purple-600 dark:text-purple-400">{t('tool.jwt.payload')}</Label><pre className="bg-slate-100 dark:bg-slate-950 p-3 rounded border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-300 h-32 overflow-auto w-full">{jwtDecoded?.payload}</pre></div>
+                    <div className="space-y-1"><Label className="text-brand-primary">{t('tool.jwt.header')}</Label><pre className="bg-background-secondary p-3 rounded border border-border text-xs text-text-secondary h-24 overflow-auto w-full">{jwtDecoded?.header}</pre></div>
+                    <div className="space-y-1"><Label className="text-purple-600 dark:text-purple-400">{t('tool.jwt.payload')}</Label><pre className="bg-background-secondary p-3 rounded border border-border text-xs text-text-secondary h-32 overflow-auto w-full">{jwtDecoded?.payload}</pre></div>
                 </div>
             </CardContent>
         </Card>
@@ -138,17 +138,17 @@ export const PasswordTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
-        <div><h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.pass.title')}</h2><p className="text-slate-500 dark:text-slate-400">{t('tool.pass.desc')}</p></div>
+        <div><h2 className="text-2xl font-bold text-text-primary">{t('tool.pass.title')}</h2><p className="text-text-secondary">{t('tool.pass.desc')}</p></div>
         <Card>
             <CardContent className="space-y-4 pt-6">
                 <div className="flex flex-wrap gap-4 items-end">
-                    <div className="w-32"><Label>{t('tool.pass.length')}</Label><Input type="number" value={passLength} onChange={e => setPassLength(Math.max(1, parseInt(e.target.value) || 1))} min={4} max={128} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" /></div>
-                    <div className="w-32"><Label>{t('tool.pass.count')}</Label><Input type="number" value={passCount} onChange={e => setPassCount(Math.max(1, parseInt(e.target.value) || 1))} min={1} max={50} className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white" /></div>
+                    <div className="w-32"><Label>{t('tool.pass.length')}</Label><Input type="number" value={passLength} onChange={e => setPassLength(Math.max(1, parseInt(e.target.value) || 1))} min={4} max={128} className="text-text-primary" /></div>
+                    <div className="w-32"><Label>{t('tool.pass.count')}</Label><Input type="number" value={passCount} onChange={e => setPassCount(Math.max(1, parseInt(e.target.value) || 1))} min={1} max={50} className="text-text-primary" /></div>
                     <Button onClick={generatePasswords}>{t('tool.pass.generate')}</Button>
                 </div>
                 <div className="grid gap-2">
-                    {passwords.map((p, i) => (<div key={i} className="flex justify-between items-center bg-slate-100 dark:bg-slate-950 p-2 px-4 rounded border border-slate-200 dark:border-slate-800 group"><span className="font-mono text-emerald-600 dark:text-emerald-400 break-all">{p}</span><div className="opacity-0 group-hover:opacity-100"><CopyButton text={p} /></div></div>))}
-                    {passwords.length === 0 && <div className="text-slate-500 text-center py-4">{t('tool.pass.click_generate')}</div>}
+                    {passwords.map((p, i) => (<div key={i} className="flex justify-between items-center bg-background-secondary p-2 px-4 rounded border border-border group"><span className="font-mono text-emerald-600 dark:text-emerald-400 break-all">{p}</span><div className="opacity-0 group-hover:opacity-100"><CopyButton text={p} /></div></div>))}
+                    {passwords.length === 0 && <div className="text-text-secondary text-center py-4">{t('tool.pass.click_generate')}</div>}
                 </div>
             </CardContent>
         </Card>

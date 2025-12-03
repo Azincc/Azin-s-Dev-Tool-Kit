@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardHeader, CardContent, Button, TextArea, CopyButton, Select, Label } from '../components/ui/Shared';
+import { Card, CardHeader, CardContent, Button, TextArea, CopyButton, Select, Label, Input } from '../components/ui/Shared';
 import { useAppContext } from '../contexts/AppContext';
 
 // --- Crontab Tools ---
@@ -126,8 +126,8 @@ export const CrontabTools: React.FC = () => {
     return (
         <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
             <div>
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.crontab.title')}</h2>
-                <p className="text-slate-500 dark:text-slate-400">{t('tool.crontab.desc')}</p>
+                <h2 className="text-2xl font-bold text-text-primary">{t('tool.crontab.title')}</h2>
+                <p className="text-text-secondary">{t('tool.crontab.desc')}</p>
             </div>
             
             <Card>
@@ -138,15 +138,15 @@ export const CrontabTools: React.FC = () => {
                         
                         <Label className="mt-4 block">{t('tool.crontab.manual')}</Label>
                         <div className="flex gap-4">
-                            <input 
+                            <Input 
                                 type="text" 
                                 value={cron} 
                                 onChange={(e) => setCron(e.target.value)}
-                                className="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-md px-4 py-2 text-slate-900 dark:text-white font-mono"
+                                className="flex-1 font-mono"
                                 placeholder="* * * * *"
                             />
                         </div>
-                        <div className="text-xs text-slate-500">
+                        <div className="text-xs text-text-secondary">
                             {t('tool.crontab.format')}
                         </div>
                     </div>
@@ -180,7 +180,7 @@ export const WorldClockTools: React.FC = () => {
     // Ref to avoid closure stale state in setInterval if we were using it for fetching,
     // but here we just need to update 'now'.
     
-const fetchTime = async () => {
+    const fetchTime = async () => {
         setLoading(true);
         const start = Date.now();
         try {
@@ -257,8 +257,8 @@ const fetchTime = async () => {
     return (
         <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
             <div>
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.worldclock.title')}</h2>
-                <p className="text-slate-500 dark:text-slate-400">{t('tool.worldclock.desc')}</p>
+                <h2 className="text-2xl font-bold text-text-primary">{t('tool.worldclock.title')}</h2>
+                <p className="text-text-secondary">{t('tool.worldclock.desc')}</p>
             </div>
 
             <Card>
@@ -268,15 +268,15 @@ const fetchTime = async () => {
                          <Label className="text-lg">{t('tool.worldclock.server')}</Label>
                          <div className="text-3xl font-mono text-emerald-600 dark:text-emerald-400">
                              {currentServerTime ? formatTime(currentServerTime, 'Asia/Shanghai') : '--'}
-                             <span className="text-sm text-slate-500 ml-2">(Beijing)</span>
+                             <span className="text-sm text-text-secondary ml-2">(Beijing)</span>
                          </div>
-                         <div className="text-xs text-slate-400">{t('tool.worldclock.source')}: time.azin.workers.dev</div>
+                         <div className="text-xs text-text-muted">{t('tool.worldclock.source')}: time.azin.workers.dev</div>
                      </div>
                      <div className="space-y-2">
                          <Label className="text-lg">{t('tool.worldclock.local')}</Label>
                          <div className="text-3xl font-mono text-blue-600 dark:text-blue-400">
                              {formatTime(now, 'Asia/Shanghai')}
-                              <span className="text-sm text-slate-500 ml-2">(Beijing)</span>
+                              <span className="text-sm text-text-secondary ml-2">(Beijing)</span>
                          </div>
                          {timeOffset !== null && (
                              <div className={`text-sm ${getOffsetStatus(timeOffset).color}`}>
@@ -304,15 +304,15 @@ const fetchTime = async () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {zones.map(z => (
                     <Card key={z.name} className="flex flex-col">
-                        <div className="p-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 font-semibold">
+                        <div className="p-4 border-b border-border bg-background-highlight font-semibold">
                             {z.name}
                         </div>
-                        <div className="p-6 text-2xl font-mono text-center text-slate-800 dark:text-white">
+                        <div className="p-6 text-2xl font-mono text-center text-text-primary">
                             {currentServerTime 
                                 ? formatTime(currentServerTime, z.zone).split(', ')[1] 
                                 : formatTime(now, z.zone).split(', ')[1]
                             }
-                             <div className="text-xs text-slate-400 mt-2">
+                             <div className="text-xs text-text-muted mt-2">
                                  {currentServerTime 
                                     ? formatTime(currentServerTime, z.zone).split(', ')[0] 
                                     : formatTime(now, z.zone).split(', ')[0]
