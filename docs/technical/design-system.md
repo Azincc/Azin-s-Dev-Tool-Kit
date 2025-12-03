@@ -1,66 +1,67 @@
-# Design System & Tokens
+# 设计系统与令牌 (Design System & Tokens)
 
-This document outlines the design tokens and system used in Azin's Dev Toolkit. We use CSS variables integrated with Tailwind CSS to manage themes and consistency.
+本文档概述了 Azin's Dev Toolkit 中使用的设计令牌和系统。我们使用与 Tailwind CSS 集成的 CSS 变量来管理主题和一致性。
 
-## Tokens Source of Truth
+## 令牌单一数据源 (Tokens Source of Truth)
 
-The source of truth for tokens is `src/styles/design-system.ts`. This file exports strongly typed objects representing the design decisions.
-However, the implementation is done via CSS variables in `src/index.css` and referenced in `tailwind.config.js`.
+令牌的单一数据源是 `src/styles/design-system.ts`。该文件导出了代表设计决策的强类型对象。
+然而，实际实现是通过 `src/index.css` 中的 CSS 变量并在 `tailwind.config.js` 中引用来完成的。
 
-## CSS Variables
+## CSS 变量 (CSS Variables)
 
-Variables are defined in `src/index.css` under `:root` for light mode and `.dark` for dark mode.
+变量定义在 `src/index.css` 中，亮色模式在 `:root` 下，暗色模式在 `.dark` 下。
 
-### Colors
+### 颜色 (Colors)
 
-| Token | Variable | Tailwind Utility | Description |
+| 令牌 (Token) | 变量 (Variable) | Tailwind 工具类 (Utility) | 描述 (Description) |
 |-------|----------|------------------|-------------|
-| **Backgrounds** | | | |
-| Page | `--bg-page` | `bg-background-page` | Main app background (Slate 50 / Slate 900) |
-| Surface | `--bg-surface` | `bg-background-surface` | Card/Container background (White / Slate 800) |
-| Surface Highlight | `--bg-surface-highlight` | `bg-background-highlight` | Subtle highlights (Slate 50 / Slate 800) |
-| Input | `--bg-input` | `bg-background-input` | Form inputs background |
-| **Text** | | | |
-| Primary | `--text-primary` | `text-text-primary` | Main content text |
-| Secondary | `--text-secondary` | `text-text-secondary` | Subtitles, labels |
-| Muted | `--text-muted` | `text-text-muted` | Hints, placeholders |
-| Inverse | `--text-inverse` | `text-text-inverse` | Text on contrasting backgrounds |
-| **Border** | | | |
-| Default | `--border-default` | `border-border` | Default borders |
-| Input | `--border-input` | `border-border-input` | Input borders |
-| **Brand** | | | |
-| Primary | `--brand-primary` | `text-brand-primary`, `bg-brand-primary` | Primary brand color (Blue 600) |
-| Hover | `--brand-hover` | `hover:bg-brand-hover` | Hover state for primary actions |
-| **Status** | | | |
-| Error Bg | `--status-error-bg` | `bg-status-error-bg` | Background for error messages |
-| Error Text | `--status-error-text` | `text-status-error-text` | Text color for errors |
+| **背景 (Backgrounds)** | | | |
+| Page | `--bg-page` | `bg-background-page` | 主应用背景 (Slate 50 / Slate 900) |
+| Surface | `--bg-surface` | `bg-background-surface` | 卡片/容器背景 (White / Slate 800) |
+| Surface Highlight | `--bg-surface-highlight` | `bg-background-highlight` | 微妙的高亮 (Slate 50 / Slate 800) |
+| Secondary | `--bg-secondary` | `bg-background-secondary` | 次级背景 (Slate 100 / Slate 700) |
+| Input | `--bg-input` | `bg-background-input` | 表单输入框背景 |
+| **文本 (Text)** | | | |
+| Primary | `--text-primary` | `text-text-primary` | 主要内容文本 |
+| Secondary | `--text-secondary` | `text-text-secondary` | 副标题、标签 |
+| Muted | `--text-muted` | `text-text-muted` | 提示、占位符 |
+| Inverse | `--text-inverse` | `text-text-inverse` | 对比背景上的文本 |
+| **边框 (Border)** | | | |
+| Default | `--border-default` | `border-border` | 默认边框 |
+| Input | `--border-input` | `border-border-input` | 输入框边框 |
+| **品牌 (Brand)** | | | |
+| Primary | `--brand-primary` | `text-brand-primary`, `bg-brand-primary` | 主品牌色 (Blue 600) |
+| Hover | `--brand-hover` | `hover:bg-brand-hover` | 主要操作的悬停状态 |
+| **状态 (Status)** | | | |
+| Error Bg | `--status-error-bg` | `bg-status-error-bg` | 错误信息背景 |
+| Error Text | `--status-error-text` | `text-status-error-text` | 错误文本颜色 |
 
-### Spacing
+### 间距 (Spacing)
 
-| Token | Variable | Tailwind Utility | Value |
+| 令牌 (Token) | 变量 (Variable) | Tailwind 工具类 (Utility) | 值 (Value) |
 |-------|----------|------------------|-------|
 | Layout Page | `--spacing-layout-page` | `p-layout-page` | 2rem (32px) |
 | Layout Section | `--spacing-layout-section` | `p-layout-section` | 3rem (48px) |
 
-### Radii
+### 圆角 (Radii)
 
-| Token | Variable | Tailwind Utility | Value |
+| 令牌 (Token) | 变量 (Variable) | Tailwind 工具类 (Utility) | 值 (Value) |
 |-------|----------|------------------|-------|
 | Small | `--radius-sm` | `rounded-sm` | 0.125rem |
 | Medium | `--radius-md` | `rounded-md` | 0.375rem |
 | Large | `--radius-lg` | `rounded-lg` | 0.5rem |
 | XLarge | `--radius-xl` | `rounded-xl` | 0.75rem |
 
-## Rules for New Tokens
+## 新令牌规则 (Rules for New Tokens)
 
-1. **Define in `design-system.ts`**: Add the conceptual token in the TypeScript file first.
-2. **Add CSS Variable**: Add the variable to `src/index.css` in both `:root` and `.dark` blocks.
-3. **Update Tailwind Config**: Add the reference in `tailwind.config.js`.
-4. **Usage**: Use the Tailwind utility class in components. Avoid using raw hex values or arbitrary values (e.g. `bg-[#123456]`).
+1. **在 `design-system.ts` 中定义**: 首先在 TypeScript 文件中添加概念上的令牌。
+2. **添加 CSS 变量**: 在 `src/index.css` 的 `:root` 和 `.dark` 块中添加变量。
+3. **更新 Tailwind 配置**: 在 `tailwind.config.js` 中添加引用。
+4. **使用**: 在组件中使用 Tailwind 工具类。避免使用原始十六进制值或任意值（例如 `bg-[#123456]`）。
 
-## Typography
+## 排版 (Typography)
 
-Base typography is set in `src/index.css` on the `body` tag:
-- Font: Sans-serif (System UI)
-- Color: `text-text-primary`
-- Background: `bg-background-page`
+基础排版在 `src/index.css` 的 `body` 标签上设置：
+- 字体: Sans-serif (系统 UI)
+- 颜色: `text-text-primary`
+- 背景: `bg-background-page`
