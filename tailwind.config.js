@@ -18,6 +18,7 @@ export default {
         background: {
           page: 'var(--bg-page)',
           surface: 'var(--bg-surface)',
+          sidebar: 'var(--bg-sidebar)',
           highlight: 'var(--bg-surface-highlight)',
           input: 'var(--bg-input)',
           secondary: 'var(--bg-secondary)',

@@ -6,6 +6,7 @@
     /* Backgrounds */
     --bg-page: #f8fafc; /* slate-50 */
     --bg-surface: #ffffff; /* white */
+    --bg-sidebar: #ffffff; /* white */
     --bg-surface-highlight: rgb(248 250 252 / 0.5); /* slate-50/50 */
     --bg-input: #f8fafc; /* slate-50 */
     --bg-secondary: #f1f5f9; /* slate-100 */
@@ -45,6 +46,7 @@
     /* Backgrounds */
     --bg-page: #0f172a; /* slate-900 */
     --bg-surface: #1e293b; /* slate-800 */
+    --bg-sidebar: #020617; /* slate-950 */
     --bg-surface-highlight: rgb(30 41 59 / 0.5); /* slate-800/50 */
     --bg-input: #0f172a; /* slate-900 */
     --bg-secondary: #334155; /* slate-700 */

@@ -37,6 +37,10 @@ export const tokens = {
         light: palette.white,
         dark: palette.slate[800],
       },
+      sidebar: {
+        light: palette.white,
+        dark: '#020617', // slate-950
+      },
       surfaceHighlight: {
         light: 'rgb(248 250 252 / 0.5)', // slate-50/50
         dark: 'rgb(30 41 59 / 0.5)', // slate-800/50

@@ -65,11 +65,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
   return (
     <>
       <aside 
-        className={`fixed left-0 top-0 z-50 h-[100dvh] bg-background-surface border-r border-border transition-all duration-300 ease-in-out flex flex-col group/sidebar ${collapsed ? 'w-16' : 'w-64'}`}
+        className={`fixed left-0 top-0 z-50 h-[100dvh] bg-background-sidebar border-r border-border-muted transition-all duration-300 ease-in-out flex flex-col group/sidebar ${collapsed ? 'w-16' : 'w-64'}`}
         onMouseEnter={handleSidebarMouseEnter}
         onMouseLeave={handleSidebarMouseLeave}
       >
-        <div className={`flex items-center justify-between h-16 px-4 border-b border-border shrink-0`}>
+        <div className={`flex items-center justify-between h-16 px-4 border-b border-border-muted shrink-0`}>
           <div className={`overflow-hidden transition-all duration-300 ease-in-out ${collapsed ? 'w-0 opacity-0' : 'w-40 opacity-100'}`}>
             <span className="font-bold text-lg text-brand-primary tracking-tight whitespace-nowrap">Azin's Toolkit</span>
           </div>
@@ -90,7 +90,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
               </div>
               
               {collapsed && group.title && groupIdx > 0 && (
-                <div className="border-t border-border mx-2 my-2"></div>
+                <div className="border-t border-border-muted mx-2 my-2"></div>
               )}
 
               {group.items.map((item) => (
@@ -119,7 +119,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-border shrink-0 flex flex-col gap-2">
+        <div className="p-4 border-t border-border-muted shrink-0 flex flex-col gap-2">
            <div className={`flex ${collapsed ? 'flex-col items-center gap-4' : 'flex-row justify-between items-center'}`}>
              <button 
                onClick={toggleTheme} 
