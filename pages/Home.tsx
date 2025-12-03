@@ -66,7 +66,7 @@ const Home: React.FC = () => {
           <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 pb-2">
             {t('home.title')}
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+          <p className="text-text-secondary text-lg leading-relaxed">
             {t('home.desc')}
           </p>
         </div>
@@ -76,16 +76,16 @@ const Home: React.FC = () => {
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-6">
         {features.map((feature, idx) => (
           <Link key={idx} to={feature.path} className="group">
-            <Card className="h-full hover:shadow-md dark:hover:shadow-blue-900/10 hover:-translate-y-1 transition-all duration-300 border-slate-200 dark:border-slate-800">
+            <Card className="h-full hover:shadow-md hover:-translate-y-1 transition-all duration-300">
               <CardContent className="p-5 flex items-start space-x-4">
-                <div className={`p-3 rounded-xl bg-slate-50 dark:bg-slate-900 ${feature.color} ring-1 ring-slate-100 dark:ring-slate-800`}>
+                <div className={`p-3 rounded-xl bg-background-input ${feature.color} ring-1 ring-border`}>
                   {feature.icon}
                 </div>
                 <div className="flex-1 space-y-1">
-                  <h3 className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                  <h3 className="font-semibold text-text-primary group-hover:text-brand-primary transition-colors duration-300">
                     {t(feature.title)}
                   </h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+                  <p className="text-sm text-text-secondary line-clamp-2">
                     {t(feature.desc)}
                   </p>
                 </div>
@@ -95,7 +95,7 @@ const Home: React.FC = () => {
         ))}
       </div>
 
-      <div className="text-sm text-slate-400 dark:text-slate-600 pt-8">
+      <div className="text-sm text-text-muted pt-8">
         {t('home.footer')}
       </div>
     </div>
