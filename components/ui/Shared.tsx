@@ -2,13 +2,13 @@ import React from "react";
 import { CopyIcon, CheckIcon } from "./Icons";
 
 export const Card = ({ children, className = "" }: { children?: React.ReactNode; className?: string }) => (
-  <div className={`bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm dark:shadow-lg overflow-hidden transition-colors duration-200 ${className}`}>
+  <div className={`bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm dark:shadow-lg overflow-hidden transition-colors duration-300 ${className}`}>
     {children}
   </div>
 );
 
 export const CardHeader = ({ title, description, action }: { title: string; description?: string; action?: React.ReactNode }) => (
-  <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 transition-colors duration-200">
+  <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 transition-colors duration-300">
     <div>
       <h3 className="text-lg font-semibold text-slate-800 dark:text-white">{title}</h3>
       {description && <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{description}</p>}
@@ -27,7 +27,7 @@ export interface ButtonProps extends React.ComponentProps<"button"> {
 }
 
 export const Button = ({ children, variant = "primary", size = "default", className = "", ...props }: ButtonProps) => {
-  const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-50 disabled:pointer-events-none";
+  const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:opacity-50 disabled:pointer-events-none";
   
   const variants = {
     primary: "bg-blue-600 text-white hover:bg-blue-700 shadow-sm",
@@ -53,14 +53,14 @@ export const Button = ({ children, variant = "primary", size = "default", classN
 
 export const Input = ({ className = "", ...props }: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input
-    className={`flex h-10 w-full rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-200 ${className}`}
+    className={`flex h-10 w-full rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-300 ${className}`}
     {...props}
   />
 );
 
 export const TextArea = ({ className = "", ...props }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
   <textarea
-    className={`flex min-h-[80px] w-full rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 font-mono transition-colors duration-200 ${className}`}
+    className={`flex min-h-[80px] w-full rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 font-mono transition-colors duration-300 ${className}`}
     {...props}
   />
 );
@@ -68,7 +68,7 @@ export const TextArea = ({ className = "", ...props }: React.TextareaHTMLAttribu
 export const Select = ({ children, className = "", ...props }: React.SelectHTMLAttributes<HTMLSelectElement>) => (
   <div className="relative">
     <select
-      className={`flex h-10 w-full appearance-none rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-200 ${className}`}
+      className={`flex h-10 w-full appearance-none rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-300 ${className}`}
       {...props}
     >
       {children}
@@ -127,7 +127,7 @@ export const Tabs = ({ defaultValue, children, className = "" }: { defaultValue:
 };
 
 export const TabsList = ({ children, className = "" }: { children?: React.ReactNode; className?: string }) => (
-  <div className={`flex space-x-1 rounded-lg bg-slate-100 dark:bg-slate-800 p-1 mb-6 transition-colors duration-200 ${className}`}>
+  <div className={`flex space-x-1 rounded-lg bg-slate-100 dark:bg-slate-800 p-1 mb-6 transition-colors duration-300 ${className}`}>
     {children}
   </div>
 );
@@ -153,5 +153,5 @@ export const TabsContent = ({ value, children, className = "" }: { value: string
   if (!context) throw new Error("TabsContent must be used within Tabs");
   
   if (context.activeTab !== value) return null;
-  return <div className={`animate-in fade-in slide-in-from-left-1 duration-200 ${className}`}>{children}</div>;
+  return <div className={`animate-in fade-in slide-in-from-left-1 duration-300 ${className}`}>{children}</div>;
 };

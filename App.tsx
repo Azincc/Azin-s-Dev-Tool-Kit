@@ -4,7 +4,7 @@ import { Sidebar } from './components/Sidebar';
 import { NavGroup } from './types';
 import { 
   HomeIcon, FileJsonIcon, LockIcon, PaletteIcon, FileTextIcon,
-  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon, ClockIcon, GlobeIcon
+  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon, ClockIcon, GlobeIcon, TableIcon
 } from './components/ui/Icons';
 import { AppProvider } from './contexts/AppContext';
 
@@ -13,6 +13,7 @@ const Home = React.lazy(() => import('./pages/Home'));
 const JsonTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.JsonTools })));
 const CodeTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.CodeTools })));
 const EncoderTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.EncoderTools })));
+const CsvTools = React.lazy(() => import('./pages/DataTools').then(m => ({ default: m.CsvTools })));
 const HashTools = React.lazy(() => import('./pages/SecurityTools').then(m => ({ default: m.HashTools })));
 const EncryptTools = React.lazy(() => import('./pages/SecurityTools').then(m => ({ default: m.EncryptTools })));
 const JwtTools = React.lazy(() => import('./pages/SecurityTools').then(m => ({ default: m.JwtTools })));
@@ -87,6 +88,7 @@ const MainLayout = () => {
             
               {/* Formatters */}
               <Route path="/json" element={<JsonTools />} />
+              <Route path="/csv" element={<CsvTools />} />
               <Route path="/code" element={<CodeTools />} />
               <Route path="/encoders" element={<EncoderTools />} />
 
