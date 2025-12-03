@@ -30,6 +30,7 @@ export default {
         },
         border: {
           DEFAULT: 'var(--border-default)',
+          muted: 'var(--border-muted)',
           input: 'var(--border-input)',
         },
         brand: {

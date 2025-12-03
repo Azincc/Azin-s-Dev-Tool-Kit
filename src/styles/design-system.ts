@@ -38,8 +38,8 @@ export const tokens = {
         dark: palette.slate[800],
       },
       surfaceHighlight: {
-        light: palette.slate[50], // approx for bg-slate-50/50
-        dark: palette.slate[800], // approx for bg-slate-800/50
+        light: 'rgb(248 250 252 / 0.5)', // slate-50/50
+        dark: 'rgb(30 41 59 / 0.5)', // slate-800/50
       },
       input: {
         light: palette.slate[50],
@@ -72,6 +72,10 @@ export const tokens = {
       default: {
         light: palette.slate[200],
         dark: palette.slate[700],
+      },
+      muted: {
+        light: palette.slate[200],
+        dark: palette.slate[800],
       },
       input: {
         light: palette.slate[300],

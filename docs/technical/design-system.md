@@ -18,7 +18,7 @@
 | **背景 (Backgrounds)** | | | |
 | Page | `--bg-page` | `bg-background-page` | 主应用背景 (Slate 50 / Slate 900) |
 | Surface | `--bg-surface` | `bg-background-surface` | 卡片/容器背景 (White / Slate 800) |
-| Surface Highlight | `--bg-surface-highlight` | `bg-background-highlight` | 微妙的高亮 (Slate 50 / Slate 800) |
+| Surface Highlight | `--bg-surface-highlight` | `bg-background-highlight` | 微妙的高亮，带透明度 (Slate 50 / Slate 800) |
 | Secondary | `--bg-secondary` | `bg-background-secondary` | 次级背景 (Slate 100 / Slate 700) |
 | Input | `--bg-input` | `bg-background-input` | 表单输入框背景 |
 | **文本 (Text)** | | | |
@@ -28,6 +28,7 @@
 | Inverse | `--text-inverse` | `text-text-inverse` | 对比背景上的文本 |
 | **边框 (Border)** | | | |
 | Default | `--border-default` | `border-border` | 默认边框 |
+| Muted | `--border-muted` | `border-border-muted` | 柔和边框，用于深色模式下的卡片等 (Slate 200 / Slate 800) |
 | Input | `--border-input` | `border-border-input` | 输入框边框 |
 | **品牌 (Brand)** | | | |
 | Primary | `--brand-primary` | `text-brand-primary`, `bg-brand-primary` | 主品牌色 (Blue 600) |

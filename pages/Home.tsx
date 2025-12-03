@@ -76,7 +76,7 @@ const Home: React.FC = () => {
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-6">
         {features.map((feature, idx) => (
           <Link key={idx} to={feature.path} className="group">
-            <Card className="h-full hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+            <Card className="h-full hover:shadow-md hover:-translate-y-1 transition-all duration-300 border-border-muted">
               <CardContent className="p-5 flex items-start space-x-4">
                 <div className={`p-3 rounded-xl bg-background-input ${feature.color} ring-1 ring-border`}>
                   {feature.icon}
