@@ -22,6 +22,7 @@ export default {
           highlight: 'var(--bg-surface-highlight)',
           input: 'var(--bg-input)',
           secondary: 'var(--bg-secondary)',
+          muted: 'var(--bg-muted)',
         },
         text: {
           primary: 'var(--text-primary)',

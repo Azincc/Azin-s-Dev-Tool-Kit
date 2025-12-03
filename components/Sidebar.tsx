@@ -103,7 +103,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
                     flex items-center py-2.5 rounded-lg transition-all duration-300 group relative px-0
                     ${isActive 
                       ? 'bg-brand-primary text-text-inverse shadow-md shadow-blue-900/20' 
-                      : 'text-text-secondary hover:bg-background-secondary hover:text-text-primary'}
+                      : 'text-text-secondary hover:bg-background-muted hover:text-text-primary'}
                   `}
                 >
                   <span className="shrink-0 flex items-center justify-center w-12">
@@ -124,7 +124,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
              <button 
                onClick={toggleTheme} 
                title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
-               className="p-2 rounded-md hover:bg-background-secondary text-text-secondary transition-colors duration-300"
+               className="p-2 rounded-md hover:bg-background-muted text-text-secondary transition-colors duration-300"
              >
                {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
              </button>
@@ -132,7 +132,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ groups }) => {
              <button
                onClick={toggleLanguage}
                title={language === 'en' ? "切换到中文" : "Switch to English"}
-               className="p-2 rounded-md hover:bg-background-secondary text-text-secondary transition-colors duration-300 flex items-center"
+               className="p-2 rounded-md hover:bg-background-muted text-text-secondary transition-colors duration-300 flex items-center"
              >
                <GlobeIcon className="w-5 h-5" />
                <span className={`text-xs font-bold whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out ${collapsed ? 'max-w-0 opacity-0 ml-0' : 'max-w-[50px] opacity-100 ml-2'}`}>{language === 'en' ? 'ZH' : 'EN'}</span>

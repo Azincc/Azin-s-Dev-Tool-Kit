@@ -52,6 +52,10 @@ export const tokens = {
       secondary: {
         light: palette.slate[100],
         dark: palette.slate[700],
+      },
+      muted: {
+        light: palette.slate[100], // matches bg-secondary light
+        dark: palette.slate[800], // matches bg-surface dark, darker than secondary
       }
     },
     text: {
@@ -69,7 +73,7 @@ export const tokens = {
       },
       inverse: {
         light: palette.white,
-        dark: palette.slate[900],
+        dark: palette.white, // inverse on brand color should be white in dark mode too
       },
     },
     border: {

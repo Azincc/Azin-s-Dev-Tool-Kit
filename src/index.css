@@ -10,6 +10,7 @@
     --bg-surface-highlight: rgb(248 250 252 / 0.5); /* slate-50/50 */
     --bg-input: #f8fafc; /* slate-50 */
     --bg-secondary: #f1f5f9; /* slate-100 */
+    --bg-muted: #f1f5f9; /* slate-100 */
     
     /* Text */
     --text-primary: #0f172a; /* slate-900 */
@@ -50,12 +51,13 @@
     --bg-surface-highlight: rgb(30 41 59 / 0.5); /* slate-800/50 */
     --bg-input: #0f172a; /* slate-900 */
     --bg-secondary: #334155; /* slate-700 */
+    --bg-muted: #1e293b; /* slate-800 */
     
     /* Text */
     --text-primary: #f1f5f9; /* slate-100 */
     --text-secondary: #94a3b8; /* slate-400 */
     --text-muted: #64748b; /* slate-500 */
-    --text-inverse: #0f172a; /* slate-900 */
+    --text-inverse: #ffffff; /* white */
     
     /* Borders */
     --border-default: #334155; /* slate-700 */
