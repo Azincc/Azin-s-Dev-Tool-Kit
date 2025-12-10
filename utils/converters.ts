@@ -17,7 +17,8 @@ const detectFormat = (input: string): FormatType | null => {
     return 'xml';
   }
 
-  if (trimmed.includes(':') && !trimmed.includes('{')) {
+  // Basic YAML detection (looking for key: value structure or document start)
+  if ((trimmed.includes(':') && !trimmed.includes('{') && !trimmed.startsWith('<')) || trimmed.startsWith('---')) {
     return 'yaml';
   }
 
@@ -54,38 +55,61 @@ const xmlToJson = (xml: string): any => {
       throw new Error('Invalid XML structure');
     }
 
-    return xmlNodeToObject(xmlDoc.documentElement);
+    const rootNode = xmlDoc.documentElement;
+    const result: any = {};
+    result[rootNode.nodeName] = xmlNodeToObject(rootNode);
+    return result;
   } catch (e) {
     throw new Error(`XML parsing failed: ${(e as Error).message}`);
   }
 };
 
 const xmlNodeToObject = (node: Element): any => {
-  const obj: any = {};
+    const obj: any = {};
+    const hasAttributes = node.hasAttributes();
+    const hasChildren = node.children.length > 0;
 
-  if (node.children.length === 0) {
-    const text = node.textContent?.trim();
-    return text || null;
-  }
-
-  const childMap: { [key: string]: any[] } = {};
-
-  for (let i = 0; i < node.children.length; i++) {
-    const child = node.children[i] as Element;
-    const childName = child.nodeName;
-    const childValue = xmlNodeToObject(child);
-
-    if (!childMap[childName]) {
-      childMap[childName] = [];
+    // Process attributes
+    if (hasAttributes) {
+        for (let i = 0; i < node.attributes.length; i++) {
+            const attr = node.attributes[i];
+            obj[`@${attr.name}`] = attr.value;
+        }
     }
-    childMap[childName].push(childValue);
-  }
 
-  for (const [key, values] of Object.entries(childMap)) {
-    obj[key] = values.length === 1 ? values[0] : values;
-  }
+    // Process text content
+    if (!hasChildren) {
+        const text = node.textContent?.trim();
+        if (text) {
+             if (hasAttributes) {
+                 obj['#text'] = text;
+             } else {
+                 return text;
+             }
+        } else if (!hasAttributes) {
+             return null;
+        }
+    } else {
+        // Process children
+         const childMap: { [key: string]: any[] } = {};
 
-  return obj;
+        for (let i = 0; i < node.children.length; i++) {
+            const child = node.children[i] as Element;
+            const childName = child.nodeName;
+            const childValue = xmlNodeToObject(child);
+
+            if (!childMap[childName]) {
+                childMap[childName] = [];
+            }
+            childMap[childName].push(childValue);
+        }
+
+        for (const [key, values] of Object.entries(childMap)) {
+            obj[key] = values.length === 1 ? values[0] : values;
+        }
+    }
+
+    return obj;
 };
 
 const jsonToXml = (obj: any, rootName = 'root', indent = 0): string => {
@@ -101,21 +125,43 @@ const jsonToXml = (obj: any, rootName = 'root', indent = 0): string => {
   }
 
   if (Array.isArray(obj)) {
-    return obj.map((item, idx) =>
+    return obj.map((item) =>
       jsonToXml(item, rootName, indent)
     ).join('\n');
   }
 
-  const entries = Object.entries(obj);
-  if (entries.length === 0) {
-    return `${indentStr}<${rootName} />`;
+  let attributes = '';
+  let childrenStr = '';
+  let hasText = false;
+  let textValue = '';
+
+  const keys = Object.keys(obj);
+
+  // Separation of attributes, text, and children
+  keys.forEach(key => {
+      if (key.startsWith('@')) {
+          attributes += ` ${key.substring(1)}="${escapeXml(String(obj[key]))}"`;
+      } else if (key === '#text') {
+          hasText = true;
+          textValue = escapeXml(String(obj[key]));
+      } else {
+          childrenStr += '\n' + jsonToXml(obj[key], key, indent + 1);
+      }
+  });
+
+  if (childrenStr) {
+       childrenStr += '\n' + indentStr;
   }
 
-  const children = entries
-    .map(([key, value]) => jsonToXml(value, key, indent + 1))
-    .join('\n');
+  if (hasText && !childrenStr) {
+      return `${indentStr}<${rootName}${attributes}>${textValue}</${rootName}>`;
+  }
 
-  return `${indentStr}<${rootName}>\n${children}\n${indentStr}</${rootName}>`;
+  if (!childrenStr && !hasText) {
+      return `${indentStr}<${rootName}${attributes} />`;
+  }
+
+  return `${indentStr}<${rootName}${attributes}>${childrenStr}</${rootName}>`;
 };
 
 const escapeXml = (str: string): string => {
@@ -134,16 +180,6 @@ const convert = (
   options: ConversionOptions = {}
 ): string => {
   try {
-    if (sourceFormat === targetFormat) {
-      if (sourceFormat === 'json') {
-        return JSON.stringify(JSON.parse(input), null, options.indent || 2);
-      } else if (sourceFormat === 'yaml') {
-        return jsonToYaml(yamlToJson(input), options);
-      } else if (sourceFormat === 'xml') {
-        return jsonToXml(xmlToJson(input), 'root', 0);
-      }
-    }
-
     let intermediate: any;
 
     if (sourceFormat === 'json') {
@@ -152,21 +188,25 @@ const convert = (
       intermediate = yamlToJson(input);
     } else if (sourceFormat === 'xml') {
       intermediate = xmlToJson(input);
+    } else {
+         throw new Error('Unsupported source format');
     }
 
-    let output: string;
-
     if (targetFormat === 'json') {
-      output = JSON.stringify(intermediate, null, options.indent || 2);
+      return JSON.stringify(intermediate, null, options.indent || 2);
     } else if (targetFormat === 'yaml') {
-      output = jsonToYaml(intermediate, options);
+      return jsonToYaml(intermediate, options);
     } else if (targetFormat === 'xml') {
-      output = `<?xml version="1.0" encoding="UTF-8"?>\n${jsonToXml(intermediate, 'root', 0)}`;
+       // Check if the object has a single root key, if so use it, otherwise wrap in root
+       const keys = Object.keys(intermediate);
+       if (keys.length === 1 && typeof intermediate[keys[0]] === 'object' && !Array.isArray(intermediate[keys[0]])) {
+           return `<?xml version="1.0" encoding="UTF-8"?>\n${jsonToXml(intermediate[keys[0]], keys[0], 0)}`;
+       }
+       return `<?xml version="1.0" encoding="UTF-8"?>\n${jsonToXml(intermediate, 'root', 0)}`;
     } else {
       throw new Error('Invalid target format');
     }
 
-    return output;
   } catch (e) {
     throw new Error((e as Error).message);
   }

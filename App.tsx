@@ -10,7 +10,7 @@ import { AppProvider } from './contexts/AppContext';
 
 // Pages & Tools - Lazy loaded
 const Home = React.lazy(() => import('./pages/Home'));
-const JsonTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.JsonTools })));
+const JsonTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.ConverterTools })));
 const CodeTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.CodeTools })));
 const EncoderTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.EncoderTools })));
 const CsvTools = React.lazy(() => import('./pages/DataTools').then(m => ({ default: m.CsvTools })));

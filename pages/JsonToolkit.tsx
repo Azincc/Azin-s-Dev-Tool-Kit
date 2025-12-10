@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardHeader, CardContent, Button, TextArea, CopyButton, Select, Label } from '../components/ui/Shared';
+import { Card, CardHeader, Button, TextArea, CopyButton, Select, Label } from '../components/ui/Shared';
 import { TrashIcon, TableIcon } from '../components/ui/Icons';
 import { useAppContext } from '../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
-import { convert, detectFormat, FormatType } from '../utils/converters';
+import { convert, detectFormat, FormatType, jsonToXml as utilJsonToXml, yamlToJson, xmlToJson } from '../utils/converters';
 
-// --- JSON Tools Component ---
-export const JsonTools: React.FC = () => {
+// --- Converter Tools Component ---
+export const ConverterTools: React.FC = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
+  // modes: format (default/auto), toTS, toGo, toJava, toCSV, minify
   const [mode, setMode] = useState('format');
   const [sourceFormat, setSourceFormat] = useState<FormatType>('json');
   const [targetFormat, setTargetFormat] = useState<FormatType>('json');
@@ -25,31 +26,75 @@ export const JsonTools: React.FC = () => {
     }
   };
 
+  // Effect for Auto Detect on load or input change if sourceFormat is JSON and input looks like something else?
+  // Requirement says: "Automatic format detection function: Identify format type based on input string".
+  // I will add a manual button for it, or check if it matches current selection.
+  // For now, keeping manual button logic, but maybe update sourceFormat if it clearly mismatches?
+  // Let's stick to the manual "Auto Detect" button for explicit action, or automatic update if user hasn't touched the dropdown?
+  // I'll stick to the manual button for now as implemented in handleAutoDetect.
+
+  // Primary Conversion Logic
   useEffect(() => {
     if (!input.trim()) {
       setOutput('');
       setError(null);
       return;
     }
+
+    // Special handling for legacy modes that expect JSON input only
+    if (['toTS', 'toGo', 'toJava', 'toCSV'].includes(mode)) {
+        try {
+             // Try to parse input as JSON first.
+             // If source format is NOT json, we should probably convert it to json first?
+             // But existing logic assumes input is JSON string.
+             // Let's support other formats by converting to JSON intermediate first.
+             let intermediate: any;
+             try {
+                if (sourceFormat === 'json') intermediate = JSON.parse(input);
+                else if (sourceFormat === 'yaml') intermediate = yamlToJson(input);
+                else if (sourceFormat === 'xml') intermediate = xmlToJson(input);
+             } catch(e) {
+                 // Fallback: try parsing as JSON if sourceFormat was wrong
+                 intermediate = JSON.parse(input);
+             }
+
+             setError(null);
+             switch (mode) {
+                case 'toTS': setOutput(jsonToTypeScript(intermediate)); break;
+                case 'toGo': setOutput(jsonToGo(intermediate)); break;
+                case 'toJava': setOutput(jsonToJava(intermediate)); break;
+                case 'toCSV': setOutput(jsonToCsv(intermediate)); break;
+             }
+        } catch (e) {
+             setError((e as Error).message);
+        }
+        return;
+    }
+
+    if (mode === 'minify') {
+        try {
+            // Minify only makes sense for JSON usually, but we can do it for others by re-stringifying with 0 indent
+             const result = convert(input, sourceFormat, targetFormat, { indent: 0 });
+             setOutput(result);
+             setError(null);
+        } catch(e) {
+            setError((e as Error).message);
+        }
+        return;
+    }
+
+    // Default 'format' mode: Use the convert utility
     try {
-      const parsed = JSON.parse(input);
+      const result = convert(input, sourceFormat, targetFormat, { indent: 2 });
+      setOutput(result);
       setError(null);
-      switch (mode) {
-        case 'format': setOutput(JSON.stringify(parsed, null, 2)); break;
-        case 'minify': setOutput(JSON.stringify(parsed)); break;
-        case 'toTS': setOutput(jsonToTypeScript(parsed)); break;
-        case 'toGo': setOutput(jsonToGo(parsed)); break;
-        case 'toJava': setOutput(jsonToJava(parsed)); break;
-        case 'toXML': setOutput(jsonToXml(parsed)); break;
-        case 'toCSV': setOutput(jsonToCsv(parsed)); break;
-        default: setOutput(JSON.stringify(parsed, null, 2));
-      }
     } catch (e) {
       setError((e as Error).message);
     }
-  }, [input, mode]);
+  }, [input, mode, sourceFormat, targetFormat]);
 
-  // Converters
+
+  // Converters (Legacy / Special)
   const jsonToTypeScript = (obj: any, name = "Root"): string => {
     const getType = (v: any): string => Array.isArray(v) ? `${getType(v[0])}[]` : typeof v === 'object' && v !== null ? 'object' : typeof v;
     return `interface ${name} {\n` + Object.keys(obj).map(k => `  ${k}: ${getType(obj[k])};`).join('\n') + `\n}`;
@@ -64,13 +109,6 @@ export const JsonTools: React.FC = () => {
         `    private ${typeof obj[k] === 'number' ? 'double' : 'String'} ${k};`
       ).join('\n') + `\n    // Getters and Setters omitted\n}`;
   };
-  const jsonToXml = (obj: any): string => {
-      const toXml = (v: any, name: string): string => {
-          if (typeof v !== 'object' || v === null) return `<${name}>${v}</${name}>`;
-          return `<${name}>${Object.keys(v).map(k => toXml(v[k], k)).join('')}</${name}>`;
-      }
-      return `<?xml version="1.0" encoding="UTF-8"?>\n<root>${Object.keys(obj).map(k => toXml(obj[k], k)).join('')}</root>`;
-  }
   const jsonToCsv = (obj: any): string => {
       const arr = Array.isArray(obj) ? obj : [obj];
       if (arr.length === 0) return '';
@@ -90,62 +128,78 @@ export const JsonTools: React.FC = () => {
   const handleOpenInCsvTool = () => {
       if (!input) return;
       try {
-          const parsed = JSON.parse(input);
-          const data = Array.isArray(parsed) ? parsed : [parsed];
+          // Attempt to get data based on current source format
+          let data: any;
+           if (sourceFormat === 'json') data = JSON.parse(input);
+           else if (sourceFormat === 'yaml') data = yamlToJson(input);
+           else if (sourceFormat === 'xml') data = xmlToJson(input);
+
+          data = Array.isArray(data) ? data : [data];
           navigate('/csv', { state: { data } });
       } catch(e) {
           // ignore
       }
   };
 
-  const handleConvert = () => {
-    if (!input.trim()) {
-      setOutput('');
-      setError(null);
-      return;
-    }
-    try {
-      const result = convert(input, sourceFormat, targetFormat, { indent: 2 });
-      setOutput(result);
-      setError(null);
-    } catch (e) {
-      setError((e as Error).message);
-    }
-  };
-
-  useEffect(() => {
-    if (mode === 'format' || mode === 'minify' || mode === 'toTS' || mode === 'toGo' || mode === 'toJava' || mode === 'toXML' || mode === 'toCSV') {
-      return;
-    }
-    handleConvert();
-  }, [sourceFormat, targetFormat]);
-
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
       <div>
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.json.title')}</h2>
-        <p className="text-slate-500 dark:text-slate-400">{t('tool.json.desc')}</p>
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.converter.title')}</h2>
+        <p className="text-slate-500 dark:text-slate-400">{t('tool.converter.desc')}</p>
       </div>
 
       <div className="flex flex-wrap gap-2 bg-slate-100 dark:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
-        {[{id: 'format', l: t('tool.json.prettify')}, {id: 'minify', l: t('tool.json.minify')}, {id: 'toTS', l: t('tool.json.toTS')}, {id: 'toGo', l: t('tool.json.toGo')},
-          {id: 'toJava', l: t('tool.json.toJava')}, {id: 'toXML', l: t('tool.json.toXML')}, {id: 'toCSV', l: t('tool.json.toCSV')}
+        {[
+          {id: 'format', l: t('tool.converter.format')},
+          {id: 'minify', l: t('tool.json.minify')},
+          {id: 'toTS', l: t('tool.json.toTS')},
+          {id: 'toGo', l: t('tool.json.toGo')},
+          {id: 'toJava', l: t('tool.json.toJava')},
+          // Removed toXML/toYAML buttons as they are now handled by dropdowns, but keeping toCSV as it's a specific export
+          {id: 'toCSV', l: t('tool.json.toCSV')}
         ].map((m) => (
           <button key={m.id} onClick={() => setMode(m.id)} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === m.id ? 'bg-blue-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700'}`}>{m.l}</button>
         ))}
       </div>
 
-      {mode === 'format' || mode === 'minify' || mode === 'toTS' || mode === 'toGo' || mode === 'toJava' || mode === 'toXML' || mode === 'toCSV' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
-          <Card className="flex flex-col h-full">
-            <CardHeader title={t('tool.json.input')} action={input && <button onClick={() => { setInput(''); setOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
-            <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-900">
-              <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder='{"name": "Azin"}' className="w-full h-full border-0 bg-transparent text-slate-900 dark:text-white resize-none p-2 font-mono text-sm" spellCheck={false} />
+      {/* Main Conversion Area */}
+      <div className="space-y-4 flex-1 flex flex-col min-h-0">
+
+          {/* Format Selection (Only show if not in legacy code generation modes) */}
+          {['format', 'minify'].includes(mode) && (
+            <div className="flex flex-wrap gap-4 items-end">
+                <div className="flex-1 min-w-[200px]">
+                <Label className="block mb-2 text-sm font-medium">{t('tool.json.sourceFormat')}</Label>
+                <Select value={sourceFormat} onChange={(e) => setSourceFormat(e.target.value as FormatType)}>
+                    <option value="json">JSON</option>
+                    <option value="yaml">YAML</option>
+                    <option value="xml">XML</option>
+                </Select>
+                </div>
+                <div className="flex-1 min-w-[200px]">
+                <Label className="block mb-2 text-sm font-medium">{t('tool.json.targetFormat')}</Label>
+                <Select value={targetFormat} onChange={(e) => setTargetFormat(e.target.value as FormatType)}>
+                    <option value="json">JSON</option>
+                    <option value="yaml">YAML</option>
+                    <option value="xml">XML</option>
+                </Select>
+                </div>
+                <Button onClick={handleAutoDetect} variant="secondary" className="text-xs">
+                    {t('tool.json.autoDetect')}
+                </Button>
             </div>
-          </Card>
-          <Card className="flex flex-col h-full border-blue-900/30">
-            <CardHeader title={error ? t('tool.json.error') : t('tool.json.output')} action={
-                <div className="flex items-center gap-2">
+          )}
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
+            <Card className="flex flex-col h-full">
+              <CardHeader title={`${t('tool.json.input')} ${['format', 'minify'].includes(mode) ? `(${sourceFormat.toUpperCase()})` : ''}`} action={input && <button onClick={() => { setInput(''); setOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
+              <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-900">
+                <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder={sourceFormat === 'json' ? '{"key": "value"}' : sourceFormat === 'yaml' ? 'key: value' : '<root><key>value</key></root>'} className="w-full h-full border-0 bg-transparent text-slate-900 dark:text-white resize-none p-2 font-mono text-sm" spellCheck={false} />
+              </div>
+            </Card>
+            <Card className="flex flex-col h-full border-blue-900/30">
+              <CardHeader title={error ? t('tool.json.error') : `${t('tool.json.output')} ${['format', 'minify'].includes(mode) ? `(${targetFormat.toUpperCase()})` : ''}`} action={
+                  <div className="flex items-center gap-2">
                     {mode === 'toCSV' && !error && output && (
                         <>
                           <Button size="sm" variant="secondary" onClick={handleOpenInCsvTool} className="text-xs" title={t('tool.json.openCsv')}>
@@ -157,47 +211,8 @@ export const JsonTools: React.FC = () => {
                         </>
                     )}
                     <CopyButton text={output} />
-                </div>
-            } />
-            <div className="flex-1 p-0 bg-slate-100 dark:bg-slate-950 overflow-hidden relative">
-               {error ? <div className="p-4 text-red-500 dark:text-red-400 font-mono text-sm">{error}</div> :
-               <TextArea readOnly value={output} className="w-full h-full border-0 bg-transparent resize-none p-4 font-mono text-emerald-600 dark:text-emerald-400 text-sm" />}
-            </div>
-          </Card>
-        </div>
-      ) : (
-        <div className="space-y-4 flex-1 flex flex-col min-h-0">
-          <div className="flex flex-wrap gap-4 items-end">
-            <div className="flex-1 min-w-[200px]">
-              <Label className="block mb-2 text-sm font-medium">{t('tool.json.sourceFormat')}</Label>
-              <Select value={sourceFormat} onChange={(e) => setSourceFormat(e.target.value as FormatType)}>
-                <option value="json">JSON</option>
-                <option value="yaml">YAML</option>
-                <option value="xml">XML</option>
-              </Select>
-            </div>
-            <div className="flex-1 min-w-[200px]">
-              <Label className="block mb-2 text-sm font-medium">{t('tool.json.targetFormat')}</Label>
-              <Select value={targetFormat} onChange={(e) => setTargetFormat(e.target.value as FormatType)}>
-                <option value="json">JSON</option>
-                <option value="yaml">YAML</option>
-                <option value="xml">XML</option>
-              </Select>
-            </div>
-            <Button onClick={handleAutoDetect} variant="secondary" className="text-xs">
-              {t('tool.json.autoDetect')}
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
-            <Card className="flex flex-col h-full">
-              <CardHeader title={`${t('tool.json.input')} (${sourceFormat.toUpperCase()})`} action={input && <button onClick={() => { setInput(''); setOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
-              <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-900">
-                <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder={sourceFormat === 'json' ? '{"key": "value"}' : sourceFormat === 'yaml' ? 'key: value' : '<root><key>value</key></root>'} className="w-full h-full border-0 bg-transparent text-slate-900 dark:text-white resize-none p-2 font-mono text-sm" spellCheck={false} />
-              </div>
-            </Card>
-            <Card className="flex flex-col h-full border-blue-900/30">
-              <CardHeader title={error ? t('tool.json.error') : `${t('tool.json.output')} (${targetFormat.toUpperCase()})`} action={<CopyButton text={output} />} />
+                  </div>
+              } />
               <div className="flex-1 p-0 bg-slate-100 dark:bg-slate-950 overflow-hidden relative">
                  {error ? <div className="p-4 text-red-500 dark:text-red-400 font-mono text-sm">{error}</div> :
                  <TextArea readOnly value={output} className="w-full h-full border-0 bg-transparent resize-none p-4 font-mono text-emerald-600 dark:text-emerald-400 text-sm" />}
@@ -205,10 +220,15 @@ export const JsonTools: React.FC = () => {
             </Card>
           </div>
         </div>
-      )}
     </div>
   );
 };
+
+// Also export JsonTools for backward compatibility if needed, but we can replace it.
+// The task says "Refactor JsonTools to ConverterTools".
+// I will export ConverterTools as JsonTools as well to avoid breaking imports in other files if any (though likely only App.tsx)
+export const JsonTools = ConverterTools;
+
 
 // --- Code Format Tools ---
 export const CodeTools: React.FC = () => {
