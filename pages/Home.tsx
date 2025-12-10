@@ -11,12 +11,20 @@ import {
 import { Card, CardContent } from '../components/ui/Shared';
 
 const PokeBall = () => (
-  // Removed animate-bounce-slow for static display
-  <svg width="120" height="120" viewBox="0 0 100 100" className="drop-shadow-xl transition-transform duration-700 hover:rotate-180">
-    <circle cx="50" cy="50" r="45" fill="currentColor" className="text-white dark:text-slate-50" stroke="#1e293b" strokeWidth="4" />
-    <path d="M 5,50 A 45,45 0 0 1 95,50" fill="#ef4444" />
-    <rect x="5" y="46" width="90" height="8" fill="#1e293b" />
-    <circle cx="50" cy="50" r="14" fill="currentColor" className="text-white dark:text-slate-50" stroke="#1e293b" strokeWidth="4" />
+  <svg width="120" height="120" viewBox="0 0 100 100" className="drop-shadow-xl">
+    <defs>
+      <clipPath id="topHalf">
+        <rect x="0" y="0" width="100" height="50" />
+      </clipPath>
+      <clipPath id="bottomHalf">
+        <rect x="0" y="50" width="100" height="50" />
+      </clipPath>
+    </defs>
+    <circle cx="50" cy="50" r="45" fill="#ef4444" clipPath="url(#topHalf)" />
+    <circle cx="50" cy="50" r="45" fill="white" clipPath="url(#bottomHalf)" />
+    <circle cx="50" cy="50" r="45" fill="none" stroke="#1e293b" strokeWidth="4" />
+    <rect x="5" y="47" width="90" height="6" fill="#1e293b" />
+    <circle cx="50" cy="50" r="14" fill="white" stroke="#1e293b" strokeWidth="4" />
     <circle cx="50" cy="50" r="8" fill="none" stroke="#94a3b8" strokeWidth="1" />
   </svg>
 );

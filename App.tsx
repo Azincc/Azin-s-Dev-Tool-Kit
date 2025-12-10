@@ -8,14 +8,24 @@ import {
 } from './components/ui/Icons';
 import { AppProvider } from './contexts/AppContext';
 
-// Pages & Tools
-import Home from './pages/Home';
-import { JsonTools, CodeTools, EncoderTools } from './pages/JsonToolkit';
-import { CsvTools } from './pages/DataTools';
-import { HashTools, EncryptTools, JwtTools, PasswordTools } from './pages/SecurityTools';
-import { ColorPaletteTools, ImageTools, CssGenTools } from './pages/ColorTools';
-import { EditorTools, RegexTools, DiffTools } from './pages/TextTools';
-import { CrontabTools, WorldClockTools } from './pages/TimeTools';
+// Pages & Tools - Lazy loaded
+const Home = React.lazy(() => import('./pages/Home'));
+const JsonTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.JsonTools })));
+const CodeTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.CodeTools })));
+const EncoderTools = React.lazy(() => import('./pages/JsonToolkit').then(m => ({ default: m.EncoderTools })));
+const CsvTools = React.lazy(() => import('./pages/DataTools').then(m => ({ default: m.CsvTools })));
+const HashTools = React.lazy(() => import('./pages/SecurityTools').then(m => ({ default: m.HashTools })));
+const EncryptTools = React.lazy(() => import('./pages/SecurityTools').then(m => ({ default: m.EncryptTools })));
+const JwtTools = React.lazy(() => import('./pages/SecurityTools').then(m => ({ default: m.JwtTools })));
+const PasswordTools = React.lazy(() => import('./pages/SecurityTools').then(m => ({ default: m.PasswordTools })));
+const ColorPaletteTools = React.lazy(() => import('./pages/ColorTools').then(m => ({ default: m.ColorPaletteTools })));
+const ImageTools = React.lazy(() => import('./pages/ColorTools').then(m => ({ default: m.ImageTools })));
+const CssGenTools = React.lazy(() => import('./pages/ColorTools').then(m => ({ default: m.CssGenTools })));
+const EditorTools = React.lazy(() => import('./pages/TextTools').then(m => ({ default: m.EditorTools })));
+const RegexTools = React.lazy(() => import('./pages/TextTools').then(m => ({ default: m.RegexTools })));
+const DiffTools = React.lazy(() => import('./pages/TextTools').then(m => ({ default: m.DiffTools })));
+const CrontabTools = React.lazy(() => import('./pages/TimeTools').then(m => ({ default: m.CrontabTools })));
+const WorldClockTools = React.lazy(() => import('./pages/TimeTools').then(m => ({ default: m.WorldClockTools })));
 
 const navGroups: NavGroup[] = [
   {
@@ -73,37 +83,39 @@ const MainLayout = () => {
       
       <main className="flex-1 ml-16 md:ml-16 transition-all duration-300 group-hover/sidebar:md:ml-64">
         <div className="container mx-auto p-layout-page md:p-layout-page lg:p-layout-section max-w-7xl animate-fade-in">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            
-            {/* Formatters */}
-            <Route path="/json" element={<JsonTools />} />
-            <Route path="/csv" element={<CsvTools />} />
-            <Route path="/code" element={<CodeTools />} />
-            <Route path="/encoders" element={<EncoderTools />} />
+          <React.Suspense fallback={null}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              
+              {/* Formatters */}
+              <Route path="/json" element={<JsonTools />} />
+              <Route path="/csv" element={<CsvTools />} />
+              <Route path="/code" element={<CodeTools />} />
+              <Route path="/encoders" element={<EncoderTools />} />
 
-            {/* Security */}
-            <Route path="/hashing" element={<HashTools />} />
-            <Route path="/encryption" element={<EncryptTools />} />
-            <Route path="/jwt" element={<JwtTools />} />
-            <Route path="/passwords" element={<PasswordTools />} />
+              {/* Security */}
+              <Route path="/hashing" element={<HashTools />} />
+              <Route path="/encryption" element={<EncryptTools />} />
+              <Route path="/jwt" element={<JwtTools />} />
+              <Route path="/passwords" element={<PasswordTools />} />
 
-            {/* Frontend */}
-            <Route path="/colors" element={<ColorPaletteTools />} />
-            <Route path="/images" element={<ImageTools />} />
-            <Route path="/css" element={<CssGenTools />} />
+              {/* Frontend */}
+              <Route path="/colors" element={<ColorPaletteTools />} />
+              <Route path="/images" element={<ImageTools />} />
+              <Route path="/css" element={<CssGenTools />} />
 
-            {/* Text */}
-            <Route path="/editor" element={<EditorTools />} />
-            <Route path="/regex" element={<RegexTools />} />
-            <Route path="/diff" element={<DiffTools />} />
+              {/* Text */}
+              <Route path="/editor" element={<EditorTools />} />
+              <Route path="/regex" element={<RegexTools />} />
+              <Route path="/diff" element={<DiffTools />} />
 
-            {/* Time */}
-            <Route path="/crontab" element={<CrontabTools />} />
-            <Route path="/worldclock" element={<WorldClockTools />} />
+              {/* Time */}
+              <Route path="/crontab" element={<CrontabTools />} />
+              <Route path="/worldclock" element={<WorldClockTools />} />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </React.Suspense>
         </div>
       </main>
     </div>
