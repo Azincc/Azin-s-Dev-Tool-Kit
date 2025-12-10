@@ -4,15 +4,26 @@ import { TrashIcon, TableIcon } from '../components/ui/Icons';
 import { useAppContext } from '../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
+import { convert, detectFormat, FormatType } from '../utils/converters';
 
 // --- JSON Tools Component ---
 export const JsonTools: React.FC = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState('format');
+  const [sourceFormat, setSourceFormat] = useState<FormatType>('json');
+  const [targetFormat, setTargetFormat] = useState<FormatType>('json');
   const [error, setError] = useState<string | null>(null);
   const { t } = useAppContext();
   const navigate = useNavigate();
+
+  const handleAutoDetect = () => {
+    if (!input.trim()) return;
+    const detected = detectFormat(input);
+    if (detected) {
+      setSourceFormat(detected);
+    }
+  };
 
   useEffect(() => {
     if (!input.trim()) {
@@ -87,6 +98,28 @@ export const JsonTools: React.FC = () => {
       }
   };
 
+  const handleConvert = () => {
+    if (!input.trim()) {
+      setOutput('');
+      setError(null);
+      return;
+    }
+    try {
+      const result = convert(input, sourceFormat, targetFormat, { indent: 2 });
+      setOutput(result);
+      setError(null);
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  };
+
+  useEffect(() => {
+    if (mode === 'format' || mode === 'minify' || mode === 'toTS' || mode === 'toGo' || mode === 'toJava' || mode === 'toXML' || mode === 'toCSV') {
+      return;
+    }
+    handleConvert();
+  }, [sourceFormat, targetFormat]);
+
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
       <div>
@@ -102,35 +135,77 @@ export const JsonTools: React.FC = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
-        <Card className="flex flex-col h-full">
-          <CardHeader title={t('tool.json.input')} action={input && <button onClick={() => { setInput(''); setOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
-          <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-900">
-            <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder='{"name": "Azin"}' className="w-full h-full border-0 bg-transparent text-slate-900 dark:text-white resize-none p-2 font-mono text-sm" spellCheck={false} />
+      {mode === 'format' || mode === 'minify' || mode === 'toTS' || mode === 'toGo' || mode === 'toJava' || mode === 'toXML' || mode === 'toCSV' ? (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
+          <Card className="flex flex-col h-full">
+            <CardHeader title={t('tool.json.input')} action={input && <button onClick={() => { setInput(''); setOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
+            <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-900">
+              <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder='{"name": "Azin"}' className="w-full h-full border-0 bg-transparent text-slate-900 dark:text-white resize-none p-2 font-mono text-sm" spellCheck={false} />
+            </div>
+          </Card>
+          <Card className="flex flex-col h-full border-blue-900/30">
+            <CardHeader title={error ? t('tool.json.error') : t('tool.json.output')} action={
+                <div className="flex items-center gap-2">
+                    {mode === 'toCSV' && !error && output && (
+                        <>
+                          <Button size="sm" variant="secondary" onClick={handleOpenInCsvTool} className="text-xs" title={t('tool.json.openCsv')}>
+                             <TableIcon className="w-4 h-4" />
+                          </Button>
+                          <Button size="sm" variant="secondary" onClick={handleDownloadCsv} className="text-xs">
+                             {t('tool.csv.download')}
+                          </Button>
+                        </>
+                    )}
+                    <CopyButton text={output} />
+                </div>
+            } />
+            <div className="flex-1 p-0 bg-slate-100 dark:bg-slate-950 overflow-hidden relative">
+               {error ? <div className="p-4 text-red-500 dark:text-red-400 font-mono text-sm">{error}</div> :
+               <TextArea readOnly value={output} className="w-full h-full border-0 bg-transparent resize-none p-4 font-mono text-emerald-600 dark:text-emerald-400 text-sm" />}
+            </div>
+          </Card>
+        </div>
+      ) : (
+        <div className="space-y-4 flex-1 flex flex-col min-h-0">
+          <div className="flex flex-wrap gap-4 items-end">
+            <div className="flex-1 min-w-[200px]">
+              <Label className="block mb-2 text-sm font-medium">{t('tool.json.sourceFormat')}</Label>
+              <Select value={sourceFormat} onChange={(e) => setSourceFormat(e.target.value as FormatType)}>
+                <option value="json">JSON</option>
+                <option value="yaml">YAML</option>
+                <option value="xml">XML</option>
+              </Select>
+            </div>
+            <div className="flex-1 min-w-[200px]">
+              <Label className="block mb-2 text-sm font-medium">{t('tool.json.targetFormat')}</Label>
+              <Select value={targetFormat} onChange={(e) => setTargetFormat(e.target.value as FormatType)}>
+                <option value="json">JSON</option>
+                <option value="yaml">YAML</option>
+                <option value="xml">XML</option>
+              </Select>
+            </div>
+            <Button onClick={handleAutoDetect} variant="secondary" className="text-xs">
+              {t('tool.json.autoDetect')}
+            </Button>
           </div>
-        </Card>
-        <Card className="flex flex-col h-full border-blue-900/30">
-          <CardHeader title={error ? t('tool.json.error') : t('tool.json.output')} action={
-              <div className="flex items-center gap-2">
-                  {mode === 'toCSV' && !error && output && (
-                      <>
-                        <Button size="sm" variant="secondary" onClick={handleOpenInCsvTool} className="text-xs" title={t('tool.json.openCsv')}>
-                           <TableIcon className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="secondary" onClick={handleDownloadCsv} className="text-xs">
-                           {t('tool.csv.download')}
-                        </Button>
-                      </>
-                  )}
-                  <CopyButton text={output} />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
+            <Card className="flex flex-col h-full">
+              <CardHeader title={`${t('tool.json.input')} (${sourceFormat.toUpperCase()})`} action={input && <button onClick={() => { setInput(''); setOutput(''); }} className="text-slate-400 hover:text-red-400"><TrashIcon className="w-4 h-4" /></button>} />
+              <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-900">
+                <TextArea value={input} onChange={(e) => setInput(e.target.value)} placeholder={sourceFormat === 'json' ? '{"key": "value"}' : sourceFormat === 'yaml' ? 'key: value' : '<root><key>value</key></root>'} className="w-full h-full border-0 bg-transparent text-slate-900 dark:text-white resize-none p-2 font-mono text-sm" spellCheck={false} />
               </div>
-          } />
-          <div className="flex-1 p-0 bg-slate-100 dark:bg-slate-950 overflow-hidden relative">
-             {error ? <div className="p-4 text-red-500 dark:text-red-400 font-mono text-sm">{error}</div> : 
-             <TextArea readOnly value={output} className="w-full h-full border-0 bg-transparent resize-none p-4 font-mono text-emerald-600 dark:text-emerald-400 text-sm" />}
+            </Card>
+            <Card className="flex flex-col h-full border-blue-900/30">
+              <CardHeader title={error ? t('tool.json.error') : `${t('tool.json.output')} (${targetFormat.toUpperCase()})`} action={<CopyButton text={output} />} />
+              <div className="flex-1 p-0 bg-slate-100 dark:bg-slate-950 overflow-hidden relative">
+                 {error ? <div className="p-4 text-red-500 dark:text-red-400 font-mono text-sm">{error}</div> :
+                 <TextArea readOnly value={output} className="w-full h-full border-0 bg-transparent resize-none p-4 font-mono text-emerald-600 dark:text-emerald-400 text-sm" />}
+              </div>
+            </Card>
           </div>
-        </Card>
-      </div>
+        </div>
+      )}
     </div>
   );
 };
