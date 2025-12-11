@@ -30,7 +30,7 @@
   "tool.converter.format": "格式",
   "tool.converter.toYAML": "转 YAML",
   "tool.converter.fromYAML": "从 YAML",
-  "tool.converter.toXML": "转 XML（改进版）",
+  "tool.converter.toXML": "转 XML",
   "tool.converter.fromXML": "从 XML",
   "tool.converter.selectFormat": "选择输入格式",
   "tool.converter.autoDetect": "自动检测",
