@@ -289,5 +289,18 @@
   "tool.crontab.explain.hour_every": "past every hour",
   "tool.crontab.explain.week_val": "on day of week {val}",
   "tool.crontab.explain.month_val": "in month {val}",
-  "tool.crontab.explain.day_val": "on day {val} of the month"
+  "tool.crontab.explain.day_val": "on day {val} of the month",
+  "tool.encrypt.subtitle": "AES-GCM (256-bit) • PBKDF2 Key Derivation",
+  "tool.encrypt.card_title": "AES-GCM Encryption/Decryption",
+  "tool.encrypt.input_label": "Message / Ciphertext (Base64)",
+  "tool.encrypt.input_placeholder": "Enter text to encrypt or Base64 to decrypt...",
+  "tool.encrypt.password_placeholder": "Enter a strong password",
+  "tool.encrypt.btn_encrypt": "Encrypt (AES-GCM)",
+  "tool.encrypt.btn_decrypt": "Decrypt",
+  "tool.encrypt.result_placeholder": "Result will appear here...",
+  "tool.encrypt.error_password": "Error: Password required",
+  "tool.encrypt.error_encryption": "Encryption failed: ",
+  "tool.encrypt.error_decryption": "Decryption failed. Wrong password or invalid data.",
+  "tool.encrypt.security_note_title": "Security Note:",
+  "tool.encrypt.security_note_desc": "This tool performs client-side AES-GCM encryption. It uses PBKDF2 (100,000 iterations) to derive the key from your password. The salt is fixed for this tool version to make it stateless, so avoid using shared/common passwords. For highest security, ensure you trust the device you are running this on."
 }

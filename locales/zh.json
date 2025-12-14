@@ -289,5 +289,18 @@
   "tool.crontab.explain.hour_every": "每小时",
   "tool.crontab.explain.week_val": "每周 {val}",
   "tool.crontab.explain.month_val": "{val}月",
-  "tool.crontab.explain.day_val": "{val}日"
+  "tool.crontab.explain.day_val": "{val}日",
+  "tool.encrypt.subtitle": "AES-GCM (256 位) • PBKDF2 密钥派生",
+  "tool.encrypt.card_title": "AES-GCM 加密/解密",
+  "tool.encrypt.input_label": "消息 / 密文 (Base64)",
+  "tool.encrypt.input_placeholder": "输入加密文本或 Base64 密文...",
+  "tool.encrypt.password_placeholder": "输入高强度密码",
+  "tool.encrypt.btn_encrypt": "加密 (AES-GCM)",
+  "tool.encrypt.btn_decrypt": "解密",
+  "tool.encrypt.result_placeholder": "结果显示于此...",
+  "tool.encrypt.error_password": "错误：需要密码",
+  "tool.encrypt.error_encryption": "加密失败：",
+  "tool.encrypt.error_decryption": "解密失败。密码错误或数据无效。",
+  "tool.encrypt.security_note_title": "安全提示：",
+  "tool.encrypt.security_note_desc": "本工具执行纯客户端 AES-GCM 加密。使用 PBKDF2 (10万次迭代) 从您的密码派生密钥。为保持无状态，本工具使用固定盐值，请避免使用通用密码。为确保最高安全性，请仅在您信任的设备上运行此操作。"
 }
