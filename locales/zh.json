@@ -276,5 +276,18 @@
   "tool.curl.body": "请求体 (Body)",
   "tool.curl.generate": "生成命令",
   "tool.curl.add_header": "添加 Header",
-  "tool.curl.output": "生成的命令"
+  "tool.curl.output": "生成的命令",
+  "tool.crontab.explain.error": "格式错误：需要5个字段 (分 时 日 月 周)",
+  "tool.crontab.explain.template": "{week} {month} {day} {hour} {min} 执行",
+  "tool.crontab.explain.special_every_minute": "每分钟",
+  "tool.crontab.explain.special_hourly": "每小时整",
+  "tool.crontab.explain.min_every_x": "每隔 {val} 分钟",
+  "tool.crontab.explain.min_at": "{val}分",
+  "tool.crontab.explain.min_every": "每分钟",
+  "tool.crontab.explain.hour_every_x": "每隔 {val} 小时",
+  "tool.crontab.explain.hour_at": "{val}点",
+  "tool.crontab.explain.hour_every": "每小时",
+  "tool.crontab.explain.week_val": "每周 {val}",
+  "tool.crontab.explain.month_val": "{val}月",
+  "tool.crontab.explain.day_val": "{val}日"
 }

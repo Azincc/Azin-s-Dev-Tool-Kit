@@ -38,17 +38,17 @@ export const AppProvider: React.FC<{ children?: ReactNode }> = ({ children }) =>
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
   const toggleLanguage = () => {
-    setLanguage(prev => prev === 'en' ? 'zh' : 'en');
+    setLanguage((prev) => (prev === 'en' ? 'zh' : 'en'));
   };
 
   const t = (key: string): string => {
     const currentLocale = locales[language];
     const fallbackLocale = locales['en'];
-    
+
     // We cast key to TranslationKey because we are allowing any string to be passed
     // but we know that if it doesn't match a key, we'll just get undefined and return the key itself
     const val = currentLocale[key as TranslationKey] || fallbackLocale[key as TranslationKey];

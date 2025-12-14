@@ -29,7 +29,7 @@ const jsonToYaml = (obj: any, options: ConversionOptions = {}): string => {
     return YAML.dump(obj, {
       indent: options.indent || 2,
       lineWidth: -1,
-      quotingType: '"'
+      quotingType: '"',
     });
   } catch (e) {
     throw new Error(`YAML conversion failed: ${(e as Error).message}`);
@@ -101,9 +101,7 @@ const jsonToXml = (obj: any, rootName = 'root', indent = 0): string => {
   }
 
   if (Array.isArray(obj)) {
-    return obj.map((item, idx) =>
-      jsonToXml(item, rootName, indent)
-    ).join('\n');
+    return obj.map((item, idx) => jsonToXml(item, rootName, indent)).join('\n');
   }
 
   const entries = Object.entries(obj);
@@ -111,9 +109,7 @@ const jsonToXml = (obj: any, rootName = 'root', indent = 0): string => {
     return `${indentStr}<${rootName} />`;
   }
 
-  const children = entries
-    .map(([key, value]) => jsonToXml(value, key, indent + 1))
-    .join('\n');
+  const children = entries.map(([key, value]) => jsonToXml(value, key, indent + 1)).join('\n');
 
   return `${indentStr}<${rootName}>\n${children}\n${indentStr}</${rootName}>`;
 };

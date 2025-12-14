@@ -276,5 +276,18 @@
   "tool.curl.body": "Request Body",
   "tool.curl.generate": "Generate Command",
   "tool.curl.add_header": "Add Header",
-  "tool.curl.output": "Generated Command"
+  "tool.curl.output": "Generated Command",
+  "tool.crontab.explain.error": "Invalid format: 5 fields required (min hour day month week)",
+  "tool.crontab.explain.template": "Run {min} {hour} {day} {month} {week}",
+  "tool.crontab.explain.special_every_minute": "every minute",
+  "tool.crontab.explain.special_hourly": "every hour on the hour",
+  "tool.crontab.explain.min_every_x": "every {val} minutes",
+  "tool.crontab.explain.min_at": "at minute {val}",
+  "tool.crontab.explain.min_every": "every minute",
+  "tool.crontab.explain.hour_every_x": "past every {val} hours",
+  "tool.crontab.explain.hour_at": "past hour {val}",
+  "tool.crontab.explain.hour_every": "past every hour",
+  "tool.crontab.explain.week_val": "on day of week {val}",
+  "tool.crontab.explain.month_val": "in month {val}",
+  "tool.crontab.explain.day_val": "on day {val} of the month"
 }

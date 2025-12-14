@@ -1,8 +1,10 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @config "../tailwind.config.js";
 
 @layer base {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     @apply transition-colors duration-300 ease-in-out;
   }
 }
@@ -39,6 +41,6 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

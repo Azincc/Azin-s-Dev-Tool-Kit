@@ -27,11 +27,13 @@
    ```bash
    npm install
    ```
+
 2. 启动开发服务器:
 
    ```bash
    npm run dev
    ```
+
 3. 构建生产版本:
 
    ```bash

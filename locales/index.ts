@@ -8,5 +8,5 @@ export type TranslationKey = keyof TranslationMap;
 
 export const locales: Record<Language, TranslationMap> = {
   en: enTranslations,
-  zh: zhTranslations
+  zh: zhTranslations,
 };
