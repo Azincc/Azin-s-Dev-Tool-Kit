@@ -2,9 +2,9 @@ import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Sidebar } from './components/Sidebar';
 import { NavGroup } from './types';
-import { 
+import {
   HomeIcon, FileJsonIcon, LockIcon, PaletteIcon, FileTextIcon,
-  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon, ClockIcon, GlobeIcon, TableIcon
+  CodeIcon, ShuffleIcon, HashIcon, KeyIcon, ShieldIcon, ImageIcon, BoxIcon, RegexIcon, DiffIcon, ClockIcon, GlobeIcon, TableIcon, ShareIcon, ActivityIcon, ServerIcon
 } from './components/ui/Icons';
 import { AppProvider } from './contexts/AppContext';
 
@@ -26,6 +26,9 @@ const RegexTools = React.lazy(() => import('./pages/TextTools').then(m => ({ def
 const DiffTools = React.lazy(() => import('./pages/TextTools').then(m => ({ default: m.DiffTools })));
 const CrontabTools = React.lazy(() => import('./pages/TimeTools').then(m => ({ default: m.CrontabTools })));
 const WorldClockTools = React.lazy(() => import('./pages/TimeTools').then(m => ({ default: m.WorldClockTools })));
+const SubnetTools = React.lazy(() => import('./pages/NetworkTools').then(m => ({ default: m.SubnetCalculator })));
+const UATools = React.lazy(() => import('./pages/NetworkTools').then(m => ({ default: m.UAParserTool })));
+const CurlTools = React.lazy(() => import('./pages/NetworkTools').then(m => ({ default: m.CurlGenerator })));
 
 const navGroups: NavGroup[] = [
   {
@@ -59,6 +62,14 @@ const navGroups: NavGroup[] = [
     ]
   },
   {
+    title: 'nav.network',
+    items: [
+      { id: 'subnet', label: 'nav.subnet', icon: <ServerIcon />, path: '/subnet' },
+      { id: 'ua', label: 'nav.ua', icon: <ActivityIcon />, path: '/ua' },
+      { id: 'curl', label: 'nav.curl', icon: <ShareIcon />, path: '/curl' },
+    ]
+  },
+  {
     title: 'nav.text',
     items: [
       { id: 'editor', label: 'nav.editor', icon: <FileTextIcon />, path: '/editor' },
@@ -79,13 +90,13 @@ const MainLayout = () => {
   return (
     <div className="flex min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-500/30 transition-colors duration-300">
       <Sidebar groups={navGroups} />
-      
+
       <main className="flex-1 ml-16 md:ml-16 transition-all duration-300 group-hover/sidebar:md:ml-64">
         <div className="container mx-auto p-6 md:p-8 lg:p-12 max-w-7xl animate-fade-in">
           <React.Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<Home />} />
-            
+
               {/* Formatters */}
               <Route path="/json" element={<JsonTools />} />
               <Route path="/csv" element={<CsvTools />} />
@@ -111,6 +122,11 @@ const MainLayout = () => {
               {/* Time */}
               <Route path="/crontab" element={<CrontabTools />} />
               <Route path="/worldclock" element={<WorldClockTools />} />
+
+              {/* Network */}
+              <Route path="/subnet" element={<SubnetTools />} />
+              <Route path="/ua" element={<UATools />} />
+              <Route path="/curl" element={<CurlTools />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
-import { 
-  FileJsonIcon, CodeIcon, ShuffleIcon, 
-  HashIcon, LockIcon, ShieldIcon, KeyIcon, 
-  PaletteIcon, ImageIcon, BoxIcon, 
+import {
+  FileJsonIcon, CodeIcon, ShuffleIcon,
+  HashIcon, LockIcon, ShieldIcon, KeyIcon,
+  PaletteIcon, ImageIcon, BoxIcon,
   FileTextIcon, RegexIcon, DiffIcon,
-  ClockIcon, GlobeIcon
+  ClockIcon, GlobeIcon, ServerIcon, ActivityIcon, ShareIcon
 } from '../components/ui/Icons';
 import { Card, CardContent } from '../components/ui/Shared';
 
@@ -37,18 +37,18 @@ const Home: React.FC = () => {
     { title: 'tool.json.title', desc: 'tool.json.desc', icon: <FileJsonIcon className="w-6 h-6" />, path: '/json', color: 'text-orange-500' },
     { title: 'tool.code.title', desc: 'tool.code.desc', icon: <CodeIcon className="w-6 h-6" />, path: '/code', color: 'text-blue-500' },
     { title: 'tool.encoder.title', desc: 'tool.encoder.desc', icon: <ShuffleIcon className="w-6 h-6" />, path: '/encoders', color: 'text-purple-500' },
-    
+
     // Security
     { title: 'tool.hash.title', desc: 'tool.hash.desc', icon: <HashIcon className="w-6 h-6" />, path: '/hashing', color: 'text-green-500' },
     { title: 'tool.encrypt.title', desc: 'tool.encrypt.desc', icon: <LockIcon className="w-6 h-6" />, path: '/encryption', color: 'text-red-500' },
     { title: 'tool.jwt.title', desc: 'tool.jwt.desc', icon: <ShieldIcon className="w-6 h-6" />, path: '/jwt', color: 'text-pink-500' },
     { title: 'tool.pass.title', desc: 'tool.pass.desc', icon: <KeyIcon className="w-6 h-6" />, path: '/passwords', color: 'text-yellow-500' },
-    
+
     // Frontend
     { title: 'tool.color.title', desc: 'tool.color.desc', icon: <PaletteIcon className="w-6 h-6" />, path: '/colors', color: 'text-indigo-500' },
     { title: 'tool.image.title', desc: 'tool.image.desc', icon: <ImageIcon className="w-6 h-6" />, path: '/images', color: 'text-sky-500' },
     { title: 'tool.css.title', desc: 'tool.css.desc', icon: <BoxIcon className="w-6 h-6" />, path: '/css', color: 'text-cyan-500' },
-    
+
     // Text
     { title: 'tool.editor.title', desc: 'tool.editor.desc', icon: <FileTextIcon className="w-6 h-6" />, path: '/editor', color: 'text-slate-500' },
     { title: 'tool.regex.title', desc: 'tool.regex.desc', icon: <RegexIcon className="w-6 h-6" />, path: '/regex', color: 'text-emerald-500' },
@@ -57,6 +57,11 @@ const Home: React.FC = () => {
     // Time
     { title: 'tool.crontab.title', desc: 'tool.crontab.desc', icon: <CodeIcon className="w-6 h-6" />, path: '/crontab', color: 'text-teal-500' },
     { title: 'tool.worldclock.title', desc: 'tool.worldclock.desc', icon: <GlobeIcon className="w-6 h-6" />, path: '/worldclock', color: 'text-rose-500' },
+
+    // Network
+    { title: 'tool.subnet.title', desc: 'tool.subnet.desc', icon: <ServerIcon className="w-6 h-6" />, path: '/subnet', color: 'text-violet-500' },
+    { title: 'tool.ua.title', desc: 'tool.ua.desc', icon: <ActivityIcon className="w-6 h-6" />, path: '/ua', color: 'text-fuchsia-500' },
+    { title: 'tool.curl.title', desc: 'tool.curl.desc', icon: <ShareIcon className="w-6 h-6" />, path: '/curl', color: 'text-cyan-600' },
   ];
 
   return (
@@ -69,7 +74,7 @@ const Home: React.FC = () => {
             <PokeBall />
           </div>
         </div>
-        
+
         <div className="space-y-4 max-w-2xl">
           <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 pb-2">
             {t('home.title')}
