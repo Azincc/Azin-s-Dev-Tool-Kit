@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "diff": "^8.0.2",
     "js-yaml": "^4.1.0",
     "papaparse": "^5.5.3",
     "react": "^19.2.0",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
+    "@types/diff": "^7.0.2",
     "@types/node": "^22.14.0",
     "@types/papaparse": "^5.5.0",
     "@types/react": "^19.2.7",

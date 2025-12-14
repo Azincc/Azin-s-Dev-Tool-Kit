@@ -1,22 +1,68 @@
 import React, { useState, useMemo } from 'react';
 import { Card, CardHeader, TextArea, Label } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { diffLines } from 'diff';
+
+interface DiffRow {
+  leftIdx?: number;
+  rightIdx?: number;
+  l: string;
+  r: string;
+  type: 'same' | 'add' | 'remove';
+}
 
 export const DiffTools: React.FC = () => {
   const [diffLeft, setDiffLeft] = useState<string>('');
   const [diffRight, setDiffRight] = useState<string>('');
   const { t } = useAppContext();
+
   const diffResult = useMemo(() => {
-    const a = diffLeft.split('\n');
-    const b = diffRight.split('\n');
-    const max = Math.max(a.length, b.length);
-    const res = [];
-    for (let i = 0; i < max; i++) {
-      const l = a[i] || '';
-      const r = b[i] || '';
-      res.push({ idx: i + 1, l, r, type: l === r ? 'same' : 'diff' });
-    }
-    return res;
+    if (!diffLeft && !diffRight) return [];
+
+    const changes = diffLines(diffLeft, diffRight);
+    const rows: DiffRow[] = [];
+
+    let leftLine = 1;
+    let rightLine = 1;
+
+    changes.forEach((part) => {
+      // Split by newline, but handle strict ending to avoid extra empty row if ends with \n
+      const lines = part.value.endsWith('\n')
+        ? part.value.slice(0, -1).split('\n')
+        : part.value.split('\n');
+
+      if (part.added) {
+        lines.forEach((line) => {
+          rows.push({
+            rightIdx: rightLine++,
+            l: '',
+            r: line,
+            type: 'add',
+          });
+        });
+      } else if (part.removed) {
+        lines.forEach((line) => {
+          rows.push({
+            leftIdx: leftLine++,
+            l: line,
+            r: '',
+            type: 'remove',
+          });
+        });
+      } else {
+        lines.forEach((line) => {
+          rows.push({
+            leftIdx: leftLine++,
+            rightIdx: rightLine++,
+            l: line,
+            r: line,
+            type: 'same',
+          });
+        });
+      }
+    });
+
+    return rows;
   }, [diffLeft, diffRight]);
 
   return (
@@ -34,6 +80,7 @@ export const DiffTools: React.FC = () => {
             value={diffLeft}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDiffLeft(e.target.value)}
             className="flex-1 resize-none font-mono text-xs whitespace-pre bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
+            placeholder="Original text..."
           />
         </div>
         <div className="flex flex-col gap-2 h-full">
@@ -42,35 +89,51 @@ export const DiffTools: React.FC = () => {
             value={diffRight}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDiffRight(e.target.value)}
             className="flex-1 resize-none font-mono text-xs whitespace-pre bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
+            placeholder="Changed text..."
           />
         </div>
       </div>
       <Card>
         <CardHeader title={t('tool.diff.result')} />
         <div className="p-0 bg-white dark:bg-slate-900 overflow-auto max-h-[400px]">
-          <table className="w-full font-mono text-xs border-collapse">
+          <table className="w-full font-mono text-xs border-collapse table-fixed">
+            <colgroup>
+              <col className="w-12" />
+              <col className="w-[calc(50%-24px)]" />
+              <col className="w-12" />
+              <col className="w-[calc(50%-24px)]" />
+            </colgroup>
             <tbody>
-              {diffResult.map((row) => (
-                <tr
-                  key={row.idx}
-                  className={row.type === 'diff' ? 'bg-yellow-100 dark:bg-yellow-900/20' : ''}
-                >
-                  <td className="w-12 p-1 text-slate-400 dark:text-slate-600 text-right select-none border-r border-slate-200 dark:border-slate-800">
-                    {row.idx}
+              {diffResult.map((row, i) => (
+                <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800">
+                  {/* Left Gutter */}
+                  <td className="p-1 text-slate-400 dark:text-slate-600 text-right select-none border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+                    {row.leftIdx || ''}
                   </td>
+                  {/* Left Content */}
                   <td
-                    className={`p-1 w-1/2 border-r border-slate-200 dark:border-slate-800 ${
-                      row.type === 'diff'
-                        ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-200'
+                    className={`p-1 break-all whitespace-pre-wrap border-r border-slate-200 dark:border-slate-800 ${
+                      row.type === 'remove'
+                        ? 'bg-red-100 dark:bg-red-900/20 text-red-900 dark:text-red-200'
+                        : row.type === 'add'
+                        ? 'bg-slate-100 dark:bg-slate-900/50' // Empty placeholder for added line
                         : 'text-slate-600 dark:text-slate-400'
                     }`}
                   >
                     {row.l}
                   </td>
+
+                  {/* Right Gutter */}
+                  <td className="p-1 text-slate-400 dark:text-slate-600 text-right select-none border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+                    {row.rightIdx || ''}
+                  </td>
+                  {/* Right Content */}
                   <td
-                    className={`p-1 w-1/2 ${
-                      row.type === 'diff'
-                        ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-200'
+                    className={`p-1 break-all whitespace-pre-wrap ${
+                      row.type === 'add'
+                        ? 'bg-green-100 dark:bg-green-900/20 text-green-900 dark:text-green-200'
+                        : row.type === 'remove'
+                        ? 'bg-slate-100 dark:bg-slate-900/50' // Empty placeholder for removed line
                         : 'text-slate-600 dark:text-slate-400'
                     }`}
                   >
