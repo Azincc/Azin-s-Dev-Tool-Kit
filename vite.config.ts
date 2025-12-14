@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
           manualChunks: {
             'react-vendor': ['react', 'react-dom'],
             router: ['react-router-dom'],
+            monaco: ['@monaco-editor/react'],
           },
         },
       },
