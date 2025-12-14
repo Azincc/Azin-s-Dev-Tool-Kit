@@ -18,7 +18,7 @@ export const WorldClockTools: React.FC = () => {
     setLoading(true);
     const start = Date.now();
     try {
-      const res = await fetch('https://time.tool.azin.cc/');
+      const res = await fetch('https://time.azin.cc/');
       const json: TimeData = await res.json();
       const end = Date.now();
 
@@ -128,7 +128,7 @@ export const WorldClockTools: React.FC = () => {
               <span className="text-sm text-slate-500 ml-2">(Beijing)</span>
             </div>
             <div className="text-xs text-slate-400">
-              {t('tool.worldclock.source')}: time.azin.workers.dev
+              {t('tool.worldclock.source')}: time.azin.cc
             </div>
           </div>
           <div className="space-y-2">

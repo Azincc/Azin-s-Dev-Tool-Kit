@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, Input, CopyButton } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import QRCode from 'qrcode';
 
 export const ImageTools: React.FC = () => {
   const [imgBase64, setImgBase64] = useState<string>('');
   const [qrText, setQrText] = useState<string>(window.location.href);
+  const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const { t } = useAppContext();
+
+  useEffect(() => {
+    generateQR();
+  }, [qrText]);
+
+  const generateQR = async () => {
+    try {
+      const url = await QRCode.toDataURL(qrText || ' ', {
+        width: 200,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#ffffff',
+        },
+      });
+      setQrDataUrl(url);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -62,13 +84,13 @@ export const ImageTools: React.FC = () => {
               className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full"
             />
             <div className="flex justify-center bg-white p-4 rounded-lg w-fit mx-auto border border-slate-200 dark:border-none">
-              <img
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
-                  qrText
-                )}`}
-                alt="QR"
-                className="w-32 h-32"
-              />
+              {qrDataUrl && (
+                <img
+                  src={qrDataUrl}
+                  alt="QR"
+                  className="w-32 h-32"
+                />
+              )}
             </div>
           </CardContent>
         </Card>

@@ -25,19 +25,19 @@
 1. 安装依赖:
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. 启动开发服务器:
 
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 3. 构建生产版本:
 
    ```bash
-   npm run build
+   pnpm run build
    ```
 
 ## 🐳 Docker 部署
