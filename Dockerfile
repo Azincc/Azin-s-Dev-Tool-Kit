@@ -3,19 +3,22 @@ FROM --platform=$BUILDPLATFORM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Install pnpm
+RUN npm install -g pnpm
+
 # Install dependencies
-# Using npm ci for a clean, reproducible install based on package-lock.json
-COPY package.json package-lock.json ./
-RUN npm ci
+# Using pnpm for faster, stricter installs
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 # Copy source code
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN pnpm run build
 
 # Stage 2: Serve the application with Nginx
-FROM nginx:alpine
+FROM nginx:1.25-alpine
 
 # Install curl for Cloudflare API calls
 RUN apk add --no-cache curl
@@ -27,20 +30,15 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy custom Nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy entrypoint script
+COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 # Expose port 80
 EXPOSE 80
 
-# Start Nginx with Cloudflare cache purge
-CMD if [ -n "$CF_ZONE_ID" ] && [ -n "$CF_API_KEY" ]; then \
-      echo "Purging Cloudflare cache..." && \
-      curl -X POST "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" \
-        -H "Authorization: Bearer $CF_API_KEY" \
-        -H "Content-Type: application/json" \
-        --data '{"purge_everything":true}' && \
-      echo "Cache purged"; \
-    else \
-      echo "Skipping Cloudflare cache purge"; \
-    fi && \
-    nginx -g 'daemon off;'
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD ["nginx", "-g", "daemon off;"]
