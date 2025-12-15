@@ -1,5 +1,6 @@
 import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ToastProvider } from './components/ui/Toast';
 import { Sidebar } from './components/Sidebar';
 import { NavGroup } from './types';
 import {
@@ -275,11 +276,15 @@ const MainLayout = () => {
   );
 };
 
+
+
 const App: React.FC = () => {
   return (
     <HashRouter>
       <AppProvider>
-        <MainLayout />
+        <ToastProvider>
+          <MainLayout />
+        </ToastProvider>
       </AppProvider>
     </HashRouter>
   );

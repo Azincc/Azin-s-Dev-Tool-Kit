@@ -141,7 +141,7 @@ export const CurlGenerator: React.FC = () => {
         <Card className="flex-1 flex flex-col min-h-0">
           <CardContent className="p-6 h-full flex flex-col">
             <Label className="mb-2 block">{t('tool.curl.output')}</Label>
-            <div className="relative flex-1 bg-slate-900 rounded-lg p-4 font-mono text-sm text-green-400 overflow-auto group">
+            <div className="relative flex-1 bg-slate-100 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-green-400 overflow-auto group">
               <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <CopyButton text={generated} />
               </div>

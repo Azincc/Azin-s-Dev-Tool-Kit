@@ -149,6 +149,8 @@
   "tool.regex.matches": "Matches",
   "tool.regex.invalid": "Invalid Regex",
   "tool.regex.no_matches": "No matches found",
+  "tool.regex.add_pattern": "Add Pattern",
+  "tool.regex.timeout": "Regex execution timed out (>1000ms). Calculation discarded.",
   "tool.regex.common_rules": "Common Rules:",
   "tool.regex.flag.g": "g - Global",
   "tool.regex.flag.g_desc": "Match all occurrences",

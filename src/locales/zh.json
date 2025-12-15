@@ -149,6 +149,8 @@
   "tool.regex.matches": "匹配结果",
   "tool.regex.invalid": "无效正则表达式",
   "tool.regex.no_matches": "未找到匹配项",
+  "tool.regex.add_pattern": "添加模式",
+  "tool.regex.timeout": "正则执行超时 (>1000ms)，计算已丢弃。",
   "tool.regex.common_rules": "常用规则：",
   "tool.regex.flag.g": "g - 全局匹配",
   "tool.regex.flag.g_desc": "匹配所有出现的位置",
