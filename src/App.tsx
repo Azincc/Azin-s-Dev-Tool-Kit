@@ -120,6 +120,11 @@ const CurlTools = React.lazy(() =>
     default: m.CurlGenerator,
   }))
 );
+const LatencyTools = React.lazy(() =>
+  import('./components/tools/LatencyTools').then((m) => ({
+    default: m.LatencyTools,
+  }))
+);
 
 const navGroups: NavGroup[] = [
   {
@@ -191,6 +196,12 @@ const navGroups: NavGroup[] = [
       },
       { id: 'ua', label: 'nav.ua', icon: <ActivityIcon />, path: '/ua' },
       { id: 'curl', label: 'nav.curl', icon: <ShareIcon />, path: '/curl' },
+      {
+        id: 'latency',
+        label: 'nav.latency',
+        icon: <ActivityIcon />,
+        path: '/latency',
+      },
     ],
   },
   {
@@ -266,6 +277,7 @@ const MainLayout = () => {
               <Route path="/subnet" element={<SubnetTools />} />
               <Route path="/ua" element={<UATools />} />
               <Route path="/curl" element={<CurlTools />} />
+              <Route path="/latency" element={<LatencyTools />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
