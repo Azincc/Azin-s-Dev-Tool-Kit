@@ -4,7 +4,6 @@ import { ToastProvider } from './components/ui/Toast';
 import { Sidebar } from './components/Sidebar';
 import { NavGroup } from './types';
 import {
-  HomeIcon,
   FileJsonIcon,
   LockIcon,
   PaletteIcon,
@@ -24,6 +23,8 @@ import {
   ShareIcon,
   ActivityIcon,
   ServerIcon,
+  MonitorIcon,
+  LayoutGridIcon,
 } from './components/ui/Icons';
 import { AppProvider } from './contexts/AppContext';
 
@@ -128,7 +129,7 @@ const LatencyTools = React.lazy(() =>
 
 const navGroups: NavGroup[] = [
   {
-    items: [{ id: 'home', label: 'nav.home', icon: <HomeIcon />, path: '/' }],
+    items: [{ id: 'home', label: 'nav.home', icon: <LayoutGridIcon />, path: '/' }],
   },
   {
     title: 'nav.formatters',
@@ -194,7 +195,7 @@ const navGroups: NavGroup[] = [
         icon: <ServerIcon />,
         path: '/subnet',
       },
-      { id: 'ua', label: 'nav.ua', icon: <ActivityIcon />, path: '/ua' },
+      { id: 'ua', label: 'nav.ua', icon: <MonitorIcon />, path: '/ua' },
       { id: 'curl', label: 'nav.curl', icon: <ShareIcon />, path: '/curl' },
       {
         id: 'latency',
@@ -287,8 +288,6 @@ const MainLayout = () => {
     </div>
   );
 };
-
-
 
 const App: React.FC = () => {
   return (

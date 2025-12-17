@@ -18,8 +18,9 @@ import {
   ClockIcon,
   GlobeIcon,
   ServerIcon,
-  ActivityIcon,
   ShareIcon,
+  MonitorIcon,
+  ActivityIcon,
 } from '../components/ui/Icons';
 import { Card, CardContent } from '../components/ui/Shared';
 
@@ -172,7 +173,7 @@ const Home: React.FC = () => {
     {
       title: 'tool.ua.title',
       desc: 'tool.ua.desc',
-      icon: <ActivityIcon className="w-6 h-6" />,
+      icon: <MonitorIcon className="w-6 h-6" />,
       path: '/ua',
       color: 'text-fuchsia-500',
     },
@@ -182,6 +183,13 @@ const Home: React.FC = () => {
       icon: <ShareIcon className="w-6 h-6" />,
       path: '/curl',
       color: 'text-cyan-600',
+    },
+    {
+      title: 'tool.latency.title',
+      desc: 'tool.latency.desc',
+      icon: <ActivityIcon className="w-6 h-6" />,
+      path: '/latency',
+      color: 'text-lime-600',
     },
   ];
 
