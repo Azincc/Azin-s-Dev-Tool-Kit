@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, Input, Label, CopyButton } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { toHex } from '../../utils/hashUtils';
 
 export const HashTools: React.FC = () => {
   const [hashInput, setHashInput] = useState<string>('');
@@ -14,10 +15,6 @@ export const HashTools: React.FC = () => {
       return;
     }
     const encode = (str: string) => new TextEncoder().encode(str);
-    const toHex = (buf: ArrayBuffer) =>
-      Array.from(new Uint8Array(buf))
-        .map((b) => b.toString(16).padStart(2, '0'))
-        .join('');
     const sha1 = await crypto.subtle.digest('SHA-1', encode(text));
     const sha256 = await crypto.subtle.digest('SHA-256', encode(text));
     const sha512 = await crypto.subtle.digest('SHA-512', encode(text));
@@ -32,10 +29,6 @@ export const HashTools: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     const buffer = await file.arrayBuffer();
-    const toHex = (buf: ArrayBuffer) =>
-      Array.from(new Uint8Array(buf))
-        .map((b) => b.toString(16).padStart(2, '0'))
-        .join('');
     const sha256 = await crypto.subtle.digest('SHA-256', buffer);
     setHashInput(`File: ${file.name}`);
     setHashes({
