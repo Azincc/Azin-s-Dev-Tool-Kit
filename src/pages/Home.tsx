@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
+import { SEO } from '../components/ui/SEO';
 import {
   FileJsonIcon,
   CodeIcon,
@@ -195,6 +196,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-4 md:p-8 space-y-12 max-w-6xl mx-auto">
+      <SEO pageId="home" />
       {/* Hero Section */}
       <div className="flex flex-col items-center text-center space-y-6 mt-8">
         <div className="relative group cursor-pointer">

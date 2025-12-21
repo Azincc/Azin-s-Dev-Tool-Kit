@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 import { CustomSelect, SelectOption } from '../CustomSelect';
 
 interface TestTarget {
@@ -1397,6 +1398,7 @@ export const LatencyTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="latency" />
       <div className="flex flex-col gap-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>

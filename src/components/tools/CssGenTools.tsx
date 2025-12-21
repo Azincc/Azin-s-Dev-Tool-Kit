@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, Label, Slider, TextArea, CopyButton } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 export const CssGenTools: React.FC = () => {
   const [boxShadow, setBoxShadow] = useState({
@@ -16,6 +17,7 @@ export const CssGenTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="css" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.css.title')}</h2>
         <p className="text-slate-500 dark:text-slate-400">{t('tool.css.desc')}</p>

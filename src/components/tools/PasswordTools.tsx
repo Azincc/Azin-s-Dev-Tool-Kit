@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, Button, Input, Label, CopyButton } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 export const PasswordTools: React.FC = () => {
   const [passLength, setPassLength] = useState<number>(16);
@@ -22,6 +23,7 @@ export const PasswordTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="pass" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.pass.title')}

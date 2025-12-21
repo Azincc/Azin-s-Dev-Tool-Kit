@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CopyButton, Select } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 import Editor from '@monaco-editor/react';
 
 type Language = 'html' | 'css' | 'json' | 'javascript' | 'typescript' | 'xml' | 'yaml';
@@ -130,6 +131,7 @@ export const CodeTools: React.FC = () => {
 
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
+      <SEO pageId="code" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.code.title')}

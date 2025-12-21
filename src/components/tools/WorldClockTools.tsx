@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardContent, Button, Label } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 interface TimeData {
   ts: number;
@@ -104,6 +105,7 @@ export const WorldClockTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="worldclock" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.worldclock.title')}

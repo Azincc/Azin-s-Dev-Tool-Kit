@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, Input } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 export const ColorPaletteTools: React.FC = () => {
   const [hex, setHex] = useState<string>('#3b82f6');
@@ -8,6 +9,7 @@ export const ColorPaletteTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="colors" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.color.title')}

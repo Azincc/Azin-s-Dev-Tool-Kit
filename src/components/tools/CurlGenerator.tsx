@@ -10,6 +10,7 @@ import {
   CopyButton,
 } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 interface HeaderItem {
   id: number;
@@ -58,6 +59,7 @@ export const CurlGenerator: React.FC = () => {
 
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
+      <SEO pageId="curl" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.curl.title')}

@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, TextArea, Button, Label } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 export const EditorTools: React.FC = () => {
   const [text, setText] = useState<string>('');
@@ -25,6 +26,7 @@ export const EditorTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="editor" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.editor.title')}

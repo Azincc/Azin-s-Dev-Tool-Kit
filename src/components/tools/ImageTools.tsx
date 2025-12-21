@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, Input, CopyButton } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 import QRCode from 'qrcode';
 
 export const ImageTools: React.FC = () => {
@@ -40,6 +41,7 @@ export const ImageTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="images" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.image.title')}

@@ -10,6 +10,7 @@ import {
   CopyButton,
 } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 export const EncryptTools: React.FC = () => {
   const [inputVal, setInputVal] = useState<string>('');
@@ -113,6 +114,7 @@ export const EncryptTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="encrypt" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.encrypt.title')}

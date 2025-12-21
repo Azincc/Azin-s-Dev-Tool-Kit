@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Card, CardHeader, TextArea, Label } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 import { diffLines } from 'diff';
 
 interface DiffRow {
@@ -67,6 +68,7 @@ export const DiffTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="diff" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.diff.title')}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Button, Label, TextArea } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 import { UAParser } from 'ua-parser-js';
 
 // Define a type that matches the structure we use from UAParser result
@@ -39,6 +40,7 @@ export const UAParserTool: React.FC = () => {
 
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
+      <SEO pageId="ua" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.ua.title')}</h2>
         <p className="text-slate-500 dark:text-slate-400">{t('tool.ua.desc')}</p>

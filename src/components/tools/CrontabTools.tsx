@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Label, Select } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 // Helper for simple template interpolation
 const formatString = (template: string, params: Record<string, string | number>) => {
@@ -208,6 +209,7 @@ export const CrontabTools: React.FC = () => {
 
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
+      <SEO pageId="crontab" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.crontab.title')}

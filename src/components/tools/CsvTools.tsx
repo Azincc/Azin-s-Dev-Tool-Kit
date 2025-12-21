@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Card, Button, Select } from '../ui/Shared';
 import { TrashIcon, FileTextIcon, ShuffleIcon } from '../ui/Icons';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 import { useLocation } from 'react-router-dom';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
@@ -167,6 +168,7 @@ export const CsvTools: React.FC = () => {
 
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
+      <SEO pageId="csv" />
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white">

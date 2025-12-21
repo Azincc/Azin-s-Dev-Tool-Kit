@@ -12,6 +12,7 @@ import {
 import { TrashIcon, TableIcon } from '../ui/Icons';
 import { useAppContext } from '../../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
+import { SEO } from '../ui/SEO';
 import { convert, detectFormat, FormatType, jsonToTypeScript, jsonToGo, jsonToJava, jsonToXml, jsonToCsv } from '../../utils/converters';
 import { useDebounce } from '../../hooks/useDebounce';
 
@@ -135,6 +136,7 @@ export const JsonTools: React.FC = () => {
 
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
+      <SEO pageId="json" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.json.title')}

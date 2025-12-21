@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { Card, CardContent, TextArea, Label, Button } from '../ui/Shared';
 import { TrashIcon } from '../ui/Icons';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 import { CustomSelect } from '../CustomSelect';
 import { useToast } from '../ui/Toast';
 
@@ -305,6 +306,7 @@ export const RegexTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="regex" />
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white">

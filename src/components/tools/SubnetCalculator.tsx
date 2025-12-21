@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, Button, Label, Input, Select } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 const ipToLong = (ip: string): number | null => {
   const parts = ip.split('.');
@@ -86,6 +87,7 @@ export const SubnetCalculator: React.FC = () => {
 
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
+      <SEO pageId="subnet" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
           {t('tool.subnet.title')}

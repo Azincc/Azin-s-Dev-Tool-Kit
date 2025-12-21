@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, Label, TextArea } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
+import { SEO } from '../ui/SEO';
 
 export const JwtTools: React.FC = () => {
   const [jwtToken, setJwtToken] = useState<string>('');
@@ -25,6 +26,7 @@ export const JwtTools: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <SEO pageId="jwt" />
       <div>
         <h2 className="text-2xl font-bold text-slate-800 dark:text-white">{t('tool.jwt.title')}</h2>
         <p className="text-slate-500 dark:text-slate-400">{t('tool.jwt.desc')}</p>
