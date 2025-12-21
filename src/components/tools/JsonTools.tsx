@@ -13,7 +13,16 @@ import { TrashIcon, TableIcon } from '../ui/Icons';
 import { useAppContext } from '../../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { SEO } from '../ui/SEO';
-import { convert, detectFormat, FormatType, jsonToTypeScript, jsonToGo, jsonToJava, jsonToXml, jsonToCsv } from '../../utils/converters';
+import {
+  convert,
+  detectFormat,
+  FormatType,
+  jsonToTypeScript,
+  jsonToGo,
+  jsonToJava,
+  jsonToXml,
+  jsonToCsv,
+} from '../../utils/converters';
 import { useDebounce } from '../../hooks/useDebounce';
 
 const DEFAULT_JSON = `{

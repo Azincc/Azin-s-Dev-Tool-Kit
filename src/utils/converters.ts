@@ -216,4 +216,15 @@ const jsonToCsv = (obj: any): string => {
   return Papa.unparse(arr);
 };
 
-export { detectFormat, convert, jsonToYaml, yamlToJson, xmlToJson, jsonToXml, jsonToTypeScript, jsonToGo, jsonToJava, jsonToCsv };
+export {
+  detectFormat,
+  convert,
+  jsonToYaml,
+  yamlToJson,
+  xmlToJson,
+  jsonToXml,
+  jsonToTypeScript,
+  jsonToGo,
+  jsonToJava,
+  jsonToCsv,
+};

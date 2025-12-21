@@ -514,7 +514,6 @@ export const ActivityIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-
 export const ServerIcon = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -573,4 +572,3 @@ export const LayoutGridIcon = ({ className }: { className?: string }) => (
     <rect width="7" height="7" x="3" y="14" rx="1" />
   </svg>
 );
-

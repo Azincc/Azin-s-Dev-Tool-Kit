@@ -86,13 +86,7 @@ export const ImageTools: React.FC = () => {
               className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white w-full"
             />
             <div className="flex justify-center bg-white p-4 rounded-lg w-fit mx-auto border border-slate-200 dark:border-none">
-              {qrDataUrl && (
-                <img
-                  src={qrDataUrl}
-                  alt="QR"
-                  className="w-32 h-32"
-                />
-              )}
+              {qrDataUrl && <img src={qrDataUrl} alt="QR" className="w-32 h-32" />}
             </div>
           </CardContent>
         </Card>

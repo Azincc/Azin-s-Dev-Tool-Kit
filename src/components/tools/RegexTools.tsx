@@ -133,8 +133,8 @@ const HighlightedTextArea: React.FC<{
 
     const charColors: string[] = new Array(value.length).fill('');
 
-    // Apply ranges. 
-    highlightRanges.forEach(range => {
+    // Apply ranges.
+    highlightRanges.forEach((range) => {
       const start = Math.max(0, range.start);
       const end = Math.min(value.length, range.end);
       for (let i = start; i < end; i++) {
@@ -224,7 +224,7 @@ export const RegexTools: React.FC = () => {
       clearTimeout(timerRef.current);
     }
 
-    if (!text && regexes.every(r => !r.pattern)) {
+    if (!text && regexes.every((r) => !r.pattern)) {
       setRegexResults([]);
       return;
     }
@@ -249,7 +249,6 @@ export const RegexTools: React.FC = () => {
         addToast(t('tool.regex.timeout'), 'warning');
       }
     }, 1000);
-
   }, [text, regexes, addToast]);
 
   const flagOptions = [
@@ -288,16 +287,16 @@ export const RegexTools: React.FC = () => {
   const combinedRanges = useMemo(() => {
     const orderedRanges: HighlightRange[] = [];
     [...regexes].reverse().forEach((regex) => {
-      const result = regexResults.find(r => r.id === regex.id);
+      const result = regexResults.find((r) => r.id === regex.id);
       if (!result) return;
       const originalIndex = regexes.indexOf(regex);
       const color = COLORS[originalIndex % COLORS.length];
 
-      result.ranges.forEach(r => {
+      result.ranges.forEach((r) => {
         orderedRanges.push({
           start: r.start,
           end: r.end,
-          colorBg: color.bg
+          colorBg: color.bg,
         });
       });
     });
@@ -355,12 +354,7 @@ export const RegexTools: React.FC = () => {
             })}
             {regexes.length < 6 && (
               <Button variant="secondary" onClick={handleAddRegex} className="w-full sm:w-auto">
-                <svg
-                  className="w-4 h-4 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -393,7 +387,7 @@ export const RegexTools: React.FC = () => {
                   </span>
                 )}
                 {regexResults.map((res) => {
-                  const regexIndex = regexes.findIndex(r => r.id === res.id);
+                  const regexIndex = regexes.findIndex((r) => r.id === res.id);
                   if (regexIndex === -1) return null;
 
                   const regex = regexes[regexIndex];

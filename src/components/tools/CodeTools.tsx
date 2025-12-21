@@ -122,7 +122,7 @@ export const CodeTools: React.FC = () => {
     } catch (error) {
       // If parsing fails, just show the input as is (or maybe show error)
       // For now, we keep the previous valid output or just show input?
-      // Better to show input but maybe with a warning? 
+      // Better to show input but maybe with a warning?
       // Actually, let's show the input but we rely on Monaco to show syntax errors.
       setCodeOutput(codeInput);
       console.error('Formatting error:', error);

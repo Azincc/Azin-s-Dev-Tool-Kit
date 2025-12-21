@@ -118,8 +118,8 @@ export const DiffTools: React.FC = () => {
                       row.type === 'remove'
                         ? 'bg-red-100 dark:bg-red-900/20 text-red-900 dark:text-red-200'
                         : row.type === 'add'
-                        ? 'bg-slate-100 dark:bg-slate-900/50' // Empty placeholder for added line
-                        : 'text-slate-600 dark:text-slate-400'
+                          ? 'bg-slate-100 dark:bg-slate-900/50' // Empty placeholder for added line
+                          : 'text-slate-600 dark:text-slate-400'
                     }`}
                   >
                     {row.l}
@@ -135,8 +135,8 @@ export const DiffTools: React.FC = () => {
                       row.type === 'add'
                         ? 'bg-green-100 dark:bg-green-900/20 text-green-900 dark:text-green-200'
                         : row.type === 'remove'
-                        ? 'bg-slate-100 dark:bg-slate-900/50' // Empty placeholder for removed line
-                        : 'text-slate-600 dark:text-slate-400'
+                          ? 'bg-slate-100 dark:bg-slate-900/50' // Empty placeholder for removed line
+                          : 'text-slate-600 dark:text-slate-400'
                     }`}
                   >
                     {row.r}

@@ -63,7 +63,6 @@ export const SEO: React.FC<SEOProps> = ({ pageId }) => {
 
     // Update language meta tag
     document.documentElement.lang = language;
-
   }, [pageId, t, language]);
 
   return null;
