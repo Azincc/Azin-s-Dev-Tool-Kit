@@ -59,6 +59,7 @@ To add a new tool:
 3. Add route in the `<Routes>` section
 4. Add navigation item to appropriate `navGroups` category with icon, label (translation key), and path
 5. Add translation keys to both `src/locales/en.json` and `src/locales/zh.json`
+6. Add tool card to Home.tsx
 
 ## Docker Deployment
 
