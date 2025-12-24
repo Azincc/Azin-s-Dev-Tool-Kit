@@ -1,11 +1,12 @@
 {
   "name": "azin's-dev-toolkit",
   "private": true,
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:sitemap && vite build",
+    "build:sitemap": "node scripts/generate-sitemap.js",
     "preview": "vite preview"
   },
   "dependencies": {
