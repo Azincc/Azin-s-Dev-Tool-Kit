@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastProvider } from './components/ui/Toast';
+import { ToastInitializer } from './components/ui/ToastWrapper';
 import { Sidebar } from './components/Sidebar';
 import { NavGroup } from './types';
 import {
@@ -104,6 +105,11 @@ const CrontabTools = React.lazy(() =>
 const WorldClockTools = React.lazy(() =>
   import('./components/tools/WorldClockTools').then((m) => ({
     default: m.WorldClockTools,
+  }))
+);
+const TimestampTools = React.lazy(() =>
+  import('./components/tools/TimestampTools').then((m) => ({
+    default: m.TimestampTools,
   }))
 );
 const SubnetTools = React.lazy(() =>
@@ -233,6 +239,12 @@ const navGroups: NavGroup[] = [
         icon: <GlobeIcon />,
         path: '/worldclock',
       },
+      {
+        id: 'timestamp',
+        label: 'nav.timestamp',
+        icon: <ClockIcon />,
+        path: '/timestamp',
+      },
     ],
   },
 ];
@@ -273,6 +285,7 @@ const MainLayout = () => {
               {/* Time */}
               <Route path="/crontab" element={<CrontabTools />} />
               <Route path="/worldclock" element={<WorldClockTools />} />
+              <Route path="/timestamp" element={<TimestampTools />} />
 
               {/* Network */}
               <Route path="/subnet" element={<SubnetTools />} />
@@ -294,6 +307,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <AppProvider>
         <ToastProvider>
+          <ToastInitializer />
           <MainLayout />
         </ToastProvider>
       </AppProvider>
