@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Constants
-const DOMAIN = process.env.VITE_SITE_URL || 'https://tools.azin.com';
+const DOMAIN = process.env.VITE_SITE_URL || 'https://tool.azin.cc';
 const APP_PATH = path.join(__dirname, '../src/App.tsx');
 const OUTPUT_PATH = path.join(__dirname, '../public/sitemap.xml');
 

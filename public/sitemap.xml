@@ -1,134 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tools.azin.com</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/code</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/code</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/colors</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/colors</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/crontab</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/crontab</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/css</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/css</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/csv</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/csv</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/curl</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/curl</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/diff</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/diff</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/editor</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/editor</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/encoders</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/encoders</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/encryption</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/encryption</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/hashing</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/hashing</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/images</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/images</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/json</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/json</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/jwt</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/jwt</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/latency</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/latency</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/passwords</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/passwords</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/regex</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/regex</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/subnet</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/subnet</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/timestamp</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/timestamp</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/ua</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/ua</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tools.azin.com/worldclock</loc>
-    <lastmod>2025-12-25</lastmod>
+    <loc>https://tool.azin.cc/worldclock</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
