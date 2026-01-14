@@ -100,6 +100,17 @@ export const Input = ({
   />
 );
 
+export const DateTimeInput = ({
+  className = '',
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement>) => (
+  <input
+    type="datetime-local"
+    className={`flex h-10 w-full rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-300 [color-scheme:light] dark:[color-scheme:dark] ${className}`}
+    {...props}
+  />
+);
+
 export const TextArea = ({
   className = '',
   ...props
