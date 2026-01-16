@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:sitemap && vite build",
-    "build:sitemap": "node scripts/generate-sitemap.js",
-    "preview": "vite preview"
+    "build": "npm run build:client && npm run build:server && node scripts/prerender.js",
+    "build:client": "vite build --outDir dist/static",
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "preview": "vite preview --outDir dist/static"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
@@ -20,6 +21,7 @@
     "qrcode": "^1.5.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-helmet-async": "^2.0.5",
     "react-router-dom": "^7.9.6",
     "ua-parser-js": "^2.0.7",
     "xlsx": "^0.18.5"
@@ -31,6 +33,7 @@
     "@types/papaparse": "^5.5.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@types/react-helmet-async": "^1.0.3",
     "@types/ua-parser-js": "^0.7.39",
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.22",

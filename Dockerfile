@@ -24,7 +24,8 @@ FROM nginx:1.25-alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy built assets from the builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+# With SSG, the public files are now in dist/static
+COPY --from=builder /app/dist/static /usr/share/nginx/html
 
 # Copy custom Nginx configuration
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
