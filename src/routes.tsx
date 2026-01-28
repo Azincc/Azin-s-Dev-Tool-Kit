@@ -20,6 +20,7 @@ import {
   ServerIcon,
   MonitorIcon,
   LayoutGridIcon,
+  ClockIcon,
 } from './components/ui/Icons';
 
 // Pages & Tools - Lazy loaded
@@ -120,6 +121,11 @@ export const LatencyTools = React.lazy(() =>
     default: m.LatencyTools,
   }))
 );
+export const TimestampTools = React.lazy(() =>
+  import('./components/tools/TimestampTools').then((m) => ({
+    default: m.TimestampTools,
+  }))
+);
 
 // Map paths to components for easier routing
 export const routesMap: Record<string, React.ComponentType<any>> = {
@@ -144,6 +150,7 @@ export const routesMap: Record<string, React.ComponentType<any>> = {
   '/ua': UATools,
   '/curl': CurlTools,
   '/latency': LatencyTools,
+  '/timestamp': TimestampTools,
 };
 
 export const navGroups: NavGroup[] = [
@@ -251,6 +258,12 @@ export const navGroups: NavGroup[] = [
         label: 'nav.worldclock',
         icon: <GlobeIcon />,
         path: '/worldclock',
+      },
+      {
+        id: 'timestamp',
+        label: 'nav.timestamp',
+        icon: <ClockIcon />,
+        path: '/timestamp',
       },
     ],
   },

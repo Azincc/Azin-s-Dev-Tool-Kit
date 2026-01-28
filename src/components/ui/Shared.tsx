@@ -46,6 +46,7 @@ export const CardContent = ({
 export interface ButtonProps extends React.ComponentProps<'button'> {
   variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline';
   size?: 'default' | 'sm' | 'lg' | 'icon';
+  icon?: React.ReactNode;
 }
 
 export const Button = ({
@@ -53,6 +54,7 @@ export const Button = ({
   variant = 'primary',
   size = 'default',
   className = '',
+  icon,
   ...props
 }: ButtonProps) => {
   const baseStyle =
@@ -82,6 +84,7 @@ export const Button = ({
       className={`${baseStyle} ${variants[variant]} ${sizes[size] || sizes.default} ${className}`}
       {...props}
     >
+      {icon && <span className="mr-2">{icon}</span>}
       {children}
     </button>
   );
@@ -93,6 +96,17 @@ export const Input = ({
 }: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input
     className={`flex h-10 w-full rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-300 ${className}`}
+    {...props}
+  />
+);
+
+export const DateTimeInput = ({
+  className = '',
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement>) => (
+  <input
+    type="datetime-local"
+    className={`flex h-10 w-full rounded-md border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-300 [color-scheme:light] dark:[color-scheme:dark] ${className}`}
     {...props}
   />
 );
