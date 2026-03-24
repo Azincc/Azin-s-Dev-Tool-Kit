@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tool.azin.cc/sitemap.xml
+Sitemap: https://tool.az1n.com/sitemap.xml

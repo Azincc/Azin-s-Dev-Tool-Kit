@@ -5,7 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const toAbsolute = (p) => path.resolve(__dirname, '..', p);
 
-const DOMAIN = process.env.VITE_SITE_URL || 'https://tool.azin.cc';
+const DOMAIN = process.env.VITE_SITE_URL || 'https://tool.az1n.com';
 
 async function prerender() {
   const template = fs.readFileSync(toAbsolute('dist/static/index.html'), 'utf-8');

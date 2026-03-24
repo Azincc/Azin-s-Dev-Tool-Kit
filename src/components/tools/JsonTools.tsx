@@ -29,9 +29,9 @@ const DEFAULT_JSON = `{
   "toolkit": "Azin's Dev Toolkit",
   "description": "A powerful collection of developer tools",
   "features": ["JSON Formatter", "Hash Calculator", "Encryption Tools", "Regex Tester", "World Clock"],
-  "version": "0.0.5",
+  "version": "0.2.3",
   "author": "Azin",
-  "url": "https://tool.azin.cc"
+  "url": "https://tool.az1n.com"
 }`;
 
 export const JsonTools: React.FC = () => {

@@ -6,7 +6,7 @@
 
 ## 🔗 在线预览
 
-访问 [tool.azin.cc](https://tool.azin.cc) 体验完整功能
+访问 [tool.az1n.com](https://tool.az1n.com) 体验完整功能
 
 ## ✨ 功能特性
 
@@ -38,6 +38,12 @@
 
    ```bash
    pnpm run build
+   ```
+
+   或显式执行静态站点构建:
+
+   ```bash
+   pnpm run build:ssg
    ```
 
 ## 🐳 Docker 部署
