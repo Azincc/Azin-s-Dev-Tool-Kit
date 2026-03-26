@@ -4,6 +4,36 @@ import { useAppContext } from '../../contexts/AppContext';
 import { SEO } from '../ui/SEO';
 import { TrashIcon } from '../ui/Icons';
 
+const bytesToBase64 = (bytes: Uint8Array) => {
+  let binary = '';
+  const chunkSize = 0x8000;
+
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+  }
+
+  return btoa(binary);
+};
+
+const base64ToBytes = (input: string) => {
+  const normalized = input
+    .trim()
+    .replace(/\s+/g, '')
+    .replace(/-/g, '+')
+    .replace(/_/g, '/');
+
+  const padding = normalized.length % 4;
+  const base64 = padding === 0 ? normalized : normalized + '='.repeat(4 - padding);
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  return bytes;
+};
+
 export const EncoderTools: React.FC = () => {
   const [encodeInput, setEncodeInput] = useState<string>('');
   const [encodeMode, setEncodeMode] = useState<string>('base64_enc');
@@ -31,10 +61,10 @@ export const EncoderTools: React.FC = () => {
       let res = '';
       switch (encodeMode) {
         case 'base64_enc':
-          res = btoa(encodeInput);
+          res = bytesToBase64(new TextEncoder().encode(encodeInput));
           break;
         case 'base64_dec':
-          res = atob(encodeInput);
+          res = new TextDecoder('utf-8', { fatal: true }).decode(base64ToBytes(encodeInput));
           break;
         case 'url_enc':
           res = encodeURIComponent(encodeInput);

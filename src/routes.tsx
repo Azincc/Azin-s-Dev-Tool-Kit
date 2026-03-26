@@ -2,6 +2,7 @@ import React from 'react';
 import { NavGroup } from './types';
 import {
   FileJsonIcon,
+  BracesIcon,
   LockIcon,
   PaletteIcon,
   FileTextIcon,
@@ -23,11 +24,22 @@ import {
   ClockIcon,
 } from './components/ui/Icons';
 
+export type RouteComponent =
+  | React.ComponentType<any>
+  | React.LazyExoticComponent<React.ComponentType<any>>;
+
+export type RouteComponentMap = Record<string, RouteComponent>;
+
 // Pages & Tools - Lazy loaded
 export const Home = React.lazy(() => import('./pages/Home'));
 export const JsonTools = React.lazy(() =>
   import('./components/tools/JsonTools').then((m) => ({
     default: m.JsonTools,
+  }))
+);
+export const JsonEscapeTools = React.lazy(() =>
+  import('./components/tools/JsonEscapeTools').then((m) => ({
+    default: m.JsonEscapeTools,
   }))
 );
 export const CodeTools = React.lazy(() =>
@@ -128,9 +140,10 @@ export const TimestampTools = React.lazy(() =>
 );
 
 // Map paths to components for easier routing
-export const routesMap: Record<string, React.ComponentType<any>> = {
+export const routesMap: RouteComponentMap = {
   '/': Home,
   '/json': JsonTools,
+  '/json-escape': JsonEscapeTools,
   '/csv': CsvTools,
   '/code': CodeTools,
   '/encoders': EncoderTools,
@@ -161,6 +174,12 @@ export const navGroups: NavGroup[] = [
     title: 'nav.formatters',
     items: [
       { id: 'json', label: 'nav.json', icon: <FileJsonIcon />, path: '/json' },
+      {
+        id: 'jsonEscape',
+        label: 'nav.jsonEscape',
+        icon: <BracesIcon />,
+        path: '/json-escape',
+      },
       { id: 'code', label: 'nav.code', icon: <CodeIcon />, path: '/code' },
       {
         id: 'encoders',

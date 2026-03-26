@@ -3,6 +3,24 @@ import { Card, CardContent, Button, Input, Label, CopyButton } from '../ui/Share
 import { useAppContext } from '../../contexts/AppContext';
 import { SEO } from '../ui/SEO';
 
+const CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
+
+const getSecureRandomIndex = (max: number) => {
+  const crypto = globalThis.crypto;
+  if (!crypto?.getRandomValues) {
+    throw new Error('Secure random is unavailable');
+  }
+
+  const buffer = new Uint32Array(1);
+  const limit = Math.floor(0x100000000 / max) * max;
+
+  do {
+    crypto.getRandomValues(buffer);
+  } while (buffer[0] >= limit);
+
+  return buffer[0] % max;
+};
+
 export const PasswordTools: React.FC = () => {
   const [passLength, setPassLength] = useState<number>(16);
   const [passCount, setPassCount] = useState<number>(5);
@@ -10,12 +28,12 @@ export const PasswordTools: React.FC = () => {
   const { t } = useAppContext();
 
   const generatePasswords = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
     const res = [];
     for (let i = 0; i < passCount; i++) {
       let pass = '';
-      for (let j = 0; j < passLength; j++)
-        pass += chars.charAt(Math.floor(Math.random() * chars.length));
+      for (let j = 0; j < passLength; j++) {
+        pass += CHARSET.charAt(getSecureRandomIndex(CHARSET.length));
+      }
       res.push(pass);
     }
     setPasswords(res);

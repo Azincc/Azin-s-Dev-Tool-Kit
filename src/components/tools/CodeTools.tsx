@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardHeader, CopyButton, Select } from '../ui/Shared';
+import { Card, CardHeader, CopyButton, Select, TextArea } from '../ui/Shared';
 import { useAppContext } from '../../contexts/AppContext';
 import { SEO } from '../ui/SEO';
 import Editor from '@monaco-editor/react';
@@ -20,9 +20,14 @@ export const CodeTools: React.FC = () => {
   const [codeInput, setCodeInput] = useState<string>('');
   const [codeLang, setCodeLang] = useState<Language>('html');
   const [codeOutput, setCodeOutput] = useState<string>('');
+  const [isEditorReady, setIsEditorReady] = useState(false);
   const { t } = useAppContext();
   const editorRef = React.useRef<any>(null);
   const monacoRef = React.useRef<any>(null);
+
+  useEffect(() => {
+    setIsEditorReady(true);
+  }, []);
 
   useEffect(() => {
     handleFormat();
@@ -154,44 +159,62 @@ export const CodeTools: React.FC = () => {
             </div>
           </div>
           <div className="flex-1 min-h-0 border-0 bg-slate-50 dark:bg-slate-900 pt-4">
-            <Editor
-              height="100%"
-              language={MONACO_LANGUAGES[codeLang]}
-              value={codeInput}
-              onChange={(value) => setCodeInput(value || '')}
-              onMount={(editor, monaco) => {
-                editorRef.current = editor;
-                monacoRef.current = monaco;
-              }}
-              theme="vs-dark" // We might want to switch based on app theme, but let's stick to dark for code for now or handle theme context.
-              // To properly handle theme, we'd need to know the current theme (dark/light) from context.
-              // Assuming dark mode is popular for dev tools.
-              options={{
-                minimap: { enabled: false },
-                fontSize: 14,
-                wordWrap: 'on',
-                automaticLayout: true,
-              }}
-            />
+            {isEditorReady ? (
+              <Editor
+                height="100%"
+                language={MONACO_LANGUAGES[codeLang]}
+                value={codeInput}
+                onChange={(value) => setCodeInput(value || '')}
+                onMount={(editor, monaco) => {
+                  editorRef.current = editor;
+                  monacoRef.current = monaco;
+                }}
+                theme="vs-dark"
+                options={{
+                  minimap: { enabled: false },
+                  fontSize: 14,
+                  wordWrap: 'on',
+                  automaticLayout: true,
+                }}
+              />
+            ) : (
+              <div className="h-full px-4 pb-4">
+                <TextArea
+                  value={codeInput}
+                  onChange={(e) => setCodeInput(e.target.value)}
+                  className="h-full border-0 bg-transparent resize-none"
+                />
+              </div>
+            )}
           </div>
         </Card>
         <Card className="flex flex-col h-full border-blue-900/30 overflow-hidden">
           <CardHeader title={t('tool.code.output')} action={<CopyButton text={codeOutput} />} />
           <div className="flex-1 min-h-0 border-0 bg-slate-100 dark:bg-slate-950 pt-4">
-            <Editor
-              height="100%"
-              language={MONACO_LANGUAGES[codeLang]}
-              value={codeOutput}
-              options={{
-                readOnly: true,
-                minimap: { enabled: false },
-                fontSize: 14,
-                wordWrap: 'on',
-                automaticLayout: true,
-                domReadOnly: true,
-              }}
-              theme="vs-dark"
-            />
+            {isEditorReady ? (
+              <Editor
+                height="100%"
+                language={MONACO_LANGUAGES[codeLang]}
+                value={codeOutput}
+                options={{
+                  readOnly: true,
+                  minimap: { enabled: false },
+                  fontSize: 14,
+                  wordWrap: 'on',
+                  automaticLayout: true,
+                  domReadOnly: true,
+                }}
+                theme="vs-dark"
+              />
+            ) : (
+              <div className="h-full px-4 pb-4">
+                <TextArea
+                  readOnly
+                  value={codeOutput}
+                  className="h-full border-0 bg-transparent resize-none"
+                />
+              </div>
+            )}
           </div>
         </Card>
       </div>

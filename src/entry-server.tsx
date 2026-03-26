@@ -3,7 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
-import { routesMap } from './routes';
+import { serverRoutesMap } from './server-routes';
 
 export function render(url: string, _context?: any) {
   const helmetContext: any = {};
@@ -12,7 +12,7 @@ export function render(url: string, _context?: any) {
     <React.StrictMode>
       <HelmetProvider context={helmetContext}>
         <MemoryRouter initialEntries={[url]}>
-          <App />
+          <App routes={serverRoutesMap} />
         </MemoryRouter>
       </HelmetProvider>
     </React.StrictMode>
@@ -22,4 +22,4 @@ export function render(url: string, _context?: any) {
   return { html, helmet };
 }
 
-export const routes = Object.keys(routesMap);
+export const routes = Object.keys(serverRoutesMap);

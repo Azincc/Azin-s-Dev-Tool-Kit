@@ -7,19 +7,21 @@ interface TimeData {
   ts: number;
 }
 
+const TIME_API_URL = 'https://time.az1n.com/';
+
 export const WorldClockTools: React.FC = () => {
   // Offset between Server Time and Local System Time (Server - Local)
   const [timeOffset, setTimeOffset] = useState<number | null>(null);
   const [uncertainty, setUncertainty] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const { t, language } = useAppContext();
-  const [now, setNow] = useState<number>(Date.now());
+  const [now, setNow] = useState<number | null>(null);
 
   const fetchTime = async () => {
     setLoading(true);
     const start = Date.now();
     try {
-      const res = await fetch('https://time.azin.cc/');
+      const res = await fetch(TIME_API_URL);
       const json: TimeData = await res.json();
       const end = Date.now();
 
@@ -38,6 +40,7 @@ export const WorldClockTools: React.FC = () => {
   };
 
   useEffect(() => {
+    setNow(Date.now());
     fetchTime();
 
     // Refresh API every minute (60000ms)
@@ -84,7 +87,7 @@ export const WorldClockTools: React.FC = () => {
   };
 
   // If we have an offset, Server Time = Now + Offset
-  const currentServerTime = timeOffset !== null ? now + timeOffset : null;
+  const currentServerTime = timeOffset !== null && now !== null ? now + timeOffset : null;
 
   const getOffsetStatus = (offsetMs: number) => {
     const absOffset = Math.abs(offsetMs);
@@ -130,13 +133,13 @@ export const WorldClockTools: React.FC = () => {
               <span className="text-sm text-slate-500 ml-2">(Beijing)</span>
             </div>
             <div className="text-xs text-slate-400">
-              {t('tool.worldclock.source')}: time.azin.cc
+              {t('tool.worldclock.source')}: time.az1n.com
             </div>
           </div>
           <div className="space-y-2">
             <Label className="text-lg">{t('tool.worldclock.local')}</Label>
             <div className="text-xl sm:text-2xl md:text-3xl font-mono text-blue-600 dark:text-blue-400 break-all">
-              {formatTime(now, 'Asia/Shanghai')}
+              {now === null ? '--' : formatTime(now, 'Asia/Shanghai')}
               <span className="text-sm text-slate-500 ml-2">(Beijing)</span>
             </div>
             {timeOffset !== null && (
@@ -202,13 +205,19 @@ export const WorldClockTools: React.FC = () => {
               {t(z.labelKey)}
             </div>
             <div className="p-6 text-2xl font-mono text-center text-slate-800 dark:text-white">
-              {currentServerTime
-                ? formatTime(currentServerTime, z.zone).split(', ')[1]
-                : formatTime(now, z.zone).split(', ')[1]}
+              {(() => {
+                const timestamp = currentServerTime ?? now;
+                if (timestamp === null) return '--';
+
+                return formatTime(timestamp, z.zone).split(', ')[1];
+              })()}
               <div className="text-xs text-slate-400 mt-2">
-                {currentServerTime
-                  ? formatTime(currentServerTime, z.zone).split(', ')[0]
-                  : formatTime(now, z.zone).split(', ')[0]}
+                {(() => {
+                  const timestamp = currentServerTime ?? now;
+                  if (timestamp === null) return '--';
+
+                  return formatTime(timestamp, z.zone).split(', ')[0];
+                })()}
               </div>
             </div>
           </Card>

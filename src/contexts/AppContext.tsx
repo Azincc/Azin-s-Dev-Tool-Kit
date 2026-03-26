@@ -14,27 +14,31 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children?: ReactNode }> = ({ children }) => {
-  // Theme state
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const stored = window.localStorage.getItem('theme');
-      if (stored === 'dark' || stored === 'light') return stored;
-    }
-    return 'dark'; // Default to dark mode
-  });
+  const [theme, setTheme] = useState<Theme>('dark');
 
   // Language state
   const [language, setLanguage] = useState<Language>('zh');
 
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+
+    const stored = window.localStorage.getItem('theme');
+    if (stored === 'dark' || stored === 'light') {
+      setTheme(stored);
+    }
+  }, []);
+
   // Apply theme class to html element
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const root = window.document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
     } else {
       root.classList.remove('dark');
     }
-    localStorage.setItem('theme', theme);
+    window.localStorage.setItem('theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {

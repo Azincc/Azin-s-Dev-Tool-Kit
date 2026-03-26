@@ -87,15 +87,12 @@ export const TimestampTools: React.FC = () => {
   // Global unit setting
   const [globalUnit, setGlobalUnit] = useState<TimeUnit>('s');
 
-  // Static entry time (captured on mount, used for input defaults)
-  const [entryTs] = useState<number>(() => Date.now());
-
   // Real-time current timestamp (for display)
   const [isPaused, setIsPaused] = useState(false);
-  const [nowMs, setNowMs] = useState<number>(Date.now());
+  const [nowMs, setNowMs] = useState<number | null>(null);
 
-  // Ts -> Date (single) - default to entry timestamp
-  const [tsInput, setTsInput] = useState<string>(entryTs.toString());
+  // Ts -> Date (single)
+  const [tsInput, setTsInput] = useState<string>('');
   const [tsAutoDetect, setTsAutoDetect] = useState(true);
   const [tsInputUnit, setTsInputUnit] = useState<TimeUnit>('s');
 
@@ -103,15 +100,23 @@ export const TimestampTools: React.FC = () => {
   const [batchInput, setBatchInput] = useState<string>('');
   const [batchOutput, setBatchOutput] = useState<string>('');
 
-  // Date -> Ts - default to entry date
-  const [dateInput, setDateInput] = useState<string>(
-    new Date(entryTs).toISOString().slice(0, 19).replace('T', ' ')
-  );
+  // Date -> Ts
+  const [dateInput, setDateInput] = useState<string>('');
 
-  // Time Difference Calculator - defaults based on static entry time
-  const [diffTime1, setDiffTime1] = useState<string>((entryTs - DEFAULT_DIFF_OFFSET_MS).toString());
-  const [diffTime2, setDiffTime2] = useState<string>(entryTs.toString());
+  // Time Difference Calculator
+  const [diffTime1, setDiffTime1] = useState<string>('');
+  const [diffTime2, setDiffTime2] = useState<string>('');
   const [diffResult, setDiffResult] = useState<string>('');
+
+  useEffect(() => {
+    const initialNow = Date.now();
+
+    setNowMs(initialNow);
+    setTsInput(initialNow.toString());
+    setDateInput(new Date(initialNow).toISOString().slice(0, 19).replace('T', ' '));
+    setDiffTime1((initialNow - DEFAULT_DIFF_OFFSET_MS).toString());
+    setDiffTime2(initialNow.toString());
+  }, []);
 
   // Memoized callbacks for DateTimePicker to prevent re-renders from timer updates
   const handleDateInputChange = useCallback((date: Date | undefined) => {
@@ -145,6 +150,8 @@ export const TimestampTools: React.FC = () => {
 
   // Update current time (real-time)
   useEffect(() => {
+    if (nowMs === null) return;
+
     const timer = setInterval(
       () => {
         if (!isPaused) {
@@ -154,10 +161,13 @@ export const TimestampTools: React.FC = () => {
       globalUnit === 's' ? 1000 : 100
     );
     return () => clearInterval(timer);
-  }, [isPaused, globalUnit]);
+  }, [globalUnit, isPaused, nowMs]);
 
   // Current timestamp in selected unit
-  const currentTs = useMemo(() => fromMs(nowMs, globalUnit), [nowMs, globalUnit]);
+  const currentTs = useMemo(
+    () => (nowMs === null ? null : fromMs(nowMs, globalUnit)),
+    [globalUnit, nowMs]
+  );
 
   // Ts -> Date conversion
   const tsResult = useMemo(() => {
@@ -300,10 +310,10 @@ export const TimestampTools: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <div className="text-center">
               <div className="text-4xl md:text-6xl font-mono text-blue-600 dark:text-blue-400 font-bold">
-                {currentTs}
+                {currentTs === null ? '--' : currentTs}
               </div>
               <div className="text-sm text-slate-500 mt-1">
-                {UNIT_LABELS[globalUnit]} • {new Date(nowMs).toLocaleString()}
+                {UNIT_LABELS[globalUnit]} • {nowMs === null ? '--' : new Date(nowMs).toLocaleString()}
               </div>
             </div>
             <div className="flex gap-2">
@@ -314,9 +324,10 @@ export const TimestampTools: React.FC = () => {
                 {isPaused ? t('tool.timestamp.resume') : t('tool.timestamp.pause')}
               </Button>
               <Button
-                onClick={() => copyToClipboard(currentTs.toString())}
+                onClick={() => currentTs !== null && copyToClipboard(currentTs.toString())}
                 variant="outline"
                 icon={<CopyIcon />}
+                disabled={currentTs === null}
               >
                 {t('common.copy')}
               </Button>
@@ -335,7 +346,7 @@ export const TimestampTools: React.FC = () => {
               <Input
                 value={tsInput}
                 onChange={(e) => setTsInput(e.target.value)}
-                placeholder={currentTs.toString()}
+                placeholder={currentTs === null ? '' : currentTs.toString()}
               />
             </div>
             <div className="flex items-center gap-4">

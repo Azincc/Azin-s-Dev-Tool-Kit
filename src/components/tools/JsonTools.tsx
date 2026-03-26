@@ -34,6 +34,8 @@ const DEFAULT_JSON = `{
   "url": "https://tool.az1n.com"
 }`;
 
+const DIRECT_JSON_MODES = ['format', 'minify', 'toTS', 'toGo', 'toJava', 'toXML', 'toCSV'] as const;
+
 export const JsonTools: React.FC = () => {
   const [input, setInput] = useState<string>(DEFAULT_JSON);
   const [output, setOutput] = useState<string>('');
@@ -44,6 +46,9 @@ export const JsonTools: React.FC = () => {
   const { t } = useAppContext();
   const navigate = useNavigate();
   const debouncedInput = useDebounce(input, 300);
+  const isDirectJsonMode = DIRECT_JSON_MODES.includes(
+    mode as (typeof DIRECT_JSON_MODES)[number]
+  );
 
   const handleAutoDetect = () => {
     if (!input.trim()) return;
@@ -59,6 +64,19 @@ export const JsonTools: React.FC = () => {
       setError(null);
       return;
     }
+
+    if (!isDirectJsonMode) {
+      try {
+        const result = convert(debouncedInput, sourceFormat, targetFormat, { indent: 2 });
+        setOutput(result);
+        setError(null);
+      } catch (e) {
+        setError((e as Error).message);
+        setOutput('');
+      }
+      return;
+    }
+
     try {
       const parsed = JSON.parse(debouncedInput);
       setError(null);
@@ -89,8 +107,9 @@ export const JsonTools: React.FC = () => {
       }
     } catch (e) {
       setError((e as Error).message);
+      setOutput('');
     }
-  }, [debouncedInput, mode]);
+  }, [debouncedInput, isDirectJsonMode, mode, sourceFormat, targetFormat]);
 
   const handleDownloadCsv = () => {
     if (!output) return;
@@ -113,36 +132,6 @@ export const JsonTools: React.FC = () => {
     }
   };
 
-  const handleConvert = () => {
-    if (!input.trim()) {
-      setOutput('');
-      setError(null);
-      return;
-    }
-    try {
-      const result = convert(input, sourceFormat, targetFormat, { indent: 2 });
-      setOutput(result);
-      setError(null);
-    } catch (e) {
-      setError((e as Error).message);
-    }
-  };
-
-  useEffect(() => {
-    if (
-      mode === 'format' ||
-      mode === 'minify' ||
-      mode === 'toTS' ||
-      mode === 'toGo' ||
-      mode === 'toJava' ||
-      mode === 'toXML' ||
-      mode === 'toCSV'
-    ) {
-      return;
-    }
-    handleConvert();
-  }, [sourceFormat, targetFormat]);
-
   return (
     <div className="space-y-6 h-[calc(100vh-4rem)] flex flex-col">
       <SEO pageId="json" />
@@ -157,6 +146,7 @@ export const JsonTools: React.FC = () => {
         {[
           { id: 'format', l: t('tool.json.prettify') },
           { id: 'minify', l: t('tool.json.minify') },
+          { id: 'convert', l: t('tool.json.convert') },
           { id: 'toTS', l: t('tool.json.toTS') },
           { id: 'toGo', l: t('tool.json.toGo') },
           { id: 'toJava', l: t('tool.json.toJava') },
@@ -177,13 +167,7 @@ export const JsonTools: React.FC = () => {
         ))}
       </div>
 
-      {mode === 'format' ||
-      mode === 'minify' ||
-      mode === 'toTS' ||
-      mode === 'toGo' ||
-      mode === 'toJava' ||
-      mode === 'toXML' ||
-      mode === 'toCSV' ? (
+      {isDirectJsonMode ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
           <Card className="flex flex-col h-full">
             <CardHeader

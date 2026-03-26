@@ -4,6 +4,7 @@ import { useAppContext } from '../contexts/AppContext';
 import { SEO } from '../components/ui/SEO';
 import {
   FileJsonIcon,
+  BracesIcon,
   CodeIcon,
   ShuffleIcon,
   HashIcon,
@@ -55,6 +56,13 @@ const Home: React.FC = () => {
       icon: <FileJsonIcon className="w-6 h-6" />,
       path: '/json',
       color: 'text-orange-500',
+    },
+    {
+      title: 'tool.jsonEscape.title',
+      desc: 'tool.jsonEscape.desc',
+      icon: <BracesIcon className="w-6 h-6" />,
+      path: '/json-escape',
+      color: 'text-teal-500',
     },
     {
       title: 'tool.code.title',

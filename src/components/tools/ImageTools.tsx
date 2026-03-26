@@ -6,17 +6,28 @@ import QRCode from 'qrcode';
 
 export const ImageTools: React.FC = () => {
   const [imgBase64, setImgBase64] = useState<string>('');
-  const [qrText, setQrText] = useState<string>(window.location.href);
+  const [qrText, setQrText] = useState<string>('');
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const { t } = useAppContext();
 
   useEffect(() => {
-    generateQR();
+    if (typeof window !== 'undefined') {
+      setQrText(window.location.href);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!qrText) {
+      setQrDataUrl('');
+      return;
+    }
+
+    generateQR(qrText);
   }, [qrText]);
 
-  const generateQR = async () => {
+  const generateQR = async (text: string) => {
     try {
-      const url = await QRCode.toDataURL(qrText || ' ', {
+      const url = await QRCode.toDataURL(text, {
         width: 200,
         margin: 2,
         color: {
